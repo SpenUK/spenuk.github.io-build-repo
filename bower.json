@@ -1,0 +1,28 @@
+{
+	"name": "spenuk.github.io",
+	"version": "0.0.1",
+	"authors": [
+    "Spen <spen_@hotmail.co.uk>"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "main": "app/scripts/main.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/scripts/vendor",
+    "test",
+    "tests"
+  ],
+	"dependencies": {
+		"modernizr": "~2.8.2",
+		"jquery": null,
+		"underscore-amd": null,
+		"backbone-amd": null,
+		"handlebars": null,
+		"requirejs": null,
+		"fontawesome": "~4.2.0"
+	}
+}
