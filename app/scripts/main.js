@@ -1,5 +1,7 @@
 'use strict';
 
+// main.js used only for configurations and as an entry point into app.js, where the actual app logic will live.
+
 require.config({
 	paths: {
 		'jquery': '../bower_components/jquery/dist/jquery',
@@ -9,11 +11,10 @@ require.config({
 	}
 });
 
-require([
-'test1',
-],function(test1){
+define([
+'app',
+],function(App){
 
-		console.log(test1);
-		test1.init();
+		App.init();
 
 });

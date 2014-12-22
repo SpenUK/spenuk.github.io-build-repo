@@ -153,6 +153,15 @@ module.exports = function (grunt) {
 	        dest: '.tmp/styles',
 	        ext: '.css'
 	      }]
+	    },
+	    export: {
+	    	files: [{
+	        expand: true,
+	        cwd: '<%= config.app %>/styles',
+	        src: ['*.{scss,sass}'],
+	        dest: '<%= config.dist %>/styles',
+	        ext: '.css'
+	      }]
 	    }
 	  },
 
@@ -408,6 +417,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('export', [
 		'copy:dist',
+		'sass:export',
 	  'shell:buildjs',
 	  'replace:require'
 	]);
