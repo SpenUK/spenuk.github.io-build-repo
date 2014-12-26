@@ -1,0 +1,11 @@
+$c-background: rgba(225,225,225,1);
+
+$c-header: rgba(255,90,110,1);
+// $c-UI-feature-1: rgba(195,100,85,1);
+$c-UI-feature-1: rgba(165,165,165,1);
+
+$p-loading-strip: '../images/720.GIF';
+
+.i-btn {
+	@include icon-btn($c-background, 30);
+}

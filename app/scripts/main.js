@@ -1,6 +1,7 @@
 'use strict';
 
-// main.js used only for configurations and as an entry point into app.js, where the actual app logic will live.
+// main.js used for pulling in modules.
+// Doing this in app.js may be better/ more flexible/ semantic
 
 require.config({
 	paths: {
@@ -11,10 +12,23 @@ require.config({
 	}
 });
 
-define([
+require([
 'app',
 ],function(App){
+		// console.log('in main define');
+		
+		// App.Modules.Wordpress = require('modules/wordpress/main');
+		// App.Modules.Wordpress.init();
+
+		// require([
+		// 	'modules/wordpress/main'
+		// ], function(Wordpress){
+		// 	App.Modules.Wordpress = Wordpress;
+		// 	App.Modules.Wordpress.init();
+		// });
 
 		App.init();
 
 });
+
+

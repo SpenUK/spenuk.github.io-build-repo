@@ -1,7 +1,7 @@
 {
-	"name": "spenuk.github.io",
-	"version": "0.0.1",
-	"authors": [
+  "name": "spenuk.github.io",
+  "version": "0.0.1",
+  "authors": [
     "Spen <spen_@hotmail.co.uk>"
   ],
   "moduleType": [
@@ -16,13 +16,17 @@
     "test",
     "tests"
   ],
-	"dependencies": {
-		"modernizr": "~2.8.2",
-		"jquery": null,
-		"underscore-amd": null,
-		"backbone-amd": null,
-		"handlebars": null,
-		"requirejs": null,
-		"fontawesome": "~4.2.0"
-	}
+  "dependencies": {
+    "modernizr": "~2.8.2",
+    "jquery": null,
+    "underscore-amd": null,
+    "backbone-amd": null,
+    "handlebars": null,
+    "requirejs": null,
+    "fontawesome": "~4.2.0",
+    "normalize.scss": "~3.0.2+normalize.3.0.2"
+  },
+  "devDependencies": {
+    "modularized-normalize-scss": "~3.0.2"
+  }
 }

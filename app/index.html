@@ -4,7 +4,55 @@
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
+	
+	<div id="window-wrapper">
+		<!-- AbovePage: Used for info bars etc. -->
+		<!-- Slides whole page down including header -->
+		<div id="above-page"></div>
 
-<script src="bower_components/requirejs/require.js" data-main="scripts/main.js"></script>
+		<!-- Header -->
+		<div id="header-wrapper">
+			<div class="header"></div>
+		</div>
+		<!-- Header End -->
+
+				<!-- A 200% by 200% box used for sliding page transitions -->
+			<!-- <div id="transition-container"> -->
+
+				<!-- Page Content -->
+				<div id="page-wrapper">
+					<div id="transition-wrapper">
+						<div id="transition-left">
+
+						</div>
+
+						<div id="transition-right">
+
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!-- Page Content End -->
+
+			<!-- </div> -->
+
+		<!-- Footer is outside of page-wrapper to allow it to be 'sticky' -->
+		<div id="footer-wrapper">
+			<div class="footer"></div>
+		</div>
+		<!-- Footer End -->
+
+	</div>
+
+	<!-- Modal: Overlays the entire page at 100%-100% -->
+	<div id="modal">
+		<div class="modal__shader"></div>
+		<div class="modal__container">
+			<div class="modal__button--dismiss"></div>
+		</div>
+	</div>
+	<!-- Modal end ===================================-->
+
+	<script src="bower_components/requirejs/require.js" data-main="scripts/main.js"></script>
 </body>
 </html>

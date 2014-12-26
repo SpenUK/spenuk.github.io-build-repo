@@ -62,13 +62,12 @@ module.exports = function (grunt) {
 	        '.tmp/styles/{,*/}*.css',
 	        '<%= config.app %>/images/{,*/}*'
 	      ]
-	    }
-	    // ,
+	    },
 
-	    // hbs: {
-	    //   files: ['<%= config.app %>/scripts/templates/{,*/}*.hbs'],
-	    //   tasks: ['shell:handlebars']
-	    // }
+	    hbs: {
+	      files: ['<%= config.app %>/scripts/templates/{,*/}*.hbs'],
+	      tasks: ['handlebars', 'concat:templates']
+	    }
 		}, // watch end
 
 	  // Grunt server settings
@@ -126,6 +125,8 @@ module.exports = function (grunt) {
 	      '<%= config.app %>/scripts/{,*/}*.js',
 	      '!<%= config.app %>/scripts/vendor/*',
 	      '!<%= config.app %>/scripts/almond.js',
+	      '!<%= config.app %>/scripts/templates.js',
+	      '!<%= config.app %>/scripts/templates/templates.js',
 	      'test/spec/{,*/}*.js'
 	    ]
 	  },
@@ -180,102 +181,131 @@ module.exports = function (grunt) {
 	    }
 	  },
 
+	  concat: {
+	  	templates: {
+	  		files: {
+	        '<%= config.app %>/scripts/templates.js': ['<%= config.app %>/scripts/templates/templates.js'],
+	      },
+        options: {
+		      banner: ';require([\'handlebars\'], function(Handlebars) { \n',
+		      footer: '});'
+		    }
+			  // dist: {
+			  //   src: ['<%= config.app %>/scripts/templates/templates.js'],
+			  //   dest: '<%= config.app %>/scripts/templates.js',
+			    
+			  // }
+			}
+		},
+
 	  // Renames files for browser caching purposes
-	  // rev: {
-	  //   dist: {
-	  //     files: {
-	  //       src: [
-	  //         '<%= config.dist %>/scripts/{,*/}*.js',
-	  //         '<%= config.dist %>/styles/{,*/}*.css',
-	  //         '<%= config.dist %>/assets/images/{,*/}*.*',
-	  //         '<%= config.dist %>/styles/fonts/{,*/}*.*',
-	  //         '<%= config.dist %>/*.{ico,png}'
-	  //       ]
-	  //     }
-	  //   }
-	  // },
+		  // rev: {
+		  //   dist: {
+		  //     files: {
+		  //       src: [
+		  //         '<%= config.dist %>/scripts/{,*/}*.js',
+		  //         '<%= config.dist %>/styles/{,*/}*.css',
+		  //         '<%= config.dist %>/assets/images/{,*/}*.*',
+		  //         '<%= config.dist %>/styles/fonts/{,*/}*.*',
+		  //         '<%= config.dist %>/*.{ico,png}'
+		  //       ]
+		  //     }
+		  //   }
+		  // },
 
-	  // Reads HTML for usemin blocks to enable smart builds that automatically
-	  // concat, minify and revision files. Creates configurations in memory so
-	  // additional tasks can operate on them
-	  // useminPrepare: {
-	  //   options: {
-	  //     dest: '<%= config.dist %>'
-	  //   },
-	  //   html: '<%= config.app %>/index.html'
-	  // },
+		  // Reads HTML for usemin blocks to enable smart builds that automatically
+		  // concat, minify and revision files. Creates configurations in memory so
+		  // additional tasks can operate on them
+		  // useminPrepare: {
+		  //   options: {
+		  //     dest: '<%= config.dist %>'
+		  //   },
+		  //   html: '<%= config.app %>/index.html'
+		  // },
 
-	  // Performs rewrites based on rev and the useminPrepare configuration
-	  // usemin: {
-	  //   options: {
-	  //     assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images']
-	  //   },
-	  //   html: ['<%= config.dist %>/{,*/}*.html'],
-	  //   css: ['<%= config.dist %>/styles/{,*/}*.css']
-	  // },
+		  // Performs rewrites based on rev and the useminPrepare configuration
+		  // usemin: {
+		  //   options: {
+		  //     assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images']
+		  //   },
+		  //   html: ['<%= config.dist %>/{,*/}*.html'],
+		  //   css: ['<%= config.dist %>/styles/{,*/}*.css']
+		  // },
 
-	  // The following *-min tasks produce minified files in the dist folder
-	  // imagemin: {
-	  //   dist: {
-	  //     files: [{
-	  //       expand: true,
-	  //       cwd: '<%= config.app %>/images',
-	  //       src: '{,*/}*.{gif,jpeg,jpg,png}',
-	  //       dest: '<%= config.dist %>/images'
-	  //     }]
-	  //   }
-	  // },
+		  // The following *-min tasks produce minified files in the dist folder
+		  // imagemin: {
+		  //   dist: {
+		  //     files: [{
+		  //       expand: true,
+		  //       cwd: '<%= config.app %>/images',
+		  //       src: '{,*/}*.{gif,jpeg,jpg,png}',
+		  //       dest: '<%= config.dist %>/images'
+		  //     }]
+		  //   }
+		  // },
 
-	  // svgmin: {
-	  //   dist: {
-	  //     files: [{
-	  //       expand: true,
-	  //       cwd: '<%= config.app %>/images',
-	  //       src: '{,*/}*.svg',
-	  //       dest: '<%= config.dist %>/images'
-	  //     }]
-	  //   }
-	  // },
+		  // svgmin: {
+		  //   dist: {
+		  //     files: [{
+		  //       expand: true,
+		  //       cwd: '<%= config.app %>/images',
+		  //       src: '{,*/}*.svg',
+		  //       dest: '<%= config.dist %>/images'
+		  //     }]
+		  //   }
+		  // },
 
-	  // htmlmin: {
-	  //   dist: {
-	  //     options: {
-	  //       collapseBooleanAttributes: true,
-	  //       collapseWhitespace: true,
-	  //       conservativeCollapse: true,
-	  //       removeAttributeQuotes: true,
-	  //       removeCommentsFromCDATA: true,
-	  //       removeEmptyAttributes: true,
-	  //       removeOptionalTags: true,
-	  //       removeRedundantAttributes: true,
-	  //       useShortDoctype: true
-	  //     },
-	  //     files: [{
-	  //       expand: true,
-	  //       cwd: '<%= config.dist %>',
-	  //       src: '{,*/}*.html',
-	  //       dest: '<%= config.dist %>'
-	  //     }]
-	  //   }
+		  // htmlmin: {
+		  //   dist: {
+		  //     options: {
+		  //       collapseBooleanAttributes: true,
+		  //       collapseWhitespace: true,
+		  //       conservativeCollapse: true,
+		  //       removeAttributeQuotes: true,
+		  //       removeCommentsFromCDATA: true,
+		  //       removeEmptyAttributes: true,
+		  //       removeOptionalTags: true,
+		  //       removeRedundantAttributes: true,
+		  //       useShortDoctype: true
+		  //     },
+		  //     files: [{
+		  //       expand: true,
+		  //       cwd: '<%= config.dist %>',
+		  //       src: '{,*/}*.html',
+		  //       dest: '<%= config.dist %>'
+		  //     }]
+		  //   }
 	  // },
 
 	  shell: {
 	  	buildjs: {
 	  		command: 'r.js -o <%= config.buildjs %>'
 	  	},
-	    handlebars: {
-	      command: (function(){
-	        var src = 'app/scripts/templates/**/*.hbs';
-	        var dest = 'app/scripts/templates.js';
-
-	        // var cmdString = "handlebars " + src;
-	        var cmdString = 'handlebars ' + src + ' -f ' + dest;
-
-
-	        return cmdString;
-	      })()
+	  	pushBuilt: {
+	  		command: (function(message){ 
+					  				if (typeof message === 'undefined') {
+					  					return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update @ '+ new Date().toLocaleString() +'" && git push -u origin master';
+					  				} else {
+					  					return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update: ' + message + '" && git push -u origin master';
+					  				}
+									})()
 	    }
 	  },
+
+
+    handlebars: {
+		    all: {
+		    	options: {
+		    		processName: function(filePath) {
+		        	return filePath.replace('app/scripts/templates/', '').replace('.hbs', '');
+		    		},
+		    		// wrapped: false
+		    	},
+		      files: {
+		        'app/scripts/templates/templates.js': ['app/scripts/templates/**/*.hbs']
+		      } 
+		    }
+		},
 
 	  replace: {
 		  require: {
@@ -296,17 +326,6 @@ module.exports = function (grunt) {
 		  }
 		},
 
-	  // handlebars: {
-	  //   all: {
-	  //     files: {
-	  //       'app/scripts/templates/template-compile-test.js': 'app/scripts/templates/wordpress/*.hbs'
-
-	  //     },
-	  //     options: {
-	  //       namespace: 'myApp.templates'
-	  //     }
-	  //   }
-	  // },
 
 	  // Copies remaining files to places other tasks can use
 	  copy: {
@@ -389,6 +408,9 @@ module.exports = function (grunt) {
 	  grunt.task.run([
 	    'clean:server',
 	    // 'wiredep',
+	    // 'jshint:all',
+	    'handlebars',
+			'concat:templates',
 	    'concurrent:server',
 	    'autoprefixer',
 	    'connect:livereload',
@@ -413,10 +435,17 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('default', [
+		'handlebars'
+	]);
+
+	grunt.registerTask('pushBuilt', [
+		'shell:pushBuilt'
 	]);
 
 	grunt.registerTask('export', [
 		'copy:dist',
+		'handlebars',
+		'concat:templates',
 		'sass:export',
 	  'shell:buildjs',
 	  'replace:require'

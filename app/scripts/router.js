@@ -10,7 +10,7 @@ define([
 		routes: {
 			'': 'root',
 			'test': 'testRoute',
-			"*actions": "defaultRoute"
+			'*actions': 'defaultRoute'
 		},
 		setTheme: function(namespace){
 			// Used in conjunction with themes set in scss.
@@ -21,7 +21,7 @@ define([
 		},
 		initialize: function(){
 			var parentScope = this;
-			Backbone.history.start();
+			
 
 			// initial routes // There's a better place for this for sure, app.js maybe?
 			this.on('route:root' ,function(){
@@ -35,6 +35,8 @@ define([
 			this.on('route:defaultRoute', function(){
 				parentScope.setTheme('home');
 			});
+
+			Backbone.history.start();
 		}
 		// ,
 		// addRoutes: function (routes) {
@@ -45,10 +47,10 @@ define([
 		// 		parentScope.on('route:'+ route.trigger , route.handler);
 		// 		console.log(route.path);
 		// 	};
-		// 	// shit hack - works for initializing but does not solve the issue of navigating back to the route after leaving it.
-		// 	console.log('stopping/starting backbone history');
-		// 	Backbone.history.stop();
-		// 	Backbone.history.start();
+			// shit hack - works for initializing but does not solve the issue of navigating back to the route after leaving it.
+			// console.log('stopping/starting backbone history');
+			// Backbone.history.stop();
+			// Backbone.history.start();
 		// },
 
 
