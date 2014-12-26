@@ -1,0 +1,6 @@
+::-webkit-scrollbar {
+    width: 15px; }
+  ::-webkit-scrollbar-track {
+    background-color: lighten($c-header, 10); }
+  ::-webkit-scrollbar-thumb {
+    background-color: $c-header;}
