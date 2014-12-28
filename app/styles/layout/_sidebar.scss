@@ -60,6 +60,7 @@
     width: 60px;
     top: 0;
     background-color: $c-header;
+    cursor: pointer;
 
     &:before {
       content: $fa-var-bars;

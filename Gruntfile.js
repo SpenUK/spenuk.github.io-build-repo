@@ -314,16 +314,24 @@ module.exports = function (grunt) {
 		    replacements: [{
 		      from: 'bower_components/requirejs/require.js" data-main="scripts/', // string replacement
 		      to: ''
-		    // }, {
-		      // from: /(f|F)(o{2,100})/g,      // regex replacement ('Fooo' to 'Mooo')
-		      // to: 'M$2'
+		    }, {
+		      from: '<link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css" />',
+		      to: ''
 		    // }, {
 		    //   from: 'Foo',
 		    //   to: function (matchedWord) {   // callback replacement
 		    //     return matchedWord + ' Bar';
 		      // }
 		    }]
-		  }
+		  },
+		  // fontawesome: {
+		  // 	src: '<%= config.dist %>/styles/',
+		  //   dest: '<%= config.dist %>/styles/',
+		  //   replacements: [{
+		  //   	from: ,
+		  //   	to: 
+		  //   }]
+		  // }
 		},
 
 
@@ -339,9 +347,15 @@ module.exports = function (grunt) {
 	          '*.{ico,png,txt}',
 	          'images/{,*/}*.webp',
 	          '{,*/}*.html',
-	          'styles/fonts/{,*/}*.*'
+	          'styles/fonts/{,*/}*.*',
+	          'bower_components/fontawesome/fonts/fontawesome-webfont.ttf'
 	        ]
 	      }, {
+	        src: [
+	        	'bower_components/fontawesome/fonts/fontawesome-webfont.ttf'
+	        ],
+	        dest: '<%= config.dist %>/fonts/fontawesome-webfont.ttf'
+	      },{
 	        src: 'node_modules/apache-server-configs/dist/.htaccess',
 	        dest: '<%= config.dist %>/.htaccess'
 	      // }, {
@@ -352,6 +366,12 @@ module.exports = function (grunt) {
 	      //   dest: '<%= config.dist %>'
 	      }]
 	    },
+	    // fontawesome: {
+	    // 	files: [{
+	    // 		cwd: 'bower_components/fontawesome.js',
+	    //     dest: '<%= config.dist %>',
+	    // 	}]
+	    // },
 	    styles: {
 	      expand: true,
 	      dot: true,
