@@ -1,27 +1,55 @@
-$container-w: 1450;
-$col-count: 10;
+// ========= Grid Options ==========
 
+$container-w: 1250;
+$col-count: 10;
 $gutter-w: 20;
+
+// $sizes: (
+// 	prefix: large,
+// 	container: 1440,
+// 	columns: 10,
+// 	gutters: 20,
+// 	min: 1041
+// ) (
+// 	prefix: medium,
+// 	container: 1040,
+// 	columns: 10,
+// 	gutters: 20,
+// 	min: 761
+// ) (
+// 	prefix: small,
+// 	container: 760,
+// 	columns: 6,
+// 	gutters: 20,
+// 	min: 769
+// );
+
+// =================================
 
 $col-w: (($container-w + $gutter-w) / $col-count) - $gutter-w;
 
 @mixin grid-prefix($multiplier){
 	$gutters: $multiplier * $gutter-w - $gutter-w;
-	width: $multiplier * $col-w + $gutters;
+	width: $multiplier * $col-w + $gutters * 1px;
 }
 
 .grid-container {
 	margin: 0 auto;
+	margin-top: $gutter-w;
 	width: $container-w * 1px;
 	position: relative;
-	background-color: rgba(0,0,0,0.1);
 	font-size: 0em;
 
 	.grid-row {
 		white-space: nowrap;
-		margin: 0 -($gutter-w/2)* 1px;
+		margin-left: -($gutter-w)* 1px;
+		
+		&:first-child {
+			margin-top: -($gutter-w)* 1px;
+		}
 
 		* {
+			// A different method for removing inline-block's gaps would be ideal
 			font-size: 14px;
 		}
 
@@ -30,7 +58,8 @@ $col-w: (($container-w + $gutter-w) / $col-count) - $gutter-w;
 				@include grid-prefix($i);
 				min-height: 100px;
 				display: inline-block;
-				margin: ($gutter-w/2) * 1px;
+				margin-left: ($gutter-w) * 1px;
+				margin-top: ($gutter-w) * 1px;
 			}
 		}
 
