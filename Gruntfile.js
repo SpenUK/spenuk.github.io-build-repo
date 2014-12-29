@@ -358,12 +358,12 @@ module.exports = function (grunt) {
 	      },{
 	        src: 'node_modules/apache-server-configs/dist/.htaccess',
 	        dest: '<%= config.dist %>/.htaccess'
-	      // }, {
-	      //   expand: true,
-	      //   dot: true,
-	      //   cwd: '.',
-	      //   src: '../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-	      //   dest: '<%= config.dist %>'
+	      }, {
+	      	expand: true,
+	      	cwd: '<%= config.app %>/fonts',
+	        // src: '**/*.*',
+	        src: ['*.ttf'],
+	        dest: '<%= config.dist %>/fonts/'
 	      }]
 	    },
 	    // fontawesome: {
