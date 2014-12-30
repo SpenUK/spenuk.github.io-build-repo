@@ -6,16 +6,19 @@
 </head>
 <body>
 	
-	<div id="window-wrapper">
+	<div id="window-wrapper" class="">
 		<!-- AbovePage: Used for info bars etc. -->
 		<!-- Slides whole page down including header -->
 		<div id="above-page"></div>
 
 		<!-- Header -->
 		<div id="header-wrapper">
-			<div class="header">
+			<div class="header"> 
 				<div class="logo">
 					<h1>ST</h1>
+				</div>
+				<div class="dismiss-button show">
+						<!-- <i class="fa fa-bars fa-2x"></i> -->
 				</div>
 			</div>
 		</div>
@@ -32,6 +35,9 @@
 					</div>
 
 					<ul>
+						<li><i class="fa fa-code fa-2x"></i></li>
+						<li><i class="fa fa-edit fa-2x"></i></li>
+						<li><i class="fa fa-search fa-2x"></i></li>
 						<li><i class="fa fa-facebook fa-2x"></i></li>
 						<li><i class="fa fa-twitter fa-2x"></i></li>
 						<li><i class="fa fa-google-plus fa-2x"></i></li>
@@ -41,7 +47,7 @@
 				<!-- Page Content -->
 				<div id="page-wrapper">
 
-					<div id="transition-wrapper">
+					<!-- <div id="transition-wrapper">
 						<div id="transition-left">
 
 						</div>
@@ -50,7 +56,7 @@
 
 						</div>
 					</div>
-					<div class="clearfix"></div>
+					<div class="clearfix"></div> -->
 				</div>
 				<!-- Page Content End -->
 
@@ -74,6 +80,14 @@
 		</div>
 	</div>
 	<!-- Modal end ===================================-->
+
+	<!-- Making SVG filter(s) filter available for use in CSS -->
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svgf">
+    <filter id="blur">
+        <feGaussianBlur stdDeviation="50" />
+    </filter>
+	</svg>
+	<!-- SVG filters -->
 
 	<script src="bower_components/requirejs/require.js" data-main="scripts/main.js"></script>
 </body>

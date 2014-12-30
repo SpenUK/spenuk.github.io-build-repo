@@ -59,16 +59,16 @@ define([
 		}
 	};
 
-	$('#side-bar').on('click', '.dismiss-button.show', function(){
+	$('#side-bar, .header').on('click', '.dismiss-button.show', function(){
 		$('#push-wrapper').removeClass('side-bar-hidden');
 		// $('#side-bar').removeClass('hidden');
-		$(this).removeClass('show').addClass('hide');
+		$(this).removeClass('show').addClass('close');
 	});
 
-	$('#side-bar').on('click', '.dismiss-button.hide', function(){
+	$('#side-bar, .header').on('click', '.dismiss-button.close', function(){
 		$('#push-wrapper').addClass('side-bar-hidden');
 		// $('#side-bar').addClass('hidden');
-		$(this).removeClass('hide').addClass('show');
+		$(this).removeClass('close').addClass('show');
 	});
 
 

@@ -7,6 +7,33 @@
 
 	.header {
 
+		.dismiss-button {
+	    text-align: center;
+	    position: relative;
+	    height: 60px;
+	    width: 60px;
+	    text-shadow: 0 5px 0 rgba(20,20,20,0.1);
+	    background-color: $c-header;
+	    cursor: pointer;
+	    display: inline-block;
+	    vertical-align: top;
+
+	    &:before {
+	      content: $fa-var-bars;
+	      font-family: FontAwesome;
+	      color: rgba(245,245,245,1);
+	      line-height: 60px;
+	      font-size: 2em;
+	    }
+	    
+	    &.close:before {
+	      content: $fa-var-close;
+	      font-family: FontAwesome;
+	      color: rgba(245,245,245,1);
+	      // background-color: #ff5a6e;
+	    }
+	  }
+
 		.logo {
 			height: 50px;
 			width: 50px;
@@ -15,9 +42,12 @@
 			padding: 0;
 			overflow: hidden;
 			position: relative;
+			display: inline-block;
+    	vertical-align: top;
 			box-shadow: inset 0 10px 0 rgba(20,20,20,0.1);
 			text-shadow: 0 5px 0 rgba(20,20,20,0.1);
 			h1 {
+				font-weight: bold;
 				margin: 0;
 				padding: 0;
 				line-height: 40px;

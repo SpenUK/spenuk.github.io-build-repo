@@ -49,12 +49,20 @@
   }
 
   i {
+    transition: font-size 50;
     line-height: 60px;
     color: #64dcc8;
+    font-size: 1.8em;
     text-shadow: 0 3px 0 rgba(120,120,120,0.1);
+    cursor: pointer;
+
+    &:hover {
+      font-size: 2.2em;
+    }
   }
 
   .dismiss-button {
+    text-align: center;
     position: absolute;
     right: -60px;
     height: 60px;
@@ -63,6 +71,7 @@
     text-shadow: 0 5px 0 rgba(20,20,20,0.1);
     background-color: $c-header;
     cursor: pointer;
+    display: none;
 
     &:before {
       content: $fa-var-bars;
@@ -75,13 +84,12 @@
       
     }
     
-    &.hide:before {
+    &.close:before {
       content: $fa-var-close;
       font-family: FontAwesome;
       color: rgba(245,245,245,1);
       // background-color: #ff5a6e;
     }
   }
-
-  
+ 
 }
