@@ -29,6 +29,18 @@ require([
 
 		App.init();
 
+		$('#side-bar, .header').on('click', '.dismiss-button.show', function(){
+			$('#push-wrapper').css({transform: 'translate3d(0,0,0)'});
+			$(this).removeClass('show').addClass('close');
+		});
+
+		$('#side-bar, .header').on('click', '.dismiss-button.close', function(){
+			var barWidth = $('#side-bar').width();
+			// $('#push-wrapper').addClass('side-bar-hidden');
+			$('#push-wrapper').css('transform', 'translate3d(-'+barWidth.toString()+'px,0,0)');
+			$(this).removeClass('close').addClass('show');
+		});
+
 });
 
 

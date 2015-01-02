@@ -15,7 +15,11 @@ define([
 			},
 			render: function(){
 				console.log('Home View Render');
-				App.Transitions.slideIn(this.$el.html(this.template()));
+				// App.Transitions.slideIn(this.$el.html(this.template()));
+				// App.Transitions.appear(this.$el.html(this.template()));
+				App.Transitions.appear(this.template());
+				// App.Transitions.fadeIn(this.template());
+
 				// this.$el.html(this.template());
 			},
 			template: JST['layout/homepage'],

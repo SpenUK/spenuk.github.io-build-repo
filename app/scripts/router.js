@@ -16,7 +16,7 @@ define([
 			// Used in conjunction with themes set in scss.
 			// Kind of corny, but allows for easy transitions between css styles...
 			// from one view to another.
-			//  Conflicts with any otehr use of body's class though, 'no-scroll' for instance would be blocked here.
+			//  Conflicts with any other use of body's class though, 'no-scroll' for instance would be blocked here.
 			document.body.className = namespace;
 		},
 		initialize: function(){

@@ -11,6 +11,12 @@ html {
   overflow-y: hidden;
 }
 
+svg {
+  height: 0;
+  
+  position: absolute;
+}
+
 body {
   transition: background-color 0.4s;
   background-color: $c-background;

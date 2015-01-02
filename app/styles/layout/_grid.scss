@@ -1,92 +1,50 @@
-// ========= Grid Options ==========
 
-$container-w: 1400;
-$col-count: 10;
-$gutter-w: 20;
+@import "../../../foundation/foundation/components/grid";
 
-// $sizes: (
-// 	prefix: large,
-// 	container: 1440,
-// 	columns: 10,
-// 	gutters: 20,
-// 	min: 1041
-// ) (
-// 	prefix: medium,
-// 	container: 1040,
-// 	columns: 10,
-// 	gutters: 20,
-// 	min: 761
-// ) (
-// 	prefix: small,
-// 	container: 760,
-// 	columns: 6,
-// 	gutters: 20,
-// 	min: 769
-// );
-
-// =================================
-
-$col-w: (($container-w + $gutter-w) / $col-count) - $gutter-w;
-
-@mixin grid-prefix($multiplier){
-	$gutters: $multiplier * $gutter-w - $gutter-w;
-	width: $multiplier * $col-w + $gutters * 1px;
+.full-hero {
+  @include grid-column(
+    // Control the number of columns
+    $columns:12
+  );
 }
 
-.grid-container {
-	margin: 0 auto;
-	margin-top: $gutter-w;
-	width: $container-w * 1px;
-	position: relative;
-	font-size: 0em;
+.grid-test {
+	 @include grid-column(
+    // Control the number of columns
+    $columns:6,
+    // Choose whether or not to center this column
+    $center:true
+  );
+  background-color: rgba(255,40,180,1);
+}
 
-	.grid-row {
-		white-space: nowrap;
-		margin-left: -($gutter-w)* 1px;
-		
-		&:first-child {
-			margin-top: -($gutter-w)* 1px;
-		}
+//  temp styling
+.transition {
+	min-height: 200px;
+}
 
-		* {
-			// A different method for removing inline-block's gaps would be ideal
-			font-size: 14px;
-		}
+.row {
+	padding-top: 0.9375rem;
+	padding-bottom: 0.9375rem;
 
-		@for $i from 1 through $col-count {
-			.small-#{$i} {
-				@include grid-prefix($i);
-				min-height: 100px;
-				display: inline-block;
-				margin-left: ($gutter-w) * 1px;
-				margin-top: ($gutter-w) * 1px;
-			}
-		}
-
-	}
 	
 }
 
-
-
-
-
-
-
-
-// |===============================================================================================================|
-
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-
-// |===================|  |===================|  |===================|  |===================|  |===================|
-// |===================|  |===================|  |===================|  |===================|  |===================|
-// |===================|  |===================|  |===================|  |===================|  |===================|
-// |===================|  |===================|  |===================|  |===================|  |===================|
-
-// |==========================================|  |===================|  |===================|  |===================|
-// |==========================================|  |===================|  |===================|  |===================|
-// |==========================================|  |===================|  |===================|  |===================|
-// |==========================================|  |===================|  |===================|  |===================|
+// @include grid-column(
+//     // Control the number of columns
+//     $columns:12,
+//     // Specify whether or not this is the last column in the row
+//     $last-column:true,
+//     // Choose whether or not to center this column
+//     $center:true,
+//     // Choose the number of columns to offset this element by
+//     $offset:3,
+//     // Specify how many columns to push this element past
+//     $push:3,
+//     // Specify how many columns to pull this element past
+//     $pull:9,
+//     // Set to true to remove column padding
+//     $collapse:true,
+//     // Specify the float direction
+//     $float:right
+//   );
