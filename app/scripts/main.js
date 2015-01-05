@@ -14,7 +14,8 @@ require.config({
 
 require([
 'app',
-],function(App){
+'modules/base/main'
+],function(App, BaseModule){
 		// console.log('in main define');
 		
 		// App.Modules.Wordpress = require('modules/wordpress/main');
@@ -27,7 +28,9 @@ require([
 		// 	App.Modules.Wordpress.init();
 		// });
 
-		App.init();
+		// App.init();
+
+		(App.Modules.Base = BaseModule).init();
 
 		$('#side-bar, .header').on('click', '.dismiss-button.show', function(){
 			$('#push-wrapper').css({transform: 'translate3d(0,0,0)'});

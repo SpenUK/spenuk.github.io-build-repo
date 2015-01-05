@@ -5,7 +5,7 @@ define(function (require) {
 	var wordpressModule = {
 		Views: {},
 		Extensions: {},
-		Controllers: {},
+		Collections: {},
 		Models: {}
 	}
 	var ext = wordpressModule.Extensions;
