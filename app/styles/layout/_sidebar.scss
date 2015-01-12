@@ -9,20 +9,26 @@
   left: 0;
   right: 0;
   bottom: 0;
-  transform: translate(-60px,0);
+  // transform: translate(-60px,0);
   position: relative;
   display: inline-block;
   vertical-align: top;
 
   font-size: 0em;
 
+  #side-bar, #page-wrapper {
+    transition: transform 500;
+    transform: translate(0px,0);
+    font-size: 14px;
+  }
+
   &.side-bar-hidden {
     // left: -60px;
     // transform: translate(-100%,0);
-  }
-
-  #side-bar, #page-wrapper {
-    font-size: 14px;
+    #side-bar, #page-wrapper {
+      transform: translate(-60px,0);
+      font-size: 14px;
+    }
   }
 
 }
