@@ -1,34 +1,36 @@
 // ========= Grid Options ==========
 $col-count: 12;
-$gutter-w: 10;
+$gutter-w: 10px;
+
+// Could be defined in a media queries module, to be included for use
 
 $sizes: (
   // mediaQueryRange , containerWidth
-  small: (
-    (0, 600px),
-    400px
-  ), 
-  medium: (
-    (601px, 1200px,),
-    580px
-  ), 
-  large: (
-    (1201px, 1440px),
-    1180px
-  )
-
   // small: (
-  //   (0, 40em),
-  //   24em
+  //   (0, 600px),
+  //   400px
   // ), 
   // medium: (
-  //   (40.063em, 64em),
-  //   38em
+  //   (601px, 1200px,),
+  //   580px 
   // ), 
   // large: (
-  //   (64.063em, 90em),
-  //   62em
+  //   (1201px, 1440px),
+  //   1180px
   // )
+
+  small: (
+    (0, 40em),
+    24em
+  ), 
+  medium: (
+    (40.063em, 64em),
+    38em
+  ), 
+  large: (
+    (64.063em, 90em),
+    62em
+  )
 
 );
 
@@ -51,17 +53,18 @@ $sizes: (
 }
 
 .grid-container {
+  @include clearfix();
   margin: 0 auto;
   margin-top: $gutter-w;
   position: relative;
 
   .grid-row {
     @include clearfix();
-    padding-left: -($gutter-w/2)* 1px;
-    padding-right: -($gutter-w/2)* 1px;
+    padding-left: -($gutter-w/2);
+    padding-right: -($gutter-w/2);
     
     &:first-child {
-      margin-top: -($gutter-w)* 1px;
+      margin-top: -($gutter-w);
     }
   }
   
@@ -79,11 +82,16 @@ $sizes: (
   $max-width: nth(nth($values,1),2);
   $containerWidth: nth($values,2);
 
-  @media #{$screen} and (min-width:#{$min-width}) and (max-width:#{$max-width}) {
+  // @media #{$screen} and (min-width:#{$min-width}) and (max-width:#{$max-width}) {
+  @media #{$screen} and (min-width:#{$min-width}) {
 
     .grid-container {
       width: 100%;
       max-width: $containerWidth;
+
+      &.fixed {
+        width: $containerWidth;
+      }
 
       .grid-row {
 
@@ -92,8 +100,8 @@ $sizes: (
             @include column-span($i, column-width-percent($col-count));
             display: inline-block;
             float: left;
-            padding-left: ($gutter-w) * 1px;
-            padding-top: ($gutter-w) * 1px;
+            padding-left: ($gutter-w);
+            padding-top: ($gutter-w);
           }
         }
 
@@ -101,8 +109,6 @@ $sizes: (
     }
 
     .grid-container.fixed {
-      // width: $containerWidth * 1px;
-      width: $containerWidth;
 
       .grid-row {
 
@@ -111,6 +117,8 @@ $sizes: (
 
   }
 }
+
+// Remove in prod obviously
 
 .test-1 {
   box-sizing: border-box;
@@ -132,23 +140,3 @@ $sizes: (
   background-color: rgba(255,165,165,1);
   box-shadow: 0 4px 0 darken(rgba(255,165,165,1),20);
 }
-
-//  Create both a scaling class (which will use percentages etc, and a fixed width class that gives a solid width on each media query)
-
-
-// |===============================================================================================================|
-
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-// |========| |========|  |===================|  |===================|  |===================|  |===================|
-
-// |===================|  |===================|  |===================|  |===================|  |===================|
-// |===================|  |===================|  |===================|  |===================|  |===================|
-// |===================|  |===================|  |===================|  |===================|  |===================|
-// |===================|  |===================|  |===================|  |===================|  |===================|
-
-// |==========================================|  |===================|  |===================|  |===================|
-// |==========================================|  |===================|  |===================|  |===================|
-// |==========================================|  |===================|  |===================|  |===================|
-// |==========================================|  |===================|  |===================|  |===================|
