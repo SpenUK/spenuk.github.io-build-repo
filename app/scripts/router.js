@@ -42,6 +42,14 @@ define([
 
 				});
 
+				this.on('route:test2Route' ,function(){
+
+					this.Views.homepage = new this.Extensions.Views.homepage();
+					console.log('test2');
+	    		this.Views.homepage.init();
+
+				});
+
 				this.on('route:defaultRoute', function(){
 				});
 

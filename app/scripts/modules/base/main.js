@@ -14,6 +14,7 @@ define(function (require) {
 			ext.HomeView = require('modules/base/views/home')(BaseModule);
 			// testing only - to be removed
 			ext.TestView = require('modules/base/views/test')(BaseModule);
+			ext.Test2View = require('modules/base/views/nestedGrids')(BaseModule);
 
 	BaseModule.init = function(){
 		console.log('BaseModule inited');
@@ -22,7 +23,8 @@ define(function (require) {
 		var WordpressRouter = Backbone.Router.extend({
 			routes: {
 				'' : 'getHomePage',
-				'test' : 'getTestPage'
+				'test' : 'getTestPage',
+				'nestedGrids' : 'getTest2Page'
 			},
 			init: function(){
 				this.on('route:getHomePage' ,function(){
@@ -33,6 +35,11 @@ define(function (require) {
 				this.on('route:getTestPage' ,function(){
 					console.log('test route');
 					(parentScope.Views.test = new parentScope.Extensions.TestView).render();
+				});
+
+				this.on('route:getTest2Page' ,function(){
+					console.log('test2 route');
+					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).render();
 				});
 				// Ideally get rid of the stop/start;
 				Backbone.history.stop();
