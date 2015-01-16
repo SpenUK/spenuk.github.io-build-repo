@@ -14,8 +14,9 @@ define([
 				this.render();
 			},
 			render: function(){
-				console.log('===');
-				App.Transitions.appear(this.$el.html(this.template()));
+				var html = this.$el.html(this.template());
+
+				App.Transitions.render(html).appear();
 			},
 			template: JST['layout/testpage'],
 			setListeners: function(){

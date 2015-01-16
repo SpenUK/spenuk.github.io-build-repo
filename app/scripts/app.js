@@ -3,6 +3,8 @@ define(function (require) {
 
   window.Handlebars = require('handlebars');
 
+
+
     // handlebarsHelpers = require('helpers/handlebarsHelpers'),
     // handlebarsPartials = require('helpers/partials'),
 
@@ -15,9 +17,14 @@ define(function (require) {
     Modules: {},
 
     Templates: require('templates'),
-    Transitions: require('transitions/main')
+    Transitions: require('transitions/main').init(),
+    Modal: require('shared/modal'),
     // Scrolling: scrolling,
-    // Utilities: require('utilities'),
+    // Utilities: {}
+
+    init: function(){
+      this.Transitions.init();
+    }
   };
 
   return window.App;

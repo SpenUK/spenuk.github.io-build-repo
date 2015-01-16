@@ -20,6 +20,21 @@ define([
 		return (a.childElementCount === 1)?a.firstChild:a;
 	} 
 
+	function cloneAndAppend (el) {
+		var $el = $(el);
+
+		if ($el.length >= 1) {
+			var $newEl = $el.first().clone().addClass('clone');
+					$newEl.insertAfter($el);
+
+			return $newEl;
+		} else {
+
+			return false;
+		};
+		
+	}
+
 	function randomize (array) {
 		var a =[],i,r,x;		
 		for (i = array.length - 1; i >= 0; i--) {
@@ -33,52 +48,63 @@ define([
   // 
 	var Transitions = {
 
-		inEl: 'inPage',
-		outEl: 'outPage',
+		init: function (options) {
+			console.log('init Transitons');
+			var options = options || {};
+			this.$inEl = $(this.inEl = (typeof options.page !== 'undefined') ? options.page : defaults.page);
+			this.$outEl = cloneAndAppend(this.inEl);
+			this.transitionSpeed = (typeof options.transitionSpeed !== 'undefined') ? options.transitionSpeed : defaults.transitionSpeed;
+			return this;
+		},
+		// init: function (options) {
+		// 	var options = options || {};
+		// 	this.$inEl = $(this.inEl = (typeof options.inEl !== 'undefined') ? options.inEl : defaults.inEl);
+		// 	this.$outEl = $(this.outEl = (typeof options.outEl !== 'undefined') ? options.outEl : defaults.outEl);
+		// 	this.transitionSpeed = (typeof options.transitionSpeed !== 'undefined') ? options.transitionSpeed : defaults.transitionSpeed;
+		// 	return this;
+		// },
 
-		fadeIn: function (html, speed) {
-			var parentScope = this;
-			speed = (typeof speed != 'undefined') ? speed : 400;
+		render: function (html) {
+			//  How to handle Render / init-ing?
+			console.log({'$inEl': this.$inEl, 'inEl': this.inEl});
+			this.$inEl.html(html);
 
-			var $inEl = $('#'+this.inEl),
-					$outEl = $('#'+this.outEl);
-
-			$inEl.html(html);
-
-			$outEl.fadeOut(speed);
-			$inEl.fadeIn(speed, function(){
-    		$outEl.attr('id', parentScope.inEl);
-    		$inEl.attr('id',parentScope.outEl);
-    	});
-			
+			return this;
 		},
 
-		appear: function (html, speed) {
+		fadeIn: function (options) {
 			var parentScope = this;
-			speed = (typeof speed != 'undefined') ? speed : 400;
+			var options = options || {};
+			var	speed = (typeof options.speed != 'undefined') ? options.speed : defaults.transitionSpeed;
 
-			var $inEl = $('#'+this.inEl),
-					$outEl = $('#'+this.outEl),		
-					animInterval = 100;
-					$inEl.html(html);
+			this.$outEl.fadeOut(options);
+			this.$inEl.fadeIn(speed, function(){
+				parentScope.pageSwitch();
+    	});
+			return this.pageSwitch();
+		},
 
-			var $targets = $inEl.find('.transition'),
+		appear: function (options) {
+			var parentScope = this;
+			var options = options || {};
+			var	speed = (typeof options.speed != 'undefined') ? options.speed : defaults.transitionSpeed;
+
+			var $targets = this.$inEl.find('.transition'),
 					targetCount = $targets.length;
 
-			console.log({targetCount: targetCount, targets: $targets, inEl: $inEl});
+			var animInterval = (speed / targetCount);
 
-			$outEl.animate({opacity: 0}, speed);
-			$inEl.animate({opacity: 1},100, function(){
+			console.log('appear transition');
+
+			this.$outEl.animate({opacity: 0}, speed);
+			this.$inEl.animate({opacity: 1},100, function(){
 
 
 
 				$(randomize($targets)).each(function (i) {
 					var $el = $(this);
 
-					var after = (i !== targetCount-1)? null : function(){
-						$outEl.attr('id', parentScope.inEl);
-						$inEl.attr('id',parentScope.outEl);
-					};
+					var after = (i !== targetCount-1)? null : parentScope.pageSwitch;
 					window.setTimeout(function() {
 						// This should be dynamic. each element should have an associated start state and end state.
 							// This would be either tracked by backbone (view? or a collection of 'transition models'?).
@@ -101,16 +127,22 @@ define([
 				});
 
 			});
+			return this.pageSwitch();
+		}, // end appear
 
-		}
-		// ,
+		topple: function () {
+			var parentScope = this;
+			var options = options || {};
+			var	speed = (typeof options.speed != 'undefined') ? options.speed : defaults.transitionSpeed;
+		},
+
 
 
 
 		// slideIn: function(html, speed){
 		// 	var parentScope = this,	
 
-		// 	speed = (typeof speed !== 'undefined') ? speed : 400;
+		// 	var	speed = (typeof speed !== 'undefined') ? speed : 400;
 		// 	html = (typeof html !== 'undefined') ? html : $(this.right).html();
 		// 	var $outEl = $('#'+this.left);
 		// 	var $inEl = $('#'+this.right);
@@ -145,7 +177,30 @@ define([
 
 		// 	return $inEl;
 		// }
+
+		pageSwitch: function () {
+			var a = this.$inEl,
+					b = this.$outEl;
+
+					this.$inEl = b;
+					this.$outEl = a;
+
+			// this.$inEl.removeClass(this.inEl).addClass(this.outEl);
+			// this.$outEl.removeClass(this.outEl).addClass(this.inEl);
+
+			return this;
+		}
+
 	};
+
+	var defaults = {
+		// inEl: 'pageIn',
+		// outEl: 'pageOut',
+		page: '.page',
+		inEl: 'pageTransition1',
+		outEl: 'pageTransition2',
+		transitionSpeed: 400
+	}
 
 	return Transitions;
 

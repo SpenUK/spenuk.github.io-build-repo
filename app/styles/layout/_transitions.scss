@@ -1,47 +1,18 @@
-// #transition-wrapper {
-//   width: 200%;
-//   height: 100%;
-//   position: relative;
-//   top: 0;
-//   left: 0;
-//   display: inline-block;
-// }
-
-// #transition-left,
-// #transition-right {
-//   width: 50%;
-//   height: 100%;
-// }
-
-// #transition-left {
-// 	float: left;
-// }
-
-// #transition-right {
-// 	float: right;
-// }
-
 .transition {
   opacity: 0;
-  left: 80px;
-  // left: 0;
-  top: 120px;
-  // background-color: whitesmoke;
-  // border: 1px solid rgba(0,0,0,0.1);
-  // box-shadow: 0 4px 0 rgba(210,210,210,1);
 }
 
-#inPage, #outPage {
+#inPage, #outPage, .page {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
 }
 
-#inPage {
+.pageIn {
   opacity: 0;
 }
 
-#outPage {
+.pageOut {
   opacity: 1;
 }
