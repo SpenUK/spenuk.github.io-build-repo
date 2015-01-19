@@ -5,7 +5,7 @@ define([
 ], function($) {
 
 	// Setting custom easings on the $ object
-	//  Could be moved out into another more global script
+	// Could be moved out into another more global script
 	$.easing.easeInBack = function (x, t, b, c, d, s) {
     if (s === undefined) { s = 1.2; }
     return c*(t/=d)*t*((s+1)*t - s) + b;
@@ -116,12 +116,12 @@ define([
 						},{
 							// duration: speed
 							duration: speed,
-							complete: after
-				    	// specialEasing: {
-				      	// left: 'easeInBack',
-				      	// opacity: 'easeInBack'
-				      	// top: 'easeInBack'
-				    	// }
+							complete: after,
+				    	specialEasing: {
+				      	left: 'easeInBack',
+				      	opacity: 'easeInBack',
+				      	top: 'easeInBack'
+				    	}
 				    });
 					}, i*animInterval);
 				});
@@ -130,10 +130,52 @@ define([
 			return this.pageSwitch();
 		}, // end appear
 
-		topple: function () {
+		topple: function (options) {
 			var parentScope = this;
 			var options = options || {};
 			var	speed = (typeof options.speed != 'undefined') ? options.speed : defaults.transitionSpeed;
+
+			var $inTargets = this.$inEl.find('.transition');
+			var $outTargets = this.$outEl.find('.transition');
+
+			var inAnimInterval = (speed / $inTargets.length);
+			var outAnimInterval = (speed / $outTargets.length);
+
+			console.log({ inCount: $inTargets.length, outCount: $outTargets.length});
+
+			$outTargets.each(function(i){
+				var $el = $(this);
+
+
+				window.setTimeout(function(){
+
+				console.log($el);
+				// $('#push-wrapper').css({transform: 'translate3d(0,0,0)'});
+
+					$el.css({
+						'border' : '2px solid rgba(0,0,0,0.2)',
+					  // '-webkit-transform':'translate(0px'+ window.height + + $el.height +'px)',
+					  // '-ms-transform':'translate(0px'+ window.height + + $el.height +'px)',
+					  // 'transform':'translate(0px'+ window.height + + $el.height +'px)'
+					  '-webkit-transform':'translate(0px'+ 200 +'px)',
+					  '-ms-transform':'translate(0px'+ 200 +'px)',
+					  'transform':'translate(0px'+ 200 +'px)'
+					});
+					// $el.animate({
+					// 	bottom: -($el.height * 1.2)
+					// },{
+					// 	duration: 300,
+		   //  		specialEasing: {
+		   //    		bottom: "easeInBack"
+		   //  		},
+		   //  		complete: function(){
+		   //  			console.log('complete', i);
+		   //  		}
+					// });
+				}, 100 * i);
+
+			});
+
 		},
 
 

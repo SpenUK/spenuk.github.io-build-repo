@@ -1,11 +1,17 @@
-$c-background: rgba(225,225,225,1);
+$sans-serif: sans-serif, sans-serif;
+$serif-display: 'mrseavesboldbold', Georgia, serif;
+$serif-copy: Georgia, serif;
 
-$c-header: rgba(255,90,110,1);
-// $c-UI-feature-1: rgba(195,100,85,1);
-$c-UI-feature-1: rgba(165,165,165,1);
+$black: #333;
+$white: #fff;
 
-$p-loading-strip: '../images/720.GIF';
+$white-hover: #eee;
+$black-hover: #434343;
+
+$background-color: rgba(225,225,225,1);
+$header-color: rgba(255,90,110,1);
+$main-body-color: $black;
 
 .i-btn {
-	@include icon-btn($c-background, 30);
+	@include icon-btn($background-color, 30);
 }

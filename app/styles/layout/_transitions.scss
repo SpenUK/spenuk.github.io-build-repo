@@ -1,5 +1,7 @@
 .transition {
+  transition: all 600;
   opacity: 0;
+
 }
 
 #inPage, #outPage, .page {

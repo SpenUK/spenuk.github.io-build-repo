@@ -2,38 +2,6 @@
 $col-count: 12;
 $gutter-w: 10px;
 
-// Could be defined in a media queries module, to be included for use
-
-$sizes: (
-  // mediaQueryRange , containerWidth
-  // small: (
-  //   (0, 600px),
-  //   400px
-  // ), 
-  // medium: (
-  //   (601px, 1200px,),
-  //   580px 
-  // ), 
-  // large: (
-  //   (1201px, 1440px),
-  //   1180px
-  // )
-
-  small: (
-    (0, 40em),
-    24em
-  ), 
-  medium: (
-    (40.063em, 64em),
-    38em
-  ), 
-  large: (
-    (64.063em, 90em),
-    62em
-  )
-
-);
-
 // =================================
 
 @mixin column-span($multiplier, $col-w){
@@ -60,8 +28,6 @@ $sizes: (
 
   .grid-row {
     @include clearfix();
-    // padding-left: -($gutter-w/2);
-    // padding-right: -($gutter-w/2);
 
     margin-left: -($gutter-w);
     // margin-right: -($gutter-w);
@@ -77,13 +43,20 @@ $sizes: (
 
 }
 
-@each $size, $values in $sizes {
+
+@each $size, $values in $break-points {
+
+  $size-map: map-get($break-points, $size);
 
   $screen: "only screen" !default;
 
-  $min-width: nth(nth($values,1),1);
-  $max-width: nth(nth($values,1),2);
-  $containerWidth: nth($values,2);
+  $sizes: map-get($size-map, "range");
+
+  $min-width: map-get(map-get($size-map, "range"),"lower");
+  $max-width: map-get(map-get($size-map, "range"),"upper");
+  $containerWidth: map-get($size-map, "container-width");
+
+
 
   // @media #{$screen} and (min-width:#{$min-width}) and (max-width:#{$max-width}) {
   @media #{$screen} and (min-width:#{$min-width}) {
@@ -91,6 +64,7 @@ $sizes: (
     .grid-container {
       width: 100%;
       max-width: $containerWidth;
+      font-family: '#{$containerWidth}', serif;
 
       &.fixed {
         width: $containerWidth;

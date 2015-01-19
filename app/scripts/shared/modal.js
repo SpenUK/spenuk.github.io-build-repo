@@ -53,7 +53,7 @@ define([
 		    },
 		    complete: function(){
 		    	parentScope.$shader.show();
-		  		parentScope.$container.css({bottom: 'initial'});
+		  		parentScope.$container.css({bottom: 'auto'});
 		  		parentScope.$el.hide();
 		    }
 		  });

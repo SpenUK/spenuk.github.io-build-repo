@@ -1,0 +1,42 @@
+$screen: "only screen" !default;
+
+$break-points: (
+
+  "small": (
+    "range": (
+      "lower": 0px,
+      "upper": 649px
+    ),
+    "container-width": 100%
+  ), 
+  "medium": (
+    "range": (
+      "lower": 650px,
+      "upper": 920px
+    ),
+    "container-width": 626px
+  ), 
+  "large": (
+    "range": (
+      "lower": 920px,
+      "upper": 2000px
+    ),
+    "container-width": 910px
+  )
+
+);
+
+@function query($breakpoint) {
+
+  @if map-has-key($break-points, $breakpoint) {
+    $i: map-get($break-points, $breakpoint);
+    $upper: map-get(map-get($i, "range"),"upper");
+    $lower: map-get(map-get($i, "range"),"lower");
+
+
+    @return '#{$screen} and (min-width: #{$lower})';
+  }
+  // $i: nth($break-points, 2);
+
+  @error 'no breakpoint found with value: #{$breakpoint}';
+}
