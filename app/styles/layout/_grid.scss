@@ -2,6 +2,11 @@
 $col-count: 12;
 $gutter-w: 10px;
 
+// Class names
+
+$grid-container-class: ".grid-container";
+$grid-row-class: ".grid-row";
+
 // =================================
 
 @mixin column-span($multiplier, $col-w){
@@ -20,13 +25,13 @@ $gutter-w: 10px;
   @return $width * 1%;
 }
 
-.grid-container {
+#{$grid-container-class} {
   @include clearfix();
   margin: 0 auto;
   // margin-top: $gutter-w;
   position: relative;
 
-  .grid-row {
+  #{$grid-row-class} {
     @include clearfix();
 
     margin-left: -($gutter-w);
@@ -38,11 +43,6 @@ $gutter-w: 10px;
   }
   
 }
-
-.fixed-grid-container {
-
-}
-
 
 @each $size, $values in $break-points {
 
@@ -56,12 +56,10 @@ $gutter-w: 10px;
   $max-width: map-get(map-get($size-map, "range"),"upper");
   $containerWidth: map-get($size-map, "container-width");
 
+  // @media #{$screen} and (min-width:#{$min-width}) {
+  @media #{query($size)} {
 
-
-  // @media #{$screen} and (min-width:#{$min-width}) and (max-width:#{$max-width}) {
-  @media #{$screen} and (min-width:#{$min-width}) {
-
-    .grid-container {
+    #{$grid-container-class} {
       width: 100%;
       max-width: $containerWidth;
       font-family: '#{$containerWidth}', serif;
@@ -70,7 +68,7 @@ $gutter-w: 10px;
         width: $containerWidth;
       }
 
-      .grid-row {
+      #{$grid-row-class} {
 
         @for $i from 1 through $col-count {
           .#{$size}-#{$i} {
@@ -85,13 +83,12 @@ $gutter-w: 10px;
       }
     }
 
-    .grid-container.fixed {
+    #{$grid-container-class}.fixed {
 
-      .grid-row {
+      #{$grid-row-class} {
 
       }
     }
-
   }
 }
 
