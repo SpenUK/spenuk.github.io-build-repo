@@ -15,7 +15,7 @@ define([
 			},
 			render: function(){
 				var html = this.$el.html(this.template());
-				App.Transitions.render(html).appear();
+				App.Transitions.render(html).topple();
 
 			},
 			template: JST['layout/nestedGrids'],
