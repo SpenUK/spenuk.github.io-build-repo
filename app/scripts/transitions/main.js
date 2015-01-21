@@ -1,8 +1,9 @@
 'use strict';
 
 define([
-  'jquery'
-], function($) {
+  'jquery',
+	'transit'
+], function($, Transit) {
 
 	// Setting custom easings on the $ object
 	// Could be moved out into another more global script
@@ -12,6 +13,10 @@ define([
   };
 
   // Could be  moved out into a utilities object?
+  // takes an html string blob and treats the outer most element as a DOM element,
+  // if there is only one el on the top level (i.e. the content is wrapped in a container) then that el is returned,
+  // otherwise the html is retuned wrapped in a containing div.
+
   function buildHtml (html) {
 		var a=document.createElement('div');
 				a.className = 'container';
@@ -35,6 +40,8 @@ define([
 		
 	}
 
+
+	// Another function that could do with being moved into a more globally accessible module
 	function randomize (array) {
 		var a =[],i,r,x;		
 		for (i = array.length - 1; i >= 0; i--) {
@@ -56,17 +63,9 @@ define([
 			this.transitionSpeed = (typeof options.transitionSpeed !== 'undefined') ? options.transitionSpeed : defaults.transitionSpeed;
 			return this;
 		},
-		// init: function (options) {
-		// 	var options = options || {};
-		// 	this.$inEl = $(this.inEl = (typeof options.inEl !== 'undefined') ? options.inEl : defaults.inEl);
-		// 	this.$outEl = $(this.outEl = (typeof options.outEl !== 'undefined') ? options.outEl : defaults.outEl);
-		// 	this.transitionSpeed = (typeof options.transitionSpeed !== 'undefined') ? options.transitionSpeed : defaults.transitionSpeed;
-		// 	return this;
-		// },
 
 		render: function (html) {
-			//  How to handle Render / init-ing?
-			console.log({'$inEl': this.$inEl, 'inEl': this.inEl});
+			// Render is purely responsible for injecting HTML into the $inEl, after that transition logic would take over.
 			this.$inEl.html(html);
 
 			return this;
@@ -93,8 +92,6 @@ define([
 					targetCount = $targets.length;
 
 			var animInterval = (speed / targetCount);
-
-			console.log('appear transition');
 
 			this.$outEl.animate({opacity: 0}, speed);
 			this.$inEl.animate({opacity: 1},100, function(){
@@ -176,49 +173,10 @@ define([
 
 			});
 
+			return this.pageSwitch();
+
 		},
 
-
-
-
-		// slideIn: function(html, speed){
-		// 	var parentScope = this,	
-
-		// 	var	speed = (typeof speed !== 'undefined') ? speed : 400;
-		// 	html = (typeof html !== 'undefined') ? html : $(this.right).html();
-		// 	var $outEl = $('#'+this.left);
-		// 	var $inEl = $('#'+this.right);
-		// 	var $wrapper = $('#'+this.wrapper);
-		// 		// var $outEl = $(wrapper),
-		// 				// $inEl = (function(h){
-		// 					// var a=document.createElement('div');a.innerHTML=h;return a.firstChild;
-		// 				// })('<div class="transitioning"></div>');	
-
-		// 	$inEl.html(html);
-
-		// 	$wrapper.animate({ 
-		// 			left: '-100%'
-		// 		},{
-		// 			duration: speed,
-		//     	specialEasing: {
-		//       	left: 'easeInBack'
-		//     	},
-		// 	    complete: function(){
-		// 	    	// window.setTimeout(function(){
-		// 	    		// console.log('left: 0 set on wrapper');
-		// 		    	$wrapper.css({left: 0});	
-		// 	    	// }, 1000);
-		// 	    	// window.setTimeout(function(){
-		// 	    		// console.log('right/left swapped');
-		// 	    		$outEl.attr('id',parentScope.right);
-		// 		    	$inEl.attr('id',parentScope.left);
-		// 	    	// }, 2000);
-
-		// 	    }
-		//   });
-
-		// 	return $inEl;
-		// }
 
 		pageSwitch: function () {
 			var a = this.$inEl,

@@ -28,8 +28,11 @@ $grid-row-class: ".grid-row";
 #{$grid-container-class} {
   @include clearfix();
   margin: 0 auto;
-  // margin-top: $gutter-w;
   position: relative;
+
+  &:first-child {
+      margin-top: $gutter-w;
+    }
 
   #{$grid-row-class} {
     @include clearfix();
@@ -56,7 +59,6 @@ $grid-row-class: ".grid-row";
   $max-width: map-get(map-get($size-map, "range"),"upper");
   $containerWidth: map-get($size-map, "container-width");
 
-  // @media #{$screen} and (min-width:#{$min-width}) {
   @media #{query($size)} {
 
     #{$grid-container-class} {
@@ -79,7 +81,6 @@ $grid-row-class: ".grid-row";
             padding-top: ($gutter-w);
           }
         }
-
       }
     }
 
