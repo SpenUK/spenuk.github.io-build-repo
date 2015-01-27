@@ -24,22 +24,40 @@ define(function (require) {
 			routes: {
 				'' : 'getHomePage',
 				'test' : 'getTestPage',
-				'nestedGrids' : 'getTest2Page'
+				'nestedGrids' : 'nestedGrids',
+				'test2' : 'getTest2Page',
+				'test3' : 'getTest3Page',
+				'test4' : 'getTest4Page'
 			},
 			init: function(){
 				this.on('route:getHomePage' ,function(){
 					console.log('home route');
-					(parentScope.Views.home = new parentScope.Extensions.HomeView).render();
+					(parentScope.Views.home = new parentScope.Extensions.HomeView).init();
 				});
 
 				this.on('route:getTestPage' ,function(){
 					console.log('test route');
-					(parentScope.Views.test = new parentScope.Extensions.TestView).render();
+					(parentScope.Views.test = new parentScope.Extensions.TestView).init();
 				});
 
 				this.on('route:getTest2Page' ,function(){
 					console.log('test2 route');
-					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).render();
+					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
+				});
+
+				this.on('route:getTest3Page' ,function(){
+					console.log('test3 route');
+					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
+				});
+
+				this.on('route:getTest4Page' ,function(){
+					console.log('test4 route');
+					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
+				});
+
+				this.on('route:nestedGrids' ,function(){
+					console.log('test2 route');
+					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
 				});
 				// Ideally get rid of the stop/start;
 				Backbone.history.stop();

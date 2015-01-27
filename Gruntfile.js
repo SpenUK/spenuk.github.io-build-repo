@@ -33,7 +33,10 @@ module.exports = function (grunt) {
         // ,// tasks: ['wiredep']
       },
 			js: {
-				files: ['<%= config.app %>/scripts/{,*/}*.js'],
+				files: [
+				'<%= config.app %>/scripts/{,*/}*.js',
+				'<%= config.app %>/scripts/**/*.js'
+			],
 				tasks: ['jshint'],
 				options: {
 					livereload: true
@@ -65,7 +68,7 @@ module.exports = function (grunt) {
 	    },
 
 	    hbs: {
-	      files: ['<%= config.app %>/scripts/templates/{,*/}*.hbs'],
+	      files: ['<%= config.app %>/scripts/{,*/}*.hbs'],
 	      tasks: ['handlebars', 'concat:templates']
 	    }
 		}, // watch end
@@ -123,10 +126,13 @@ module.exports = function (grunt) {
 	    all: [
 	      'Gruntfile.js',
 	      '<%= config.app %>/scripts/{,*/}*.js',
+	      '<%= config.app %>/scripts/**/*.js',
 	      '!<%= config.app %>/scripts/vendor/*',
 	      '!<%= config.app %>/scripts/almond.js',
 	      '!<%= config.app %>/scripts/templates.js',
 	      '!<%= config.app %>/scripts/templates/templates.js',
+	      '!<%= config.app %>/scripts/shared/transitTemp.js',
+	      '!<%= config.app %>/scripts/modules/wordpress/wpStubs.js',
 	      'test/spec/{,*/}*.js'
 	    ]
 	  },
@@ -134,7 +140,6 @@ module.exports = function (grunt) {
 	  // Compiles Sass to CSS and generates necessary files if requested
 	  sass: {
 	    options: {
-	      sourcemap: true,
 	      loadPath: 'bower_components'
 	    },
 	    dist: {

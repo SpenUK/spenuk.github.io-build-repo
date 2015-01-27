@@ -8,11 +8,10 @@ require.config({
 		'jquery'				: '../bower_components/jquery/dist/jquery',
 		'underscore'		: '../bower_components/underscore-amd/underscore',
 		'backbone'			: '../bower_components/backbone-amd/backbone',
-		'handlebars'		: '../bower_components/handlebars/handlebars',
-		// 'transit'				: '../node_modules/jquery.transit/jquery.transit'
-		// Transit needs to be installed properly, currently bower install fails - why?
-		'transit'				: '/scripts/shared/transitTemp'
+		'handlebars'		: '../bower_components/handlebars/handlebars'
+		// 'transit'				: '/scripts/shared/transitTemp'
 	}
+	// Transit needs to be installed properly, currently bower install fails - why?
 });
 
 require([

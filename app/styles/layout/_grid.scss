@@ -11,7 +11,6 @@ $grid-row-class: ".grid-row";
 
 @mixin column-span($multiplier, $col-w){
   $gutters: $multiplier * $gutter-w - $gutter-w;
-  // width: $multiplier * $col-w + $gutters;
   width: $multiplier * $col-w;
 }
 
@@ -30,21 +29,15 @@ $grid-row-class: ".grid-row";
   margin: 0 auto;
   position: relative;
 
-  &:first-child {
-      margin-top: $gutter-w;
-    }
-
   #{$grid-row-class} {
     @include clearfix();
 
     margin-left: -($gutter-w);
-    // margin-right: -($gutter-w);
     
     &:first-child {
       margin-top: -($gutter-w);
     }
   }
-  
 }
 
 @each $size, $values in $break-points {

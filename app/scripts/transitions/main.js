@@ -2,8 +2,9 @@
 
 define([
   'jquery',
-	'transit'
-], function($, Transit) {
+	// 'transit'
+	'shared/transitTemp'
+], function($) {
 
 	// Setting custom easings on the $ object
 	// Could be moved out into another more global script
@@ -17,13 +18,13 @@ define([
   // if there is only one el on the top level (i.e. the content is wrapped in a container) then that el is returned,
   // otherwise the html is retuned wrapped in a containing div.
 
-  function buildHtml (html) {
-		var a=document.createElement('div');
-				a.className = 'container';
-				a.innerHTML = html;
+ //  function buildHtml (html) {
+	// 	var a=document.createElement('div');
+	// 			a.className = 'container';
+	// 			a.innerHTML = html;
 
-		return (a.childElementCount === 1)?a.firstChild:a;
-	} 
+	// 	return (a.childElementCount === 1)?a.firstChild:a;
+	// } 
 
 	function cloneAndAppend (el) {
 		var $el = $(el);
@@ -36,10 +37,9 @@ define([
 		} else {
 
 			return false;
-		};
+		}
 		
 	}
-
 
 	// Another function that could do with being moved into a more globally accessible module
 	function randomize (array) {
@@ -48,7 +48,7 @@ define([
 			r = Math.floor(Math.random()*array.length);
 			x = array.splice(r ,1);
 			a.push(x[0]);
-		};
+		}
 		return a;
 	}
 
@@ -57,9 +57,13 @@ define([
 
 		init: function (options) {
 			console.log('init Transitons');
-			var options = options || {};
+			options = options || {};
 			this.$inEl = $(this.inEl = (typeof options.page !== 'undefined') ? options.page : defaults.page);
 			this.$outEl = cloneAndAppend(this.inEl);
+
+			this.$inEl.ref = 'original';
+			this.$outEl.ref = 'clone';
+
 			this.transitionSpeed = (typeof options.transitionSpeed !== 'undefined') ? options.transitionSpeed : defaults.transitionSpeed;
 			return this;
 		},
@@ -73,8 +77,8 @@ define([
 
 		fadeIn: function (options) {
 			var parentScope = this;
-			var options = options || {};
-			var	speed = (typeof options.speed != 'undefined') ? options.speed : defaults.transitionSpeed;
+					options = options || {};
+			var	speed = (typeof options.speed !== 'undefined') ? options.speed : defaults.transitionSpeed;
 
 			this.$outEl.fadeOut(options);
 			this.$inEl.fadeIn(speed, function(){
@@ -84,19 +88,25 @@ define([
 		},
 
 		appear: function (options) {
+
 			var parentScope = this;
-			var options = options || {};
-			var	speed = (typeof options.speed != 'undefined') ? options.speed : defaults.transitionSpeed;
+					options = options || {};
+			var	speed = (typeof options.speed !== 'undefined') ? options.speed : defaults.transitionSpeed;
 
 			var $targets = this.$inEl.find('.transition'),
 					targetCount = $targets.length;
 
 			var animInterval = (speed / targetCount);
 
+			// console.log({ref: this.$outEl.ref});
+
 			this.$outEl.animate({opacity: 0}, speed);
+			this.$outEl.animate({opacity: 0}, 2000);
+
 			this.$inEl.animate({opacity: 1},100, function(){
+			// this.$inEl.animate({opacity: 1},1000, function(){
 
-
+				// console.log({targets: $targets});
 
 				$(randomize($targets)).each(function (i) {
 					var $el = $(this);
@@ -113,7 +123,12 @@ define([
 						},{
 							// duration: speed
 							duration: speed,
-							complete: after,
+							// complete: function () { 
+							// 	if (typeof after === 'function') {
+							// 		after(parentScope);	
+							// 	};
+								
+							// },
 				    	specialEasing: {
 				      	left: 'easeInBack',
 				      	opacity: 'easeInBack',
@@ -124,13 +139,17 @@ define([
 				});
 
 			});
+
 			return this.pageSwitch();
+			
+			// return this;
 		}, // end appear
 
 		topple: function (options) {
-			var parentScope = this;
-			var options = options || {};
-			var	speed = (typeof options.speed != 'undefined') ? options.speed : defaults.transitionSpeed;
+			// var parentScope = this;
+
+			options = options || {};
+			var	speed = (typeof options.speed !== 'undefined') ? options.speed : defaults.transitionSpeed;
 
 			var $inTargets = this.$inEl.find('.transition');
 			var $outTargets = this.$outEl.find('.transition');
@@ -140,8 +159,6 @@ define([
 
 			var H = $(window).height();
 
-			console.log({ inCount: $inTargets.length, outCount: $outTargets.length});
-
 			$inTargets.css('transform', 'translate(0,-'+$(window).height()+')');
 
 			this.$inEl.animate({
@@ -149,42 +166,48 @@ define([
 			});
 
 			$outTargets.each(function(i){
-				var $el = $(this),
-						elH = $el.height();
+				var $el = $(this);
 
+				// console.log($el.closest('.page'));
 				window.setTimeout(function(){
-					$el.transition({translate: [0,H]}, 500,'easeInBack');
-				}, 60 * i);
+					// $el.transition({translate: [0,H], opacity: 0}, 500,'easeInBack');
+				}, inAnimInterval * i);
 			});
 
 			$inTargets.each(function(i){
-				var $el = $(this),
-						elH = $el.height();
-
-						console.log($el);
+				var $el = $(this);
 
 				window.setTimeout(function(){
 					$el.transition({translate: [0,0], opacity: 1}, 1500,'easeInBack');
-				}, 60 * i);
+				}, outAnimInterval * i);
 			});
 
 			return this.pageSwitch();
-
 		},
 
 
 		pageSwitch: function () {
+			// this.debugInOut();
 			var a = this.$inEl,
 					b = this.$outEl;
 
 					this.$inEl = b;
 					this.$outEl = a;
 
-			// this.$inEl.removeClass(this.inEl).addClass(this.outEl);
-			// this.$outEl.removeClass(this.outEl).addClass(this.inEl);
+					// this.$outEl.css({backgroundColor: 'rgba(0,180,180,0.5)'});
+					// this.$inEl.css({backgroundColor: 'rgba(180,0,180,0.5)'});
 
 			return this;
+		},
+		debugInOut: function () {
+			var parentScope = this;
+			console.log({out: parentScope.$outEl.html().length, in: parentScope.$inEl.html().length});
+			var inRef = parentScope.$inEl.ref;
+			var outRef = parentScope.$outEl.ref;
+			console.log('els',{out: parentScope.$outEl, in: parentScope.$inEl});
+			console.log('refs',{outRef: outRef, inRef: inRef});
 		}
+
 
 	};
 
@@ -195,7 +218,7 @@ define([
 		inEl: 'pageTransition1',
 		outEl: 'pageTransition2',
 		transitionSpeed: 400
-	}
+	};
 
 	return Transitions;
 

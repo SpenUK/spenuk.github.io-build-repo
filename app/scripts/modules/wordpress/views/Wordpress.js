@@ -19,33 +19,28 @@ define([
 
 	var WordpressView = Backbone.View.extend({
 
-		// nameSpace: 'wordpress',
-		el: '#page-in',
 		// stub: false,
 		stub: true, // toggle for when offline
 
 		template: Handlebars.templates['wpBlog.hbs'],
 		loadingIndicators: ['#wp-container .load-next-button'],
 		loadingClass: 'loading',
-		viewport: '#wp-container #wp-viewport',
-		bottomControlBar: '.blog-control-bar',
-		bottomControlBarShown: true,
+		// viewport: '#wp-container #wp-viewport',
+		// bottomControlBar: '.blog-control-bar',
+		// bottomControlBarShown: true,
 		scrolling: false,
-		focusPoint: 0.3,
+		readLine: 0.3,
 		articleViews: [],
+		// For determining whether or not to display any indication that there are earlier posts 
+		// when the page is accessed at a random post
 		firstPostRendered: false,
 
 		initialize: function(options){
 			var parentScope = this;
-			window.wp = this;
 			console.log('wp view init');
-			this.fragment = Backbone.history.fragment;
+			// this.fragment = Backbone.history.fragment;
 			this.collection =  new Module.Extensions.ArticlesCollection();
-			window.wp = this;
-			// this.filteredCollection =  new Module.Extensions.ArticlesCollection();
-			// this.filteredCollection.listenTo(Backbone, 'blog:changeFilter', function(models){
-				// this.reset(models);
-			// }, parentScope.filteredCollection);
+			window.wp = this; // delete window access in prod
 
 			this.listen();
 			console.log('fetch all articles...');
@@ -64,17 +59,15 @@ define([
 		render: function(slug){
 			var parentScope = this;
 
-			console.log("~slug: ", slug);
+			console.log("slug: ", slug);
 			
 			var collection = this.collection;
-			// window.collection = collection;
-			// collection.filterArticles();
 
 			var html = this.template();
 			this.$el.html(html);
 
-			this.controlBar = new Module.Extensions.ControlBarView;
-			this.sidePanel = new Module.Extensions.SidePanelView();
+			// this.controlBar = new Module.Extensions.ControlBarView;
+			// this.sidePanel = new Module.Extensions.SidePanelView();
 			// this.filters = this.sidePanel.model;
 			// this.filters.on('change', function(){
 			// 	console.log(this.changed)
@@ -84,6 +77,7 @@ define([
 
 			// this.fetchAllArticles(function(){
 				if (typeof slug != 'undefined') {
+					// If slug is provided, find the post model with that slug and set the collection position to it's index.
 					var matches = collection.where({slug: slug});
 					var model = ( matches.length > 0) ? matches[0] : null;
 					var index = collection.indexOf(model);
@@ -114,7 +108,7 @@ define([
 	  },
 	  scrollHandler: function(response){
 	  	var parentScope = this;
-	  	var scrollLine = (window.scrollY + Math.floor(window.innerHeight * this.focusPoint));
+	  	var scrollLine = (window.scrollY + Math.floor(window.innerHeight * this.readLine));
 	  	var tolerance = 10;
 	  	$.each(this.articleViews, function(){
 	  		var model = this.model;
