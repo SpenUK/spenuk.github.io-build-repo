@@ -24,6 +24,7 @@ define(function (require) {
 
     init: function(){
       this.Transitions.init();
+      console.log('Templates: ', this.Templates);
     }
   };
 

@@ -22,7 +22,8 @@ define([
 		// stub: false,
 		stub: true, // toggle for when offline
 
-		template: Handlebars.templates['wpBlog.hbs'],
+		template: JST['wpBlog.hbs'],
+		// template: Handlebars.templates['wpBlog.hbs'],
 		loadingIndicators: ['#wp-container .load-next-button'],
 		loadingClass: 'loading',
 		// viewport: '#wp-container #wp-viewport',

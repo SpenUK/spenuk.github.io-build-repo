@@ -16,8 +16,9 @@ require.config({
 
 require([
 'app',
-'modules/base/main'
-],function(App, BaseModule){
+'modules/base/main',
+'modules/wordpress/main'
+],function(App, BaseModule, WordpressModule){
 		// console.log('in main define');
 		
 		// App.Modules.Wordpress = require('modules/wordpress/main');
@@ -33,6 +34,7 @@ require([
 		// App.init();
 
 		(App.Modules.Base = BaseModule).init();
+		(App.Modules.Wordpress = WordpressModule).init();
 
 		$('#side-bar, .header').on('click', '.dismiss-button.show', function(){
 			$('#push-wrapper').removeClass('side-bar-hidden');

@@ -111,7 +111,7 @@ define([
 				$(randomize($targets)).each(function (i) {
 					var $el = $(this);
 
-					var after = (i !== targetCount-1)? null : parentScope.pageSwitch;
+					// var after = (i !== targetCount-1)? null : parentScope.pageSwitch;
 					window.setTimeout(function() {
 						// This should be dynamic. each element should have an associated start state and end state.
 							// This would be either tracked by backbone (view? or a collection of 'transition models'?).
