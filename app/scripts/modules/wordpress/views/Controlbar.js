@@ -21,7 +21,8 @@ define([
 			el: $('#wp'),
 			selector: '.blog-control-bar',
 			model: controlbarModel,
-			template: Handlebars.templates['controlBar.hbs'],
+			// template: Handlebars.templates['controlBar.hbs'],
+			template: JST[Module.nameSpace+ 'layout/controlBar'],
 			hidden: false,
 			initialize: function(){
 				var parentScope = this;

@@ -26,7 +26,7 @@ define([
 				}
 
 			},
-			template: JST['layout/nestedGrids'],
+			template: JST[Module.nameSpace + '/nestedGrids'],
 			setListeners: function(){
 				// 
 			}

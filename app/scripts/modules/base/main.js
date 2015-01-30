@@ -5,6 +5,7 @@ console.log('main module included');
 define(function (require) {
 
 	var BaseModule = {
+		nameSpace: 'base',
 		Views: {},
 		Extensions: {},
 		Collections: {},

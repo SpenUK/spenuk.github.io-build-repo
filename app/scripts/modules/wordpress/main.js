@@ -3,6 +3,7 @@
 define(function (require) {
 
 	var wordpressModule = {
+		nameSpace: 'wordpress',
 		Views: {},
 		Extensions: {},
 		Collections: {},

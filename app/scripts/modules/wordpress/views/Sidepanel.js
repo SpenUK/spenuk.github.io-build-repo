@@ -36,7 +36,8 @@ define([
 				// Backbone.trigger('blog:disableTag');
 				this.model.disableTag(tag);
 		  },
-			template: Handlebars.templates['sidePanel.hbs'],
+			// template: Handlebars.templates['sidePanel.hbs'],
+			template: JST[Module.nameSpace + '/layout/sidePanel'],
 			render: function(){
 				var html = this.template(this.model.toJSON());
 				this.$el.html(html);

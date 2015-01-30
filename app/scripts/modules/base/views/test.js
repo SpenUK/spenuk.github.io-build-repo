@@ -27,7 +27,7 @@ define([
 
 				
 			},
-			template: JST['layout/testpage'],
+			template: JST[Module.nameSpace + '/testpage'],
 			setListeners: function(){
 				// 
 			}

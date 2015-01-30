@@ -302,12 +302,12 @@ module.exports = function (grunt) {
 		    all: {
 		    	options: {
 		    		processName: function(filePath) {
-		        	return filePath.replace('app/scripts/templates/', '').replace('app/scripts/', '').replace('.hbs', '');
+		        	return filePath.replace('app/scripts/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
 		    		},
 		    		// wrapped: false
 		    	},
 		      files: {
-		        'app/scripts/templates/templates.js': ['app/scripts/templates/**/*.hbs']
+		        'app/scripts/templates/templates.js': ['app/scripts/modules/**/*.hbs']
 		      } 
 		    }
 		},

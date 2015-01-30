@@ -34,7 +34,8 @@ define([
 
 		  },
 		  container: '#wp-viewport',
-		  template: Handlebars.templates['article.hbs'],
+		  // template: Handlebars.templates[Module.nameSpace+'/article'],
+		  template: JST[Module.nameSpace+'/article'],
 		  
 		  render: function(before){
 		  	var parentScope = this;
