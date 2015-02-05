@@ -68,7 +68,7 @@ module.exports = function (grunt) {
 	    },
 
 	    hbs: {
-	      files: ['<%= config.app %>/scripts/{,*/}*.hbs'],
+	      files: ['<%= config.app %>/scripts/{,*/}*.hbs','<%= config.app %>/scripts/**/*.hbs'],
 	      tasks: ['handlebars', 'concat:templates']
 	    }
 		}, // watch end

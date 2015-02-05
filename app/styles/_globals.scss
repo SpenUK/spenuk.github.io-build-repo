@@ -1,4 +1,4 @@
-$sans-serif: sans-serif, sans-serif;
+$sans-serif: 'montserrat', sans-serif;
 $serif-display: 'mrseavesboldbold', Georgia, serif;
 $serif-copy: Georgia, serif;
 
@@ -10,8 +10,11 @@ $black-hover: #434343;
 
 $background-color: rgba(225,225,225,1);
 $header-color: rgba(255,90,110,1);
+$contrast-color-1: rgba(0,200,180,1);
 $main-body-color: $black;
 
 .i-btn {
 	@include icon-btn($background-color, 30);
 }
+
+* {font-family: $sans-serif;}

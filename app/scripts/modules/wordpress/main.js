@@ -19,6 +19,7 @@ define(function (require) {
 			ext.SidePanelView = require('modules/wordpress/views/SidePanel')(wordpressModule);
 
 	wordpressModule.init = function(){
+
 		var parentScope = this;
 		var WordpressRouter = Backbone.Router.extend({
 			routes: {
@@ -26,19 +27,21 @@ define(function (require) {
 				'blog/:slug' : 'getBlog'
 			},
 			init: function(){
-				// console.log('wp router inited');
+				console.log('wordpressModule init');
 				this.on('route:getBlog' ,function(slug){
 					// Is there a better way to determine wether or not the view is rendered?
 					// This is very direct (is the element in the DOM or not?) but is rigid to 'wp'
 					if (!document.getElementById('wp')) { 
-						App.Router.setNamespace('blog');
+						// App.Router.setNamespace('blog');
 						if (typeof parentScope.Views.Master === 'undefined') {
 							parentScope.Views.Master = new parentScope.Extensions.MasterView({slug: slug});
 						} else {
 							if (typeof slug != 'undefined') {
-								parentScope.Views.Master.render(slug);
+								// parentScope.Views.Master.render(slug);
+								parentScope.Views.Master.initialize(slug);
 							} else {
-								parentScope.Views.Master.render();
+								// parentScope.Views.Master.render();
+								parentScope.Views.Master.initialize();
 							};
 						}
 					} else {
@@ -51,7 +54,7 @@ define(function (require) {
 			}
 		});
 
-		this.Router = new WordpressRouter();
+		(this.Router = new WordpressRouter()).init();
 	}
 
 	return wordpressModule;

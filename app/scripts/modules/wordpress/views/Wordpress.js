@@ -22,7 +22,7 @@ define([
 		// stub: false,
 		stub: true, // toggle for when offline
 
-		template: JST['wpBlog.hbs'],
+		template: JST[Module.nameSpace + '/main'],
 		// template: Handlebars.templates['wpBlog.hbs'],
 		loadingIndicators: ['#wp-container .load-next-button'],
 		loadingClass: 'loading',
@@ -37,6 +37,8 @@ define([
 		firstPostRendered: false,
 
 		initialize: function(options){
+			options = (typeof options === 'undefined')? {} : options;
+			
 			var parentScope = this;
 			console.log('wp view init');
 			// this.fragment = Backbone.history.fragment;
@@ -48,24 +50,29 @@ define([
 			this.fetchAllArticles(function(){
 				if (typeof options.slug != 'undefined') {
 					console.log('with slug');
-					parentScope.render(options.slug);
+					// parentScope.render(options.slug);
+					parentScope.render(options);
 				} else {
 					console.log('no slug');
-					parentScope.render();
+					// parentScope.render();
+					parentScope.render(options);
 				};
 
 			});	
 
 		},
-		render: function(slug){
+		render: function(options){
 			var parentScope = this;
+
+			var slug = options.slug;
 
 			console.log("slug: ", slug);
 			
 			var collection = this.collection;
 
 			var html = this.template();
-			this.$el.html(html);
+			// this.$el.html(html);
+			// App.Transitions.render({html: html});
 
 			// this.controlBar = new Module.Extensions.ControlBarView;
 			// this.sidePanel = new Module.Extensions.SidePanelView();
@@ -88,6 +95,8 @@ define([
 					collection.position = 0;
 				};
 				var article = parentScope.renderArticle();
+				App.Transitions.render({html: html});
+				
 				Backbone.trigger('blog:articleSelected', article.model);
 			// });
 		},
@@ -227,10 +236,10 @@ define([
 				for (i = response.posts.length - 1; i >= 0; i--) {
 					var record = response.posts[i];
 					if (!collection.where({ID: record.ID}).length) {
-						console.log('adding', record);
+						// console.log('adding', record);
 						collection.add(record);
 					} else {
-						console.log('NOT adding', record);
+						// console.log('NOT adding', record);
 					}
 				};
 				// parentScope.filteredCollection.add(parentScope.collection.models);

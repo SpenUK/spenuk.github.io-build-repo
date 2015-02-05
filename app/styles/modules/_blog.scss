@@ -1,0 +1,20 @@
+.blog.page {
+	.sidebar {
+
+		h4.author {
+			text-align: center;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
+
+	.avatar {
+		border: 5px solid $contrast-color-1;
+		border-radius: 50%;
+		overflow: hidden;
+		height: 155px;
+		width: 155px;
+		margin: auto;
+	}	
+}

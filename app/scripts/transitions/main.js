@@ -58,19 +58,26 @@ define([
 		init: function (options) {
 			console.log('init Transitons');
 			options = options || {};
-			this.$inEl = $(this.inEl = (typeof options.page !== 'undefined') ? options.page : defaults.page);
+			this.$inEl = $(this.inEl = (typeof options.page !== 'undefined') ? options.page : this.defaults.page);
 			this.$outEl = cloneAndAppend(this.inEl);
 
 			this.$inEl.ref = 'original';
 			this.$outEl.ref = 'clone';
 
-			this.transitionSpeed = (typeof options.transitionSpeed !== 'undefined') ? options.transitionSpeed : defaults.transitionSpeed;
+			this.defaults.animation = (typeof options.animation !== 'undefined') ? options.animation : this.defaults.animation;
+			this.transitionSpeed = (typeof options.transitionSpeed !== 'undefined') ? options.transitionSpeed : this.defaults.transitionSpeed;
 			return this;
 		},
 
-		render: function (html) {
-			// Render is purely responsible for injecting HTML into the $inEl, after that transition logic would take over.
-			this.$inEl.html(html);
+		render: function (params) {
+			console.log('template render');
+			if (typeof params.html === 'undefined') { console.log('params.html is not defined'); return false; }
+			var anim = (typeof params.animation === 'undefined' || typeof this[params.animation] === 'undefined') ? this.defaults.animation : params.animation;
+			this.$inEl.html(params.html);
+
+			console.log(anim);
+			// run the animation with the anim value - either a specified animation type or the default.
+			this[anim]();
 
 			return this;
 		},
@@ -78,7 +85,7 @@ define([
 		fadeIn: function (options) {
 			var parentScope = this;
 					options = options || {};
-			var	speed = (typeof options.speed !== 'undefined') ? options.speed : defaults.transitionSpeed;
+			var	speed = (typeof options.speed !== 'undefined') ? options.speed : this.defaults.transitionSpeed;
 
 			this.$outEl.fadeOut(options);
 			this.$inEl.fadeIn(speed, function(){
@@ -91,7 +98,7 @@ define([
 
 			var parentScope = this;
 					options = options || {};
-			var	speed = (typeof options.speed !== 'undefined') ? options.speed : defaults.transitionSpeed;
+			var	speed = (typeof options.speed !== 'undefined') ? options.speed : this.defaults.transitionSpeed;
 
 			var $targets = this.$inEl.find('.transition'),
 					targetCount = $targets.length;
@@ -149,7 +156,7 @@ define([
 			// var parentScope = this;
 
 			options = options || {};
-			var	speed = (typeof options.speed !== 'undefined') ? options.speed : defaults.transitionSpeed;
+			var	speed = (typeof options.speed !== 'undefined') ? options.speed : this.defaults.transitionSpeed;
 
 			var $inTargets = this.$inEl.find('.transition');
 			var $outTargets = this.$outEl.find('.transition');
@@ -206,18 +213,19 @@ define([
 			var outRef = parentScope.$outEl.ref;
 			console.log('els',{out: parentScope.$outEl, in: parentScope.$inEl});
 			console.log('refs',{outRef: outRef, inRef: inRef});
+		},
+
+		defaults: {
+			// inEl: 'pageIn',
+			// outEl: 'pageOut',
+			page: '.page',
+			inEl: 'pageTransition1',
+			outEl: 'pageTransition2',
+			animation: 'appear',
+			transitionSpeed: 400
 		}
 
 
-	};
-
-	var defaults = {
-		// inEl: 'pageIn',
-		// outEl: 'pageOut',
-		page: '.page',
-		inEl: 'pageTransition1',
-		outEl: 'pageTransition2',
-		transitionSpeed: 400
 	};
 
 	return Transitions;
