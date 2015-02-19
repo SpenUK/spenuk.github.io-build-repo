@@ -5,8 +5,8 @@ define(function (require) {
 
 
 
-    // handlebarsHelpers = require('helpers/handlebarsHelpers'),
-    // handlebarsPartials = require('helpers/partials'),
+  var handlebarsHelpers = require('helpers/handlebarsHelpers')(window.Handlebars),
+      handlebarsPartials = require('helpers/partials')(window.Handlebars);
 
     // scrolling  = require('scrolling');
 

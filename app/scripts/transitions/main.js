@@ -59,6 +59,7 @@ define([
 			console.log('init Transitons');
 			options = options || {};
 			this.$inEl = $(this.inEl = (typeof options.page !== 'undefined') ? options.page : this.defaults.page);
+			console.log({inEl: this.inEl, outEl: this.outEl});
 			this.$outEl = cloneAndAppend(this.inEl);
 
 			this.$inEl.ref = 'original';

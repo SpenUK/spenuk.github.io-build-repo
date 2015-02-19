@@ -38,7 +38,7 @@ define(function (require) {
 						} else {
 							if (typeof slug != 'undefined') {
 								// parentScope.Views.Master.render(slug);
-								parentScope.Views.Master.initialize(slug);
+								parentScope.Views.Master.initialize({slug: slug});
 							} else {
 								// parentScope.Views.Master.render();
 								parentScope.Views.Master.initialize();

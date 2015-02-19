@@ -1,27 +1,27 @@
 'use strict';	
 
-console.log('main module included');
+console.log('base module included');
 
 define(function (require) {
 
-	var BaseModule = {
+	var Module = {
 		nameSpace: 'base',
 		Views: {},
 		Extensions: {},
 		Collections: {},
 		Models: {}
 	}
-	var ext = BaseModule.Extensions;
-			ext.HomeView = require('modules/base/views/home')(BaseModule);
+	var ext = Module.Extensions;
+			ext.HomeView = require('modules/base/views/home')(Module);
 			// testing only - to be removed
-			ext.TestView = require('modules/base/views/test')(BaseModule);
-			ext.Test2View = require('modules/base/views/nestedGrids')(BaseModule);
+			ext.TestView = require('modules/base/views/test')(Module);
+			ext.Test2View = require('modules/base/views/nestedGrids')(Module);
 
-	BaseModule.init = function(){
-		console.log('BaseModule inited');
+	Module.init = function(){
+		console.log('Base Module inited');
 
-		var parentScope = this;
-		var WordpressRouter = Backbone.Router.extend({
+		var this_ = this;
+		var Router = Backbone.Router.extend({
 			routes: {
 				'' : 'getHomePage',
 				'test' : 'getTestPage',
@@ -33,32 +33,32 @@ define(function (require) {
 			init: function(){
 				this.on('route:getHomePage' ,function(){
 					console.log('home route');
-					(parentScope.Views.home = new parentScope.Extensions.HomeView).init();
+					(this_.Views.home = new this_.Extensions.HomeView).init();
 				});
 
 				this.on('route:getTestPage' ,function(){
 					console.log('test route');
-					(parentScope.Views.test = new parentScope.Extensions.TestView).init();
+					(this_.Views.test = new this_.Extensions.TestView).init();
 				});
 
 				this.on('route:getTest2Page' ,function(){
 					console.log('test2 route');
-					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
+					(this_.Views.nestedGrid = new this_.Extensions.Test2View).init();
 				});
 
 				this.on('route:getTest3Page' ,function(){
 					console.log('test3 route');
-					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
+					(this_.Views.nestedGrid = new this_.Extensions.Test2View).init();
 				});
 
 				this.on('route:getTest4Page' ,function(){
 					console.log('test4 route');
-					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
+					(this_.Views.nestedGrid = new this_.Extensions.Test2View).init();
 				});
 
 				this.on('route:nestedGrids' ,function(){
 					console.log('test2 route');
-					(parentScope.Views.nestedGrid = new parentScope.Extensions.Test2View).init();
+					(this_.Views.nestedGrid = new this_.Extensions.Test2View).init();
 				});
 				// Ideally get rid of the stop/start;
 				Backbone.history.stop();
@@ -66,10 +66,10 @@ define(function (require) {
 			}
 		});
 
-		this.Router = new WordpressRouter();
+		this.Router = new Router();
 		this.Router.init();
 	}
 
-	return BaseModule;
+	return Module;
 
 });

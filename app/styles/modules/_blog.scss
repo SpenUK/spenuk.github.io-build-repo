@@ -1,6 +1,137 @@
-.blog.page {
-	.sidebar {
 
+.blog.page {
+
+	.article {
+		margin-bottom: 10px;
+		// padding: 1em 3em;
+		.title-bar {
+			padding: 1.5em 1em;
+			background-color: $header-color;
+			color: $white;
+
+			h1, .date {
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0;
+			}
+
+			// .date {
+			// 	display: inline-block;
+			// 	vertical-align: middle;
+			// }
+
+		}
+		.social-bar {
+			$element-height: 30;
+			// height: 50px;
+			padding: .5em 1em;
+			width: 100%;
+			background-color: darken($white, 5);
+			@include clearfix();
+			.likes {
+				float: left;
+				margin-left: 10px;
+				white-space: nowrap;
+				display: inline-block;
+				.like-button {
+					@include icon-btn(rgba(160,100,180,1), $element-height);
+					border-radius: 8px 0 0 8px;
+				}
+				.like-count {
+					@include ui-btn-label(lighten(rgba(160,100,180,1), 15), $element-height);
+					border-radius: 0 8px 8px 0;
+				}
+			}
+
+			.social-share {
+				transition: background-color 0.4s;
+				transition: box-shadow-color 0.4s;
+				position: relative;
+				height: $element-height * 1px;
+				line-height: $element-height * 1px;
+				display: inline-block;
+				white-space: nowrap;
+				margin-right: .75em;
+				padding: 0 8px;
+			
+
+				.social-share__background {	
+					transition: opacity 0.2s;
+			    background-color: rgba(160,100,180,1);
+					box-shadow: 0 2px 0 darken(rgba(160,100,180,1), 20);
+					border-radius: 8px;
+			    @include cover();
+			    position: absolute;
+			    opacity: 0;
+				}
+
+				.social-share__label, .social-share__icons {
+					margin-top: 0;
+					margin-bottom: 0; 
+				}
+
+				.social-share__label {
+					display: inline-block;
+					span {
+						color: white;
+						transition: opacity 0.2s, top 0.1s ease-in;
+						opacity: 0;
+						position: relative;
+						top: 10px;
+						text-shadow: 0 2px 0 rgba(0,0,0,0.2);
+					}
+				}
+
+				&:hover {
+					.social-share__label {
+						span {
+							opacity: 1;
+							top: 0px;	
+						}
+					}
+					.social-share__background {
+						opacity: 1;
+					}
+
+					.social-share__icons a {
+						color: rgba(255,255,255,0.7);
+						text-shadow: 0 2px 0 rgba(0,0,0,0.2);
+					}
+
+				}
+
+				.social-share__icons {
+					display: inline-block;
+					position: relative;
+					font-size: 18px;
+					padding-left: 5px;
+
+					li {
+						display: inline-block;
+					}
+					a {
+						color: rgba(0,0,0,0.7);
+						&:hover {
+							color: rgba(255,255,255,1);
+							text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+						}
+					}
+				}
+
+			}
+		}
+
+		.body {
+			padding: 1em 3em;
+		}
+
+		.tags-bar {
+
+		}
+	}
+
+	.sidebar {
+		padding: 1em;
 		h4.author {
 			text-align: center;
 			text-overflow: ellipsis;
@@ -16,5 +147,9 @@
 		height: 155px;
 		width: 155px;
 		margin: auto;
+
+		img {
+			width: 100%;
+		}
 	}	
 }

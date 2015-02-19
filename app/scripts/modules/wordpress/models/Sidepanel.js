@@ -13,8 +13,6 @@ define([
 			initialize: function(){
 				this.set('activeTags', {});
 				this.set('disabledTags', {});
-				this.listenTo(Backbone, 'blog:addNewTags', this.setTags);
-				window.poop = this;
 			}
 		});
 		return SidePanel;

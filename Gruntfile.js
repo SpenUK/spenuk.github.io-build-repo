@@ -55,7 +55,9 @@ module.exports = function (grunt) {
 			gruntfile: {
 	      files: ['Gruntfile.js']
 	    },
-
+	    html: {
+        files: ['<%= config.app %>/**/*.html']
+      },
 	    livereload: {
 	      options: {
 	        livereload: '<%= connect.options.livereload %>'

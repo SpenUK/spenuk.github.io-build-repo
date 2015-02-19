@@ -1,46 +1,36 @@
-<div class="page blog">
+<div class="wp-post__wrapper {{#unless selected}} out-of-focus{{/unless}}">
+  <div class="click-block"></div>
+  <article class="panel article" id="{{slug}}">
+  	<div class="panel-content">
+      <div class="title-bar">
+        <h1>{{title}}</h1>
+        <h4 class="date">{{#format_wp_date date}}{{date}}{{/format_wp_date}} </h4>
+      </div>
+      <div class="social-bar">
+        {{> article_control_bar }}
+      </div>
 
-	<div class="grid-container">
-		<div class="grid-row">
-			<div class="small-12">
-				<h1>Blog/WP</h1>
-			</div>
-		</div>
-		<div class="grid-row">
-		  <div class="small-12 medium-6"><div class="transition test-1"></div></div>
-		  <div class="small-6 medium-3"><div class="transition test-1"></div></div>
-		  <div class="small-6 medium-3"><div class="transition test-1"></div></div>
-		</div>
-		
-		<div class="grid-row">
-		  <div class="small-4"><div class="transition test-1"></div></div>
-		  <div class="small-4"><div class="transition test-1"></div></div>
-		  <div class="small-4"><div class="transition test-1"></div></div>
-		</div>
+      <div class="content">{{{content}}}</div>
 
-		<div class="grid-row">
-		  <div class="small-12 medium-6"><div class="transition test-1"></div></div>
-		  <div class="small-6 medium-3"><div class="transition test-1"></div></div>
-		  <div class="small-6 medium-3"><div class="transition test-1"></div></div>
-		</div>
-		
-		<div class="grid-row">
-		  <div class="small-4"><div class="transition test-1"></div></div>
-		  <div class="small-4"><div class="transition test-1"></div></div>
-		  <div class="small-4"><div class="transition test-1"></div></div>
-		</div>
+        
+        {{#has_tags tags}}
+          <div class="tags-bar">
+            <p>Tags:</p>
+              <ul>
+              {{#each tags}}
+                {{#if name }}
+                  <li><a href="#/#">{{name}}</a></li>
+                {{/if}}
 
-		<div class="grid-row">
-		  <div class="small-3"><div class="transition test-1"></div></div>
-		  <div class="small-3"><div class="transition test-1"></div></div>
-		  <div class="small-6"><div class="transition test-1"></div></div>
-		</div>
-		
-	</div>
-
-	<style type="text/css">
-		.transition {
-			min-height: 100px;
-		}
-	</style>
+                {{#if title }}
+                  <li><a href="#/#">{{title}}</a></li>
+                {{/if}}
+              {{/each}}
+              </ul>
+            
+          </div>
+        {{/has_tags}}
+    </div>
+  </article>
+  <div class="comments">Comments...</div>
 </div>

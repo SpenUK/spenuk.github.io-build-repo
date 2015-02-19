@@ -9,6 +9,7 @@ define([
 	return function(Module){
 		console.log('SidePanel required');
 		var sidePanelModel = new Module.Extensions.SidePanelModel;
+		// var tagsView = new Module.Extensions.SidePanelTagsView;
 		console.log('sidePanelModel', sidePanelModel);
 
 		var SidePanelView = Backbone.View.extend({
@@ -25,6 +26,13 @@ define([
 			events: {
 				'click .remove': 'disableTag',
 	  		'click .add': 'enableTag'
+			},
+			updateTags: function(){
+				// var activeTagsHTML = this.activeTagsTemplate();
+				// var disabledTagsHTML = this.disabledTagsTemplate();
+				// this.$activeTags.html()
+
+				// this.$disabledTags.html()
 			},
 			enableTag: function(tag){
 		  	var tag = $(tag.target).closest('.tag').find('.tag-title').text();

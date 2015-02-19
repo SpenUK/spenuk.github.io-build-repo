@@ -23,6 +23,8 @@ define([
 		stub: true, // toggle for when offline
 
 		template: JST[Module.nameSpace + '/main'],
+		articleTemplate: JST[Module.nameSpace + '/article'],
+		articlePreviewTemplate: JST[Module.nameSpace + '/layout/articlePreview'],
 		// template: Handlebars.templates['wpBlog.hbs'],
 		loadingIndicators: ['#wp-container .load-next-button'],
 		loadingClass: 'loading',
@@ -50,15 +52,13 @@ define([
 			this.fetchAllArticles(function(){
 				if (typeof options.slug != 'undefined') {
 					console.log('with slug');
-					// parentScope.render(options.slug);
 					parentScope.render(options);
 				} else {
 					console.log('no slug');
-					// parentScope.render();
 					parentScope.render(options);
 				};
 
-			});	
+			});
 
 		},
 		render: function(options){
@@ -69,8 +69,22 @@ define([
 			console.log("slug: ", slug);
 			
 			var collection = this.collection;
+			console.log(this.collection);
 
 			var html = this.template();
+			App.Transitions.render({html: html});
+			console.log('posts el', parentScope.$el.find('.posts'));
+			collection.each(function(model,i){
+				//  including i as a render offset
+				// window.setTimeout(function(){
+					var artcilePreview = parentScope.articleTemplate(model.attributes);
+					$('.page.blog .posts').append(artcilePreview);
+
+				// }, i*250);
+				
+			});
+
+
 			// this.$el.html(html);
 			// App.Transitions.render({html: html});
 
@@ -84,20 +98,21 @@ define([
 			// }, parentScope.filters);
 
 			// this.fetchAllArticles(function(){
-				if (typeof slug != 'undefined') {
-					// If slug is provided, find the post model with that slug and set the collection position to it's index.
-					var matches = collection.where({slug: slug});
-					var model = ( matches.length > 0) ? matches[0] : null;
-					var index = collection.indexOf(model);
-					console.log({slug: slug, index: index});
-					collection.position = index;
-				} else {
-					collection.position = 0;
-				};
-				var article = parentScope.renderArticle();
-				App.Transitions.render({html: html});
-				
-				Backbone.trigger('blog:articleSelected', article.model);
+
+				// if (typeof slug != 'undefined') {
+				// 	// If slug is provided, find the post model with that slug and set the collection position to it's index.
+				// 	var matches = collection.where({slug: slug});
+				// 	var model = ( matches.length > 0) ? matches[0] : null;
+				// 	var index = collection.indexOf(model);
+				// 	console.log({slug: slug, index: index});
+				// 	collection.position = index;
+				// } else {
+				// 	collection.position = 0;
+				// };
+				// var article = parentScope.renderArticle();
+				// App.Transitions.render({html: html});
+
+				// Backbone.trigger('blog:articleSelected', article.model);
 			// });
 		},
 		listen: function(){
