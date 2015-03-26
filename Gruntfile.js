@@ -1,110 +1,146 @@
 'use strict';
 
 module.exports = function (grunt) {
+	
+  // Loading tasks Manually
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
-	// Time how long tasks take. Can help when optimizing build times
-	require('time-grunt')(grunt);
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
 
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-browserify');
 
-	// Load grunt tasks automatically 
-	require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-sftp-deploy');
 
 	// Configurable paths
   var config = {
     app: 'app',
-    dist: '../spenuk.github.io',
-    build: 'build.js'
+    dist: 'dist',
+    build: 'build.js',
+    jsfolder: '/js',
+    sassfolder: '/styles/sass',
+    cssfolder: '/styles/css'
   };
 
-	grunt.initConfig({
+  grunt.initConfig({
 
-		// Configurable paths
-		config: {
-		  app: config.app,
-		  dist: config.dist,
-		  buildjs: config.build
-		  
-		}, // config end
+  	// Referencing globally defined configurable paths
+  	config: config,
 
-		watch: {
-			bower: {
-        files: ['bower.json']
-        // ,// tasks: ['wiredep']
-      },
-			js: {
-				files: [
-				'<%= config.app %>/scripts/{,*/}*.js',
-				'<%= config.app %>/scripts/**/*.js'
-			],
-				tasks: ['jshint'],
-				options: {
-					livereload: true
-				}
-			},
-			sass: {
-        files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['sass:server', 'autoprefixer']
+
+    'sftp-deploy': {
+      dev: {
+        auth: {
+          host: '<~ hostname ~>',
+          port: 22,
+          authKey: 'key1'
+
+          // "key1" refers to a key set in the .ftppass file.
+          // This is ignored by git (for security reasons) so will have to be created in the format of the below
+
+          /* ./.ftppass 
+            {
+              "key1": {
+                "username": "<~ username ~>",
+                "password": "<~ password ~>"
+              }
+            }
+          */
+
+        },
+        src: '<%= config.dist %>',
+        dest: '<~ Project root on server ~>',
+        exclusions: [
+          '<%= config.dist %>/**/.DS_Store'
+        ],
+        serverSep: '/',
+        concurrency: 4,
+        progress: true
+      }
+    },
+
+  	watch: {
+
+  		js: {
+  			// files: ['<%= config.app %><% config.jsfolder %>/{,*/}*.js'],
+        files: ['<%= config.app %><% config.jsfolder %>/**/*.js'],
+  			tasks: ['browserify:server', 'jshint'],
+  			options: {
+  				livereload: true
+  			}
+  		},
+
+  		sass: {
+  			// files: ['<%= config.app %><% config.sassfolder %>/{,*/}*.{scss,sass}'],
+  			files: ['<%= config.app %>/styles/**/*.{scss,sass}'],
+  			tasks: ['sass:server']
+  		},
+
+  		css: {
+        files: ['<%= config.app %><% config.cssfolder %>/**/*.css'],
+  			// files: ['<%= config.app %>/styles/**/*.css'],
+  			options: {
+  				livereload: true
+  			}
+  		},
+
+  		gruntfile: {
+  			files: ['gruntfile.js']
+  		},
+
+      // html: {
+      //   files: ['<%= config.app %>/html/**/*.html'],
+      //   tasks: ['concat:html']
+      // },
+
+      hbs: {
+        // files: ['<%= config.app %>/scripts/{,*/}*.hbs','<%= config.app %>/scripts/**/*.hbs'],
+        files: [
+          '<%= config.app %><% config.jsfolder %>/**/*.hbs', 
+          '<%= config.app %><% config.jsfolder %>/{,*/}*.handlebars'
+        ],
+        tasks: ['handlebars', 'concat:templates']
       },
 
-      styles: {
-        files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: ['newer:copy:styles', 'autoprefixer']
-      },
-
-			gruntfile: {
-	      files: ['Gruntfile.js']
-	    },
-	    html: {
-        files: ['<%= config.app %>/**/*.html']
-      },
-	    livereload: {
-	      options: {
-	        livereload: '<%= connect.options.livereload %>'
-	      },
-	      files: [
-	        '<%= config.app %>/{,*/}*.html',
+  		livereload: {
+  			options: {
+  				livereload: '<%= connect.options.livereload %>'
+  			},
+  			files: [
+  				'<%= config.app %>/{,*/}*.html',
 	        '.tmp/styles/{,*/}*.css',
 	        '<%= config.app %>/images/{,*/}*'
-	      ]
-	    },
+  			]
+  		}
+  	}, // watch end
 
-	    hbs: {
-	      files: ['<%= config.app %>/scripts/{,*/}*.hbs','<%= config.app %>/scripts/**/*.hbs'],
-	      tasks: ['handlebars', 'concat:templates']
-	    }
-		}, // watch end
-
-	  // Grunt server settings
-	  connect: {
-	    options: {
-	      port: 9000,
-	      open: true,
-	      livereload: 35729,
-	      // base: '../spenuks.github.io/',
-	      // Change this to '0.0.0.0' to access the server from outside
-	      hostname: 'localhost'
-	    },
-	    livereload: {
+  	connect: {
+  		options: {
+  			port: 9000,
+  			open: true,
+  			livereload: 35729,
+  			base: 'app',
+  			hostname: 'localhost'
+  		},
+      livereload: {
         options: {
-          middleware: function(connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
-            ];
-          }
         }
       },
-	    dist: {
-	      options: {
-	        base: '<%= config.dist %>',
-	        livereload: false
-	      }
-	    }
-	  }, // end connect (server)
+  		dist: {
+  			options: {
+  				base: '<%= config.dist %>',
+  				livereload: false
+  			}
+  		}
 
-	  // Empties folders to start fresh
+  	}, // end connect (server)
+
+  	// Empties folders to start fresh
 	  clean: {
 	    dist: {
 	      files: [{
@@ -119,364 +155,181 @@ module.exports = function (grunt) {
 	    server: '.tmp'
 	  },
 
-	  // Make sure code styles are up to par and there are no obvious mistakes
-	  jshint: {
-	    options: {
-	      jshintrc: '.jshintrc',
-	      reporter: require('jshint-stylish')
-	    },
-	    all: [
-	      'Gruntfile.js',
-	      '<%= config.app %>/scripts/{,*/}*.js',
-	      '<%= config.app %>/scripts/**/*.js',
-	      '!<%= config.app %>/scripts/vendor/*',
-	      '!<%= config.app %>/scripts/almond.js',
-	      '!<%= config.app %>/scripts/templates.js',
-	      '!<%= config.app %>/scripts/templates/templates.js',
-	      '!<%= config.app %>/scripts/shared/transitTemp.js',
-	      '!<%= config.app %>/scripts/modules/wordpress/wpStubs.js',
-	      'test/spec/{,*/}*.js'
-	    ]
-	  },
+  	jshint: {
+  		options: {
+  			jshintrc: '.jshintrc',
+  			reporter: require('jshint-stylish')
+  		},
+  		all: [
+  			'gruntfile.js',
+  			'<%= config.app %>/js/**/*.js',
+        '<%= config.app %>/js/{,*/}*.js',
+        '!<%= config.app %>/js/vendor/**/*.*',
+        '!<%= config.app %>/js/bundle.js',
+        '!<%= config.app %>/js/blog-post-stubs.js',
+        '!<%= config.app %>/js/templates.js'
+        
+  		]
+  	}, 
+  	// lint end
 
-	  // Compiles Sass to CSS and generates necessary files if requested
-	  sass: {
-	    options: {
-	      loadPath: 'bower_components'
-	    },
-	    dist: {
-	      files: [{
-	        expand: true,
-	        cwd: '<%= config.app %>/styles',
-	        src: ['*.{scss,sass}'],
-	        dest: '.tmp/styles',
-	        ext: '.css'
-	      }]
-	    },
-	    server: {
-	      files: [{
-	        expand: true,
-	        cwd: '<%= config.app %>/styles',
-	        src: ['*.{scss,sass}'],
-	        dest: '.tmp/styles',
-	        ext: '.css'
-	      }]
-	    },
-	    export: {
-	    	files: [{
-	        expand: true,
-	        cwd: '<%= config.app %>/styles',
-	        src: ['*.{scss,sass}'],
-	        dest: '<%= config.dist %>/styles',
-	        ext: '.css'
-	      }]
-	    }
-	  },
-
-	  // Add vendor prefixed styles
-	  autoprefixer: {
-	    options: {
-	      browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
-	    },
-	    dist: {
-	      files: [{
-	        expand: true,
-	        cwd: '.tmp/styles/',
-	        src: '{,*/}*.css',
-	        dest: '.tmp/styles/'
-	      }]
-	    }
-	  },
-
-	  concat: {
-	  	templates: {
-	  		files: {
-	        '<%= config.app %>/scripts/templates.js': ['<%= config.app %>/scripts/templates/templates.js'],
-	      },
+  	sass: {
+  		dist: {
+  			files: [{
+  				expand: true,
+  				cwd: '<%= config.app %><%= config.sassfolder %>',
+  				src: ['*.{scss,sass}'],
+  				dest: '.tmp/styles',
+  				ext: '.css'
+  			}]
+  		},
+  		server: {
+  			files: [{
+  				expand: true,
+          cwd: '<%= config.app %><%= config.sassfolder %>',
+  				src: ['{,*/}*.{scss,sass}'],
+  				dest: '<%= config.app %><%= config.cssfolder %>',
+  				ext: '.css'
+  			}]
+  		},
+  		export: {
         options: {
-		      banner: ';require([\'handlebars\'], function(Handlebars) { \n',
-		      footer: '});'
-		    }
-			  // dist: {
-			  //   src: ['<%= config.app %>/scripts/templates/templates.js'],
-			  //   dest: '<%= config.app %>/scripts/templates.js',
-			    
-			  // }
-			}
-		},
-
-	  // Renames files for browser caching purposes
-		  // rev: {
-		  //   dist: {
-		  //     files: {
-		  //       src: [
-		  //         '<%= config.dist %>/scripts/{,*/}*.js',
-		  //         '<%= config.dist %>/styles/{,*/}*.css',
-		  //         '<%= config.dist %>/assets/images/{,*/}*.*',
-		  //         '<%= config.dist %>/styles/fonts/{,*/}*.*',
-		  //         '<%= config.dist %>/*.{ico,png}'
-		  //       ]
-		  //     }
-		  //   }
-		  // },
-
-		  // Reads HTML for usemin blocks to enable smart builds that automatically
-		  // concat, minify and revision files. Creates configurations in memory so
-		  // additional tasks can operate on them
-		  // useminPrepare: {
-		  //   options: {
-		  //     dest: '<%= config.dist %>'
-		  //   },
-		  //   html: '<%= config.app %>/index.html'
-		  // },
-
-		  // Performs rewrites based on rev and the useminPrepare configuration
-		  // usemin: {
-		  //   options: {
-		  //     assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images']
-		  //   },
-		  //   html: ['<%= config.dist %>/{,*/}*.html'],
-		  //   css: ['<%= config.dist %>/styles/{,*/}*.css']
-		  // },
-
-		  // The following *-min tasks produce minified files in the dist folder
-		  // imagemin: {
-		  //   dist: {
-		  //     files: [{
-		  //       expand: true,
-		  //       cwd: '<%= config.app %>/images',
-		  //       src: '{,*/}*.{gif,jpeg,jpg,png}',
-		  //       dest: '<%= config.dist %>/images'
-		  //     }]
-		  //   }
-		  // },
-
-		  // svgmin: {
-		  //   dist: {
-		  //     files: [{
-		  //       expand: true,
-		  //       cwd: '<%= config.app %>/images',
-		  //       src: '{,*/}*.svg',
-		  //       dest: '<%= config.dist %>/images'
-		  //     }]
-		  //   }
-		  // },
-
-		  // htmlmin: {
-		  //   dist: {
-		  //     options: {
-		  //       collapseBooleanAttributes: true,
-		  //       collapseWhitespace: true,
-		  //       conservativeCollapse: true,
-		  //       removeAttributeQuotes: true,
-		  //       removeCommentsFromCDATA: true,
-		  //       removeEmptyAttributes: true,
-		  //       removeOptionalTags: true,
-		  //       removeRedundantAttributes: true,
-		  //       useShortDoctype: true
-		  //     },
-		  //     files: [{
-		  //       expand: true,
-		  //       cwd: '<%= config.dist %>',
-		  //       src: '{,*/}*.html',
-		  //       dest: '<%= config.dist %>'
-		  //     }]
-		  //   }
-	  // },
-
-	  shell: {
-	  	buildjs: {
-	  		command: 'r.js -o <%= config.buildjs %>'
-	  	},
-	  	pushBuilt: {
-	  		command: (function(message){ 
-					  				if (typeof message === 'undefined') {
-					  					return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update @ '+ new Date().toLocaleString() +'" && git push -u origin master';
-					  				} else {
-					  					return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update: ' + message + '" && git push -u origin master';
-					  				}
-									})()
-	    }
-	  },
-
+          sourcemap: 'none'
+        },
+  			files: [{
+  				expand: true,
+  				cwd: '<%= config.app %><%= config.sassfolder %>',
+  				src: ['*.{scss,sass}'],
+  				dest: '<%= config.dist %><%= config.cssfolder %>',
+  				ext: '.css'
+  			}]
+  		}
+  	}, // sass end
 
     handlebars: {
-		    all: {
-		    	options: {
-		    		processName: function(filePath) {
-		        	return filePath.replace('app/scripts/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
-		    		},
-		    		// wrapped: false
-		    	},
-		      files: {
-		        'app/scripts/templates/templates.js': ['app/scripts/modules/**/*.hbs']
-		      } 
-		    }
-		},
+        all: {
+          options: {
+            processName: function(filePath) {
+              return filePath.replace('app/js/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
+            },
+            // wrapped: false
+          },
+          files: {
+            '<%= config.app %>/js/templates.js': ['app/js/**/*.hbs']
+          } 
+        }
+    }, // handlbars end
 
-	  replace: {
-		  require: {
-		    src: ['<%= config.app %>/*.html'],             // source files array (supports minimatch)
-		    dest: '<%= config.dist %>/',             // destination directory or file
-		    replacements: [{
-		      from: 'bower_components/requirejs/require.js" data-main="scripts/', // string replacement
-		      to: ''
-		    }, {
-		      from: '<link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css" />',
-		      to: ''
-		    // }, {
-		    //   from: 'Foo',
-		    //   to: function (matchedWord) {   // callback replacement
-		    //     return matchedWord + ' Bar';
-		      // }
-		    }]
-		  },
-		  // fontawesome: {
-		  // 	src: '<%= config.dist %>/styles/',
-		  //   dest: '<%= config.dist %>/styles/',
-		  //   replacements: [{
-		  //   	from: ,
-		  //   	to: 
-		  //   }]
-		  // }
-		},
+    concat: {
+      templates: {
+        files: {
 
+          // '<%= config.app %>/js/templates.js': ['<%= config.app %>/js/test/templates/templates.js'],
+          '<%= config.app %>/js/templates.js': ['<%= config.app %>/js/templates.js'],
+        },
+        options: {
+            // relative path is rubbish - but will do until porting over to gulp
+          banner: 'var exports = (function () { \n\n var Handlebars = window.Handlebars; \n\n',
+          footer: '\n return this[\'JST\'];\n})();\n\nmodule.exports = exports;'
+        }
+        // dist: {
+        //   src: ['<%= config.app %>/scripts/templates/templates.js'],
+        //   dest: '<%= config.app %>/scripts/templates.js',
+          
+        // }
+      }
+    },
 
-	  // Copies remaining files to places other tasks can use
-	  copy: {
-	    dist: {
-	      files: [{
-	        expand: true,
-	        dot: true,
-	        cwd: '<%= config.app %>',
-	        dest: '<%= config.dist %>',
-	        src: [
-	          '*.{ico,png,txt}',
-	          'images/{,*/}*.webp',
-	          '{,*/}*.html',
-	          'styles/fonts/{,*/}*.*',
-	          'bower_components/fontawesome/fonts/fontawesome-webfont.ttf'
-	        ]
-	      }, {
-	        src: [
-	        	'bower_components/fontawesome/fonts/fontawesome-webfont.ttf'
-	        ],
-	        dest: '<%= config.dist %>/fonts/fontawesome-webfont.ttf'
-	      },{
-	        src: 'node_modules/apache-server-configs/dist/.htaccess',
-	        dest: '<%= config.dist %>/.htaccess'
-	      }, {
-	      	expand: true,
-	      	cwd: '<%= config.app %>/fonts',
-	        // src: '**/*.*',
-	        src: ['*.ttf'],
-	        dest: '<%= config.dist %>/fonts/'
-	      }]
-	    },
-	    // fontawesome: {
-	    // 	files: [{
-	    // 		cwd: 'bower_components/fontawesome.js',
-	    //     dest: '<%= config.dist %>',
-	    // 	}]
-	    // },
-	    styles: {
-	      expand: true,
-	      dot: true,
-	      cwd: '<%= config.app %>/styles',
-	      dest: '.tmp/styles/',
-	      src: '{,*/}*.css'
-	    }
-	  },
+    shell: {
+      buildjs: {
+        command: 'r.js -o <%= config.buildjs %>'
+      },
+      pushBuilt: {
+        command: (function(message){ 
+          if (typeof message === 'undefined') {
+            return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update @ '+ new Date().toLocaleString() +'" && git push -u origin master';
+          } else {
+            return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update: ' + message + '" && git push -u origin master';
+          }
+        })()
+      }
+    },
 
-	  // Generates a custom Modernizr build that includes only the tests you
-	  // reference in your app
-	  modernizr: {
-	    dist: {
-	      devFile: 'bower_components/modernizr/modernizr.js',
-	      outputFile: '<%= config.dist %>/scripts/vendor/modernizr.js',
-	      files: {
-	        src: [
-	          '<%= config.dist %>/scripts/{,*/}*.js',
-	          '<%= config.dist %>/styles/{,*/}*.css',
-	          '!<%= config.dist %>/scripts/vendor/*'
-	        ]
-	      },
-	      uglify: true
-	    }
-	  },
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.dist %>',
+          src: [
+            '*.{ico,png,jpg,txt}',
+            '{,*/}*.html',
+            '!html/**/*.*',
+            // 'js/**/*.js',
+            'js/vendor/*.js',
+            'js/bundle.js',
+            'styles/**/*.css',
+            'styles/fonts/{,*/}*.*'
+          ]}
+        ]
+      }
+    },
 
-	  // Run some tasks in parallel to speed up build process
-	  concurrent: {
-	    server: [
-	      'sass:server',
-	      'copy:styles'
-	    ],
-	    test: [
-	      'copy:styles'
-	    ],
-	    dist: [
-	      'sass',
-	      'copy:styles',
-	      'imagemin',
-	      'svgmin'
-	    ]
-	  }
+    browserify: {
+      server: {
+        options: {
+          browserifyOptions: {
+             debug: true
+          }
+        },
+        files: {
+          '<%= config.app %>/js/bundle.js': ['<%= config.app %>/js/main.js'],
+        }
+      },
+      dist: {
+        files: {
+          '<%= config.dist %>/js/bundle.js': ['<%= config.app %>/js/main.js'],
+        }
+      }
+    }
 
-	});
+  });
 
-	grunt.registerTask('serve', 'start the server and preview your app, --allow-remote for remote access', function (target) {
-	  if (grunt.option('allow-remote')) {
-	    grunt.config.set('connect.options.hostname', '0.0.0.0');
-	  }
-	  if (target === 'dist') {
-	    return grunt.task.run(['build', 'connect:dist:keepalive']);
-	  }
+	grunt.registerTask('serve', 'Start the front-end server', function(target){
+  	if (target === 'dist') {
+  		return grunt.task.run(['build', 'connect:dist:keepalive']);
+  	}
 
-	  grunt.task.run([
-	    'clean:server',
-	    // 'wiredep',
-	    // 'jshint:all',
-	    'handlebars',
-			'concat:templates',
-	    'concurrent:server',
-	    'autoprefixer',
-	    'connect:livereload',
-	    'watch'
-	  ]);
-	});
+  	grunt.task.run([
+  		'clean:server',
+  		'sass:server',
+  		'jshint',
+  		'connect:livereload',
+  		'watch'
+  	]);
+  }); // serve task end
 
-	grunt.registerTask('build', [
-	  'clean:dist',
-	  // 'wiredep',
-	  // 'useminPrepare',
-	  'concurrent:dist',
-	  'autoprefixer',
-	  'concat',
-	  'cssmin',
-	  'uglify',
-	  'copy:dist',
-	  'modernizr',
-	  // 'rev',
-	  // 'usemin',
-	  // 'htmlmin'
-	]);
-
-	grunt.registerTask('default', [
-		'handlebars'
-	]);
-
-	grunt.registerTask('pushBuilt', [
-		'shell:pushBuilt'
-	]);
+  grunt.registerTask('build', [
+  	'clean:dist',
+  	'cssmin',
+  	'uglify',
+  	'copy:dist'
+  ]);
 
 	grunt.registerTask('export', [
-		'copy:dist',
-		'handlebars',
-		'concat:templates',
-		'sass:export',
-	  'shell:buildjs',
-	  'replace:require'
+    'clean:dist',
+    'sass:export',
+		'copy:dist'
 	]);
 
-};
+  grunt.registerTask('devpush', [
+    'export',
+    'sftp-deploy:dev'
+  ]);
 
+  grunt.registerTask('default', [
+    'serve'
+  ]);
+
+};

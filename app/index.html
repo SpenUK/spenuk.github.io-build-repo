@@ -1,128 +1,67 @@
-<html>
-<head>
-	<title>Spen Taylor</title>
-	<link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css" />
-	<link rel="stylesheet" type="text/css" href="styles/main.css">
-</head>
-<body>
-	
-	<div id="window-wrapper" class="">
-		<!-- AbovePage: Used for info bars etc. -->
-		<!-- Slides whole page down including header -->
-		<div id="above-page"></div>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<html class="block-initial-transition">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- Header -->
-		<div id="header-wrapper">
-			<div class="grid-container">
-				<div class="header"> 
-					<a href="#/">
-						<div class="logo">
-							<h1>ST</h1>
-						</div>
-					</a>
-					<!-- <div class="dismiss-button show"> -->
-							<!-- <i class="fa fa-bars fa-2x"></i> -->
-					<!-- </div> -->
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-					<div class="header-dropdown">
-						<h1 class="current-page-title">Current Page</h1>
-						<!-- <ul>
-							<li><a href="#/test">test page</a></li>
-							<li><a href="#/nestedGrids">Nested Grids</a></li>
-							<li><a href="#/blog">Blog</a></li>
-							<li><a href="#/test2">Projects</a></li>
-							<li><a href="#/test3">Other shit</a></li>
-							<li><a href="#/test4">Other shit</a></li>
-						</ul> -->
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Header End -->
+        <link rel="stylesheet" href="styles/fontawesome/css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="styles/css/main.css">
 
-		<!-- <div id="push-wrapper" class="side-bar-hidden"> -->
-<!-- 			<div class="off-canvas-wrap" data-offcanvas>
+    </head>
 
-				<nav class="tab-bar">
-		      <section class="left-small">
-		        <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
-		      </section>
-		    </nav>
+<!-- <body class="intro-landing"> -->
+<body >
+  <div class="page-wrap">
 
-				<aside class="left-off-canvas-menu">
-		      <ul class="off-canvas-list">
-		        <li><label>Foundation</label></li>
-		        <li><a href="#">The Psychohistorians</a></li>
-		        <li><a href="#">...</a></li>
-		      </ul>
-		    </aside>
+    <!-- <div class="inner-wrapper"> -->
+    	<div class="landing">
+        <!-- <div class="vertical-fix"></div> -->
+        <div class="cell">
+      		<div class="landing-content" id="landing">
+            <p>Intro Content</p>
+      		</div>
+        </div>
+    	</div>
+      <div class="content-wrapper">
+        <div class="header">
 
-				<!-- Page Content -->
-				<!-- <div id="page-wrapper"> -->
+        </div>    	 
+      	<div class="main">
+          <div class="content" id="main">
+            Main content
+          </div>
+      	</div>
+      </div>
+    <!-- </div> -->
+  </div>
 
-				<!-- </div> -->
-				<!-- Page Content End -->
 
-			<!-- </div> -->
-			<!-- </div> -->
+<script type="text/javascript" src="js/vendor/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="js/vendor/underscore.js"></script>
+<script type="text/javascript" src="js/vendor/backbone.js"></script>>
+<script type="text/javascript" src="js/vendor/handlebars.js"></script>
 
-				<!-- A 200% by 200% box used for sliding page transitions -->
-			<!-- <div id="transition-container"> -->
+<!-- <script type="text/javascript" src="js/router.js"></script> -->
+<!-- <script type="text/javascript" src="js/main.js"></script> -->
+<script type="text/javascript" src="js/bundle.js"></script>
+<script type="text/javascript">
 
-			<!-- <div id="push-wrapper" class="side-bar-hidden"> -->
 
-				<!-- <div id="side-bar" class="hidden">
-					<div class="dismiss-button show"></div>
+</script>
+			<script type="text/javascript" ></script>
 
-					<ul>
-						<li><a href="#/test"><i class="fa fa-code fa-2x"></i></a></li>
-						<li><a href="#/nestedGrids"><i class="fa fa-search fa-2x"></i></a></li>
-						<li><a href="#/blog"><i class="fa fa-edit fa-2x"></i></a></li>
-						<li><a href="#/test3"><i class="fa fa-facebook fa-2x"></i></a></li>
-						<li><a href="#/test4"><i class="fa fa-twitter fa-2x"></i></a></li>
-						<li><i class="fa fa-google-plus fa-2x"></i></li>
-					</ul>
-				</div> -->
+			<!-- Page Specific Scripts -->
+			<!-- To be built into GruntFile for dynamic inclusions -->
 
-				<!-- Page Content -->
-				<div id="page-wrapper">
 
-				  <div class='page'></div>
-				  <!-- <div class='pageTransition2'></div> -->
-
-					<div class="clearfix"></div>
-				</div>
-				<!-- Page Content End -->
-
-			<!-- </div> -->
-
-			<!-- </div> -->
-
-		<!-- Footer is outside of page-wrapper to allow it to be 'sticky' -->
-		<div id="footer-wrapper">
-			<div class="footer"></div>
-		</div>
-		<!-- Footer End -->
-
-	</div>
-
-	<!-- Modal: Overlays the entire page at 100%-100% -->
-	<div id="modal">
-		<div class="modal__shader"></div>
-		<div class="modal__container">
-			<div class="modal__button--dismiss"></div>
-		</div>
-	</div>
-	<!-- Modal end ===================================-->
-
-	<!-- Making SVG filter(s) filter available for use in CSS -->
-	<svg version="1.1" xmlns="http://www.w3.org/2000/svgf">
-    <filter id="blur">
-        <feGaussianBlur stdDeviation="50" />
-    </filter>
-	</svg>
-	<!-- SVG filters -->
-
-	<script src="bower_components/requirejs/require.js" data-main="scripts/main.js"></script>
-</body>
+      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+   </body>
 </html>

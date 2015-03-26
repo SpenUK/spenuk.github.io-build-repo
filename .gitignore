@@ -1,7 +1,15 @@
 node_modules
 dist
+.ftppass
 .tmp
 .sass-cache
 bower_components
 .DS_Store
 *BU.*
+*.css
+*.css.map
+.idea
+
+npm-debug.log
+
+app/styles/css
