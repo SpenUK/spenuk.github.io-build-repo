@@ -1,0 +1,59 @@
+$header-height: 60px;
+$landing-trans-time: 1s;
+
+ body {
+  .go-prev, .go-next {
+    transition: all 0.3s ease;
+    transition-delay: $landing-trans-time;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: 1em;
+    height: 100%;
+    width: $header-height;
+    i, p {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    i {
+      // transition: all 0.3s ease;
+      height: $header-height;
+      width: $header-height;
+      line-height: $header-height;
+    }
+    
+  }
+
+  .go-prev {
+    float: left;
+    margin-left: -$header-height;
+
+    &:hover {
+      i {
+        font-size: 1.4em;
+      }
+    }
+  }
+
+  .go-next {
+    float: right;
+    margin-right: -$header-height;
+
+    &:hover {
+      i {
+        font-size: 1.4em;
+      }
+    }
+  }
+
+  &.content {
+    .go-prev {
+      margin-left: 0;  
+    }
+
+    .go-next {
+      margin-right: 0;  
+    }
+  }
+}

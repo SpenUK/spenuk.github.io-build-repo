@@ -1,0 +1,63 @@
+$theme1main: $header-color;
+$theme1UI: $white;
+$theme1text: $black;
+$theme1contrast: $contrast-color-1;
+
+$theme2main: rgba(40,110,160,1);
+$theme2UI: rgba(200,200,200,1);
+$theme2text: rgba(40,40,40,1);
+$theme2contrast: rgba(255,80,80,1);
+
+$theme3main: rgba(200,230,245,0.1);
+$theme3UI: $contrast-color-1;
+$theme3text: $black;
+$theme3contrast: $header-color;
+
+$theme4main: rgba(100,200,180,1);
+$theme4UI: $white;
+$theme4text: rgba(245,245,245,1);
+$theme4contrast: rgba(245,245,245,1);
+
+
+
+
+
+body.content.theme-1 {
+	.header {
+		background-color: $theme1main;
+
+		i {
+			color: $theme1UI;
+		}
+	}
+}
+
+body.content.theme-2 {
+	.header {
+		background-color: $theme2main;
+
+		i {
+			color: $theme2UI;
+		}
+	}
+}
+
+body.content.theme-3 {
+	.header {
+		background-color: $theme3main;
+
+		i {
+			color: $theme3UI;
+		}
+	}
+}
+
+body.content.theme-4 {
+	.header {
+		background-color: $theme4main;
+
+		i {
+			color: $theme4UI;
+		}
+	}
+}

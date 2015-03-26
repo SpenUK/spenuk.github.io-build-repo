@@ -1,0 +1,57 @@
+* {
+	box-sizing: border-box;
+	text-decoration: none;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: $background-color;
+  position: relative;
+  color: #222;
+  font-family: $default-font-family;
+  overflow-x: hidden;
+  // background-image: url(../images/background-repeat.jpg);
+  // background-position: 0 0;
+  // background-size: 100%;
+  // background-repeat: repeat-y;
+}
+
+body.no-scroll, 
+html.no-scroll {
+	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	// max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: $black;
+}
+
+ul {
+	padding-left: 0;
+	list-style: none;
+}
+
+fieldset {
+	border: none;
+}
+
+.page-wrap {
+	position: relative;
+	z-index: 5;
+	padding-bottom: 40px;
+
+	.bottom-shadow {
+    background-color: #000;
+    opacity: 0.2;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
