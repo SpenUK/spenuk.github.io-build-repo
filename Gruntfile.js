@@ -10,6 +10,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-shell');
 
   grunt.loadNpmTasks('grunt-contrib-handlebars');
 
@@ -20,8 +21,8 @@ module.exports = function (grunt) {
 	// Configurable paths
   var config = {
     app: 'app',
-    dist: 'dist',
-    build: 'build.js',
+    dist: '../spenuk.github.io',
+    // build: 'build.js',
     jsfolder: '/js',
     sassfolder: '/styles/sass',
     cssfolder: '/styles/css'
@@ -241,9 +242,6 @@ module.exports = function (grunt) {
     },
 
     shell: {
-      buildjs: {
-        command: 'r.js -o <%= config.buildjs %>'
-      },
       pushBuilt: {
         command: (function(message){ 
           if (typeof message === 'undefined') {
@@ -264,13 +262,17 @@ module.exports = function (grunt) {
           dest: '<%= config.dist %>',
           src: [
             '*.{ico,png,jpg,txt}',
+            '*.{eot,svg,ttf,woff,otf}',
+            'index.html',
             '{,*/}*.html',
             '!html/**/*.*',
             // 'js/**/*.js',
             'js/vendor/*.js',
             'js/bundle.js',
             'styles/**/*.css',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'styles/fontawesome/fonts/{,*/}*.*'
+
           ]}
         ]
       }
@@ -322,6 +324,11 @@ module.exports = function (grunt) {
     'sass:export',
 		'copy:dist'
 	]);
+
+  grunt.registerTask('pushBuilt', [
+    'export',
+    'shell:pushBuilt'
+  ]);
 
   grunt.registerTask('devpush', [
     'export',

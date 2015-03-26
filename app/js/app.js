@@ -16,10 +16,7 @@ var App = {
     blog: require('./views/blog-post.js'),
     projects: require('./views/project.js'),
     contact: require('./views/contact.js'),
-    about: require('./views/about.js'),
-    ui: {
-      header: require('./views/ui/header.js')
-    }
+    about: require('./views/about.js')
   },
 
 

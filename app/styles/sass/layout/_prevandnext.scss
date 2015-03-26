@@ -34,6 +34,10 @@ $landing-trans-time: 1s;
         font-size: 1.4em;
       }
     }
+
+    &.hide {
+      margin-left: 0;
+    }
   }
 
   .go-next {
@@ -44,6 +48,10 @@ $landing-trans-time: 1s;
       i {
         font-size: 1.4em;
       }
+    }
+
+    &.hide {
+      margin-right: 0;
     }
   }
 

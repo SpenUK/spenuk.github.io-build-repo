@@ -1,13 +1,5 @@
 'use strict';
 
-
-// swap this junk out for a proper
-var landingHandler = function(){
-	landingHandler = function(){
-		$('.block-initial-transition').removeClass('block-initial-transition');
-	};
-};
-
 var AppRouter = window.Backbone.Router.extend({
 	routes: {
 		'': 'root',
@@ -23,16 +15,16 @@ var AppRouter = window.Backbone.Router.extend({
 		this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
 
 		this.currentContentRoute = this.defaultContentRoute();
-
-		this.on('route', function(){
-			landingHandler();
-		});
 		
 		this.on('route:root' ,function(){
+
   		new context.views.intro({
   			model: {},
   			template: context.templates.intro
   		});
+  		
+			console.log('before the after');
+			this.afterRoute();
 		});
 
 		this.on('route:blog' ,function(slug){
@@ -59,7 +51,9 @@ var AppRouter = window.Backbone.Router.extend({
   		}
 
 			this.currentContentRoute = window.Backbone.history.fragment;
-
+			
+			console.log('before the after');
+			this.afterRoute();
 		});
 
 		this.on('route:projects' ,function(slug){
@@ -87,6 +81,9 @@ var AppRouter = window.Backbone.Router.extend({
 
 
   		this.currentContentRoute = window.Backbone.history.fragment;
+  		
+			console.log('before the after');
+			this.afterRoute();
 		});
 
 		this.on('route:contact' ,function(){
@@ -101,6 +98,9 @@ var AppRouter = window.Backbone.Router.extend({
   		context.views.contact.render();
   		// this.currentContent = context.views.contact;
   		this.currentContentRoute = window.Backbone.history.fragment;
+  		
+			console.log('before the after');
+			this.afterRoute();
 		});
 
 		this.on('route:about' ,function(){
@@ -114,9 +114,12 @@ var AppRouter = window.Backbone.Router.extend({
 
   		context.views.about.render();
   		this.currentContentRoute = window.Backbone.history.fragment;
+  		
 		});
 
 		this.on('route:defaultRoute', function(){
+			console.log('before the after');
+			this.afterRoute();
 		});
 
 		window.Backbone.history.start();
@@ -129,7 +132,11 @@ var AppRouter = window.Backbone.Router.extend({
 	defaultContentRoute: function () {
 		return 'about';
 	},
-
+	afterRoute: function (){
+		// $('.block-initial-transition').removeClass('block-initial-transition');
+		console.log('after');
+		// $('html').addClass('initialized');
+	},
 	redirect: function(route){
 		console.log('redirect');
 		this.navigate(route);

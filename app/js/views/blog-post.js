@@ -35,10 +35,13 @@ module.exports = window.Backbone.View.extend({
 			this.position = this.collection.indexOf(this.currentRecord);
 		}
 
-		window.Backbone.trigger('ui:updateHeader', {
-			prevLink: this.prevRoute(),
-			nextLink: this.nextRoute()
-		});
+		// window.Backbone.trigger('ui:updateHeader', {
+		// 	prevLink: this.prevRoute(),
+		// 	nextLink: this.nextRoute()
+		// });
+	
+		window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
+		window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
 
 		window.Backbone.trigger('ui:showContent');
 

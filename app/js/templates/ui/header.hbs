@@ -5,14 +5,11 @@
 </div>
 
 <div class="header-content">
-  <!-- <div class="vertical-fix"></div> -->
-  {{#if prevLink}}
-    <a href="{{prevLink}}">
+    <a class="go-prev-button" {{#if prevLink}} href="{{prevLink}}" {{ else }} class="hidden"{{/if}}>
       <div class="icon go-prev">
         <i class="fa fa-chevron-left"></i>
       </div>
     </a>
-  {{/if}}
   
   <a href="#">
     <div class="icon menu">
@@ -20,11 +17,11 @@
     </div>
   </a>
 
-  {{#if nextLink}}
-    <a href="{{nextLink}}">
+  
+    <a class="go-next-button" {{#if nextLink}} href="{{nextLink}}" {{ else }} class="hidden"{{/if}}>
       <div class="icon go-next">
         <i class="fa fa-chevron-right"></i>
       </div>
     </a>
-  {{/if}}
+  
 </div>
