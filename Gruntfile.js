@@ -177,6 +177,9 @@ module.exports = function (grunt) {
 
   	sass: {
   		dist: {
+        options: {
+          sourcemap: 'none'
+        },
   			files: [{
   				expand: true,
   				cwd: '<%= config.app %><%= config.sassfolder %>',

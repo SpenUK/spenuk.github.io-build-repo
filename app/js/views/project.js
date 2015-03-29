@@ -46,6 +46,7 @@ module.exports = window.Backbone.View.extend({
 		}
 
 		window.Backbone.trigger('ui:showContent');
+		window.Backbone.trigger('page:setNamespace', this.namespace );
 		return this;
 	},
 	setListeners: function(){

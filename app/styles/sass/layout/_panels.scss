@@ -1,0 +1,7 @@
+$box-shadow: 0 4px 0 rgba(0,0,0,.1);
+
+.panel {
+	background-color: $white;
+	padding: 2em 4em;
+	box-shadow: $box-shadow;
+}

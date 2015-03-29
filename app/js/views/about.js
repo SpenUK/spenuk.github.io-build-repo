@@ -10,11 +10,13 @@ module.exports = window.Backbone.View.extend({
 
 		console.log('render about');
 
-		window.Backbone.trigger('ui:showContent');
+		
 		this.$el.html(this.template(options));
 
 		window.Backbone.trigger('ui:updatePrev');
 		window.Backbone.trigger('ui:updateNext');
+		window.Backbone.trigger('ui:showContent');
+		window.Backbone.trigger('page:setNamespace', this.namespace );	
 
 		return this;
 	},

@@ -11,9 +11,17 @@ body {
   min-height: 100%;
   background-color: $background-color;
   position: relative;
-  color: #222;
+  color: $black;
   font-family: $default-font-family;
   overflow-x: hidden;
+}
+
+p {
+	font-size: 1.2em;
+}
+
+h2 {
+	font-size: 1.8em;
 }
 
 body.no-scroll, 

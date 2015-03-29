@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = window.Backbone.View.extend({
+	namespace: 'intro',
 	initialize: function(options){
 		options = options || {};
 		this.template = options.template;
@@ -10,7 +11,7 @@ module.exports = window.Backbone.View.extend({
 		options = options;
 		console.log('rendering intro');
 		this.$el.html(this.template());
-		$('body').addClass('intro').removeClass('content');
+		window.Backbone.trigger('page:setNamespace', this.namespace);
 
 	},
 	setListeners: function(){

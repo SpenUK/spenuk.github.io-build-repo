@@ -1,6 +1,6 @@
 'use strict';
 
-var articleStubs = require('../blog-post-stubs2.js');
+var articleStubs = require('../blog-post-stubs.js');
 var ArticleCollection = require('../collections/blog-posts.js');
 
 module.exports = window.Backbone.View.extend({
@@ -61,6 +61,7 @@ module.exports = window.Backbone.View.extend({
 			this.$el.html(this.stringToRender());	
 		}
 		window.Backbone.trigger('ui:showContent');
+		window.Backbone.trigger('page:setNamespace', this.namespace );	
 
 		
 		return this;

@@ -12,6 +12,7 @@ module.exports = window.Backbone.View.extend({
 
 		window.Backbone.trigger('ui:updatePrev');
 		window.Backbone.trigger('ui:updateNext');
+		window.Backbone.trigger('page:setNamespace', this.namespace );
 
 		return this;
 	},
