@@ -79,15 +79,11 @@ module.exports = window.Backbone.View.extend({
 
 		var transitions = this.transitions;
 
-		function next(content){console.log('trans next');transitions.next(content);}
-		function prev(content){transitions.prev(content);}
 		function render(content){transitions.render(content);}
 
 		this.listenTo(window.Backbone, 'ui:showContent', this.showContent);
 		this.listenTo(window.Backbone, 'ui:showIntro', this.showIntro);
 
-		this.listenTo(window.Backbone, 'transition:next', next);
-		this.listenTo(window.Backbone, 'transition:prev', prev);
 		this.listenTo(window.Backbone, 'transition:render', render);
 
 	}

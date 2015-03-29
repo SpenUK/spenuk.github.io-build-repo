@@ -40,9 +40,13 @@ module.exports = window.Backbone.View.extend({
 		window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
 		window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
 
-		window.Backbone.trigger('ui:showContent');
+		if (options.transition) {
+			window.Backbone.trigger('transition:render', { content: this.stringToRender()});	
+		} else {
+			this.$el.html(this.stringToRender());	
+		}
 
-		this.$el.html(this.stringToRender());
+		window.Backbone.trigger('ui:showContent');
 		return this;
 	},
 	setListeners: function(){
@@ -60,17 +64,21 @@ module.exports = window.Backbone.View.extend({
 
 		return this;
 	},
-	nextRoute: function(){
+	getNextModel: function(){
 		var collection = this.collection;
 		var targetIndex = (this.position +1 > collection.length -1)?  0 : this.position + 1;
-		var nextSlug = collection.at(targetIndex).get('slug');
-		return '#/projects/' + nextSlug;
+		return collection.at(targetIndex);
 	},
-	prevRoute: function(){
+	getPrevModel: function(){
 		var collection = this.collection;
 		var targetIndex = (this.position -1 < 0) ? collection.length -1 : this.position - 1;
-		var prevSlug = collection.at(targetIndex).get('slug');
-		return '#/projects/' + prevSlug;
+		return collection.at(targetIndex);
+	},
+	nextRoute: function(){
+		return '#/'+ this.namespace +'/' + this.getNextModel().get('slug');
+	},
+	prevRoute: function(){
+		return '#/'+ this.namespace +'/' + this.getPrevModel().get('slug');
 	},
 	checkSlug: function(slug){
 		return (this.collection.where({slug: slug}).length >= 1);
