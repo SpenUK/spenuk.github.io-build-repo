@@ -168,6 +168,7 @@ module.exports = function (grunt) {
         '!<%= config.app %>/js/vendor/**/*.*',
         '!<%= config.app %>/js/bundle.js',
         '!<%= config.app %>/js/blog-post-stubs.js',
+        '!<%= config.app %>/js/blog-post-stubs2.js',
         '!<%= config.app %>/js/templates.js'
         
   		]

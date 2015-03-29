@@ -10,6 +10,7 @@ $landing-trans-time: 1s;
     font-size: 1em;
     height: 100%;
     width: $header-height;
+    position: absolute;
     i, p {
       display: inline-block;
       vertical-align: middle;
@@ -25,7 +26,8 @@ $landing-trans-time: 1s;
   }
 
   .go-prev {
-    float: left;
+    // float: left;
+    left: 0; top: 0;
     margin-left: -$header-height;
 
     &:hover {
@@ -37,7 +39,8 @@ $landing-trans-time: 1s;
   }
 
   .go-next {
-    float: right;
+    // float: right;
+    right: 0; top: 0;
     margin-right: -$header-height;
 
     &:hover {

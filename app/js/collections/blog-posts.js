@@ -8,7 +8,7 @@ module.exports = window.Backbone.Collection.extend({
 	totalRecords: 0,
 	isLoading: false,
   url: function(){
-  	return 'http://public-api.wordpress.com/rest/v1/sites/ijustwanttotesttheapi.wordpress.com/posts';
+  	return 'http://public-api.wordpress.com/rest/v1.1/sites/ijustwanttotesttheapi.wordpress.com/posts';
   },
   parse: function(response){ //, xhr
   	this.totalRecords = response.found;

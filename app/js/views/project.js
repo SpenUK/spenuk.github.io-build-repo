@@ -65,19 +65,19 @@ module.exports = window.Backbone.View.extend({
 	},
 	getNextModel: function(){
 		var collection = this.collection;
-		var targetIndex = (this.position +1 > collection.length -1)?  0 : this.position + 1;
-		return collection.at(targetIndex);
+		return collection.at((this.position +1 > collection.length -1)?  false : this.position + 1);
 	},
 	getPrevModel: function(){
 		var collection = this.collection;
-		var targetIndex = (this.position -1 < 0) ? collection.length -1 : this.position - 1;
-		return collection.at(targetIndex);
+		return collection.at((this.position -1 < 0) ? false : this.position - 1);
 	},
 	nextRoute: function(){
-		return '#/'+ this.namespace +'/' + this.getNextModel().get('slug');
+		var model = this.getNextModel();
+		return model? '#/'+ this.namespace +'/' + model.get('slug') : false;
 	},
 	prevRoute: function(){
-		return '#/'+ this.namespace +'/' + this.getPrevModel().get('slug');
+		var model = this.getPrevModel();
+		return model? '#/'+ this.namespace +'/' + model.get('slug') : false;
 	},
 	checkSlug: function(slug){
 		return (this.collection.where({slug: slug}).length >= 1);
@@ -86,7 +86,6 @@ module.exports = window.Backbone.View.extend({
 		return this.currentRecord ? this.currentRecord.get('slug') : this.collection.first().get('slug');
 	},
 	defaultRoute: function(){
-		var thing = this.defaultSlug();
 		return '/projects/' + this.defaultSlug();
 	}
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-var articleStubs = require('../blog-post-stubs.js');
+var articleStubs = require('../blog-post-stubs2.js');
 var ArticleCollection = require('../collections/blog-posts.js');
 
 module.exports = window.Backbone.View.extend({
@@ -10,7 +10,24 @@ module.exports = window.Backbone.View.extend({
 		// collection = collection;
 		this.initialized = true;
 
-		this.addStubs();
+		if (false) {
+			collection.fetch({
+  			remove: false,
+				success: function(){
+					window.Backbone.trigger('ui:stopLoadingIndicators');
+				},
+				error: function(){
+					window.Backbone.trigger('ui:stopLoadingIndicators');
+				}
+			});
+		} else {
+			this.addStubs();
+		}
+
+		window.blogC = collection;
+
+		console.log({collection: collection});
+		
 		this.template = options.template;
 
 
@@ -60,24 +77,23 @@ module.exports = window.Backbone.View.extend({
 				collection.add(record);
 			}
 		}
-
 		return this;
 	},
 	getNextModel: function(){
 		var collection = this.collection;
-		var targetIndex = (this.position +1 > collection.length -1)?  0 : this.position + 1;
-		return collection.at(targetIndex);
+		return collection.at((this.position +1 > collection.length -1)?  false : this.position + 1);
 	},
 	getPrevModel: function(){
 		var collection = this.collection;
-		var targetIndex = (this.position -1 < 0) ? collection.length -1 : this.position - 1;
-		return collection.at(targetIndex);
+		return collection.at((this.position -1 < 0) ? false : this.position - 1);
 	},
 	nextRoute: function(){
-		return '#/'+ this.namespace +'/' + this.getNextModel().get('slug');
+		var model = this.getNextModel();
+		return model? '#/'+ this.namespace +'/' + model.get('slug') : false;
 	},
 	prevRoute: function(){
-		return '#/'+ this.namespace +'/' + this.getPrevModel().get('slug');
+		var model = this.getPrevModel();
+		return model? '#/'+ this.namespace +'/' + model.get('slug') : false;
 	},
 	checkSlug: function(slug){
 		return (this.collection.where({slug: slug}).length >= 1);

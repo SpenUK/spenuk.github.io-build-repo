@@ -2,7 +2,9 @@
 
 var afterTrans = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
 
+
 function transitions (options) {
+	/*jshint validthis:true */
 	this.container = options.container;
 	this.content = options.content;
 	this.transitionClass = options.transitionClass;
