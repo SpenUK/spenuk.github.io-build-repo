@@ -21,7 +21,6 @@ function transitions (options) {
 		$target.html(content);
 
 		this.animating = true;
-		console.log(this.animating);
 		window.setTimeout(function(){
 			$container.addClass('animating-next').removeClass('animating-prev').one(afterTrans, function(){
 				$container.removeClass('animating-next');
@@ -34,7 +33,7 @@ function transitions (options) {
 	this.prev = function(content){
 		if (this.animating) {return false; }
 		var $container = $(this.container);
-		var $target = $container.find(this.transitioner);
+		var $target = $container.find(this.transitionClass);
 		var this_ = this;
 
 		$target.html(content);

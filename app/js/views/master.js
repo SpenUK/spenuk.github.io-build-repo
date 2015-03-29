@@ -54,13 +54,11 @@ module.exports = window.Backbone.View.extend({
 	},
 	nextContent: function(e){
 		e.preventDefault();
-		console.log('nextContent');
 		this.transitions.direction = 'next';
 		window.Backbone.trigger('router:nextContent');
 	},
 	prevContent: function(e){
 		e.preventDefault();
-		console.log('prevContent');
 		this.transitions.direction = 'prev';
 		window.Backbone.trigger('router:prevContent');
 	},

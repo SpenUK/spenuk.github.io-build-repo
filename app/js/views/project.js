@@ -3,11 +3,10 @@
 var projectStubs = require('../projects-stubs.js');
 var ProjectCollection = require('../collections/projects.js');
 
-module.exports = window.Backbone.View.extend({
+module.exports = window.Backbone.View.extend({	
 	namespace: 'projects',
 	initialize: function(options){
 		var collection = this.collection = new ProjectCollection();
-		// collection = collection;
 		this.initialized = true;
 
 		this.addStubs();
@@ -41,7 +40,7 @@ module.exports = window.Backbone.View.extend({
 		window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
 
 		if (options.transition) {
-			window.Backbone.trigger('transition:render', { content: this.stringToRender()});	
+			window.Backbone.trigger('transition:render', this.stringToRender() );	
 		} else {
 			this.$el.html(this.stringToRender());	
 		}
@@ -84,12 +83,10 @@ module.exports = window.Backbone.View.extend({
 		return (this.collection.where({slug: slug}).length >= 1);
 	},
 	defaultSlug: function(){
-		console.log(this.collection);
 		return this.currentRecord ? this.currentRecord.get('slug') : this.collection.first().get('slug');
 	},
 	defaultRoute: function(){
 		var thing = this.defaultSlug();
-		console.log(thing);
 		return '/projects/' + this.defaultSlug();
 	}
 });

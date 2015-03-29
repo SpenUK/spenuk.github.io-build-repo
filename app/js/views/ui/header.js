@@ -7,7 +7,6 @@ module.exports = window.Backbone.View.extend({
 		this.template = options.template;
 		this.render({});
 		this.setListeners();
-		console.log('header view');
 	},
 	render: function(options){
 		this.$el.html(this.template(options));
