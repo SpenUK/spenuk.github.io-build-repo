@@ -4,6 +4,7 @@ var articleStubs = require('../blog-post-stubs.js');
 var ArticleCollection = require('../collections/blog-posts.js');
 
 module.exports = window.Backbone.View.extend({
+	namespace: 'blog',
 	initialize: function(options){
 		var collection = this.collection = new ArticleCollection();
 		// collection = collection;
@@ -35,17 +36,16 @@ module.exports = window.Backbone.View.extend({
 			this.position = this.collection.indexOf(this.currentRecord);
 		}
 
-		// window.Backbone.trigger('ui:updateHeader', {
-		// 	prevLink: this.prevRoute(),
-		// 	nextLink: this.nextRoute()
-		// });
+		console.log('blog render');
 	
 		window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
 		window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
 
+
+		window.Backbone.trigger('transition:render', { content: this.stringToRender()});
 		window.Backbone.trigger('ui:showContent');
 
-		this.$el.html(this.stringToRender());
+		
 		return this;
 	},
 	setListeners: function(){
@@ -62,6 +62,18 @@ module.exports = window.Backbone.View.extend({
 		}
 
 		return this;
+	},
+	getNextModel: function(){
+		var collection = this.collection;
+		var targetIndex = (this.position +1 > collection.length -1)?  0 : this.position + 1;
+		console.log(collection.at(targetIndex));
+		return collection.at(targetIndex);
+	},
+	getPrevModel: function(){
+		var collection = this.collection;
+		var targetIndex = (this.position -1 < 0) ? collection.length -1 : this.position - 1;
+		console.log(collection.at(targetIndex));
+		return collection.at(targetIndex);
 	},
 	nextRoute: function(){
 		var collection = this.collection;

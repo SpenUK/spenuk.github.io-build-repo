@@ -1,5 +1,7 @@
 'use strict';
 
+var _=window._;
+
 var AppRouter = window.Backbone.Router.extend({
 	routes: {
 		'': 'root',
@@ -13,6 +15,8 @@ var AppRouter = window.Backbone.Router.extend({
 
 		this.listenTo(window.Backbone, 'router:redirect', this.redirect);
 		this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
+		this.listenTo(window.Backbone, 'router:nextContent', this.goToNextContent);
+		this.listenTo(window.Backbone, 'router:prevContent', this.goToPrevContent);
 
 		this.currentContentRoute = this.defaultContentRoute();
 		
@@ -23,11 +27,11 @@ var AppRouter = window.Backbone.Router.extend({
   			template: context.templates.intro
   		});
   		
-			console.log('before the after');
-			this.afterRoute();
 		});
 
 		this.on('route:blog' ,function(slug){
+
+			// var options = (arguments[1] || {});
 
 			if (!context.views.blog.initialized) {
 				context.views.blog = new context.views.blog({
@@ -51,12 +55,13 @@ var AppRouter = window.Backbone.Router.extend({
   		}
 
 			this.currentContentRoute = window.Backbone.history.fragment;
+			this.currentContentView = context.views.blog;
 			
-			console.log('before the after');
-			this.afterRoute();
 		});
 
 		this.on('route:projects' ,function(slug){
+
+			var options = (arguments[1] || {});
 
 			if (!context.views.projects.initialized) {
 				context.views.projects = new context.views.projects({
@@ -73,17 +78,15 @@ var AppRouter = window.Backbone.Router.extend({
   			context.views.projects.render({slug: slug});
   		} else {
   			if (context.views.projects.checkSlug(slug)) {
-  				context.views.projects.render({slug: slug});
+  				context.views.projects.render({slug: slug, transition: options.transition});
   			} else {
-  				context.views.projects.render({});
+  				context.views.projects.render({transition: options.transition});
   			}
   		}
 
-
   		this.currentContentRoute = window.Backbone.history.fragment;
+  		this.currentContentView = context.views.projects;
   		
-			console.log('before the after');
-			this.afterRoute();
 		});
 
 		this.on('route:contact' ,function(){
@@ -96,11 +99,9 @@ var AppRouter = window.Backbone.Router.extend({
 			}
 
   		context.views.contact.render();
-  		// this.currentContent = context.views.contact;
   		this.currentContentRoute = window.Backbone.history.fragment;
+  		this.currentContentView = context.views.contact;
   		
-			console.log('before the after');
-			this.afterRoute();
 		});
 
 		this.on('route:about' ,function(){
@@ -114,12 +115,11 @@ var AppRouter = window.Backbone.Router.extend({
 
   		context.views.about.render();
   		this.currentContentRoute = window.Backbone.history.fragment;
+  		this.currentContentView = context.views.about;
   		
 		});
 
 		this.on('route:defaultRoute', function(){
-			console.log('before the after');
-			this.afterRoute();
 		});
 
 		window.Backbone.history.start();
@@ -127,18 +127,48 @@ var AppRouter = window.Backbone.Router.extend({
 	},
 	goToCurrentContent: function () {
 		this.navigate(this.currentContentRoute);
+	},
+	goToPrevContent: function () {
+		if (!_.isFunction(this.currentContentView.getPrevModel)) { return false; }
+		// var route = this.currentContentView.namespace;
+		var route = this.currentContentView.prevRoute();
+		// var slug = this.currentContentView.getPrevModel().get('slug');
+		// this.trigger('route:' + route, slug, {transition: 'prev'});
+		this.navigate(route);
 
+		// return {slug: slug, route: 'route:'+ route, v: this.currentContentView};
+	},
+	goToNextContent: function () {
+		if (!_.isFunction(this.currentContentView.getNextModel)) { return false; }
+		// var route = this.currentContentView.namespace;
+		var route = this.currentContentView.nextRoute();
+		// var slug = this.currentContentView.getNextModel().get('slug');
+		// this.trigger('route:' + route, slug, {transition: 'next'});
+		// console.log(route);
+		this.navigate(route, {trigger: true}, {lalala: 9});
+
+		// return {slug: slug, route: 'route:'+ route, v: this.currentContentView};
+	},
+	goToNextContent2: function () {
+		if (!_.isFunction(this.currentContentView.getNextModel)) { return false; }
+		var route = this.currentContentView.namespace;
+		var slug = this.currentContentView.getNextModel().get('slug');
+		this.trigger('route:' + route, slug, {transition: 'next'});
+
+		return {slug: slug, route: 'route:'+ route, v: this.currentContentView};
+	},
+	goToPrevContent2: function () {
+		if (!_.isFunction(this.currentContentView.getPrevModel)) { return false; }
+		var route = this.currentContentView.namespace;
+		var slug = this.currentContentView.getPrevModel().get('slug');
+		this.trigger('route:' + route, slug, {transition: 'prev'});
+
+		return {slug: slug, route: 'route:'+ route, v: this.currentContentView};
 	},
 	defaultContentRoute: function () {
-		return 'about';
-	},
-	afterRoute: function (){
-		// $('.block-initial-transition').removeClass('block-initial-transition');
-		console.log('after');
-		// $('html').addClass('initialized');
+		return '#/about';
 	},
 	redirect: function(route){
-		console.log('redirect');
 		this.navigate(route);
 	}
 

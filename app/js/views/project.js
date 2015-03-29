@@ -4,6 +4,7 @@ var projectStubs = require('../projects-stubs.js');
 var ProjectCollection = require('../collections/projects.js');
 
 module.exports = window.Backbone.View.extend({
+	namespace: 'projects',
 	initialize: function(options){
 		var collection = this.collection = new ProjectCollection();
 		// collection = collection;

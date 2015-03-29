@@ -3,7 +3,7 @@
 	text-decoration: none;
 }
 
-html {
+html, body {
 	height: 100%;
 }
 
@@ -14,10 +14,6 @@ body {
   color: #222;
   font-family: $default-font-family;
   overflow-x: hidden;
-  // background-image: url(../images/background-repeat.jpg);
-  // background-position: 0 0;
-  // background-size: 100%;
-  // background-repeat: repeat-y;
 }
 
 body.no-scroll, 

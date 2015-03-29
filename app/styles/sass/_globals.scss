@@ -15,6 +15,12 @@ $main-body-color: $black;
 
 $screen: "only screen" !default;
 
+$header-height: 60px;
+
+// z-indexs:
+$header-z: 200;
+
+
 $break-points: (
 
   "small": (

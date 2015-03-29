@@ -3,9 +3,11 @@
 var router = require('./router.js');
 var templates = require('./templates.js');
 
+
 var App = {
   introPanel: '#landing',
-  mainPanel: '#main',
+  mainPanel: '.main .content',
+  transitionPanel: '.main .transition-content',
 
   templates: templates,
 
@@ -19,17 +21,6 @@ var App = {
     about: require('./views/about.js')
   },
 
-
-  // collections: {
-  //   blog: require('./collections/blog-posts.js'),
-  //   projects: require('./collections/projects.js')
-  // },
-
-  // models: {
-  //   blog: require('./models/blog-post.js'),
-  //   projects: require('./models/project.js')
-  // },
-
   initialize: function(options){
   	options = options; // linter -__-
     // var templates = this.templates;
@@ -42,7 +33,7 @@ var App = {
 
     this.views.master = new this.views.master();
 
-  	this.router = new router(this);
+  	window.r = this.router = new router(this);
 
     // use local storage to define he first view? fix this up at a higher level first?
     // $(this.mainPanel).html();

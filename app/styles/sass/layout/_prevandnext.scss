@@ -1,4 +1,3 @@
-$header-height: 60px;
 $landing-trans-time: 1s;
 
  body {
@@ -35,9 +34,6 @@ $landing-trans-time: 1s;
       }
     }
 
-    &.hide {
-      margin-left: 0;
-    }
   }
 
   .go-next {
@@ -50,18 +46,23 @@ $landing-trans-time: 1s;
       }
     }
 
-    &.hide {
-      margin-right: 0;
-    }
   }
 
   &.content {
     .go-prev {
-      margin-left: 0;  
+      margin-left: 0;
+
+      &.hide {
+        margin-left: -$header-height;        
+      }
     }
 
     .go-next {
       margin-right: 0;  
+
+      &.hide {
+        margin-right: -$header-height;
+      }
     }
   }
 }

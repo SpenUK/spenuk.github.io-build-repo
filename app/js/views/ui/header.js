@@ -11,6 +11,8 @@ module.exports = window.Backbone.View.extend({
 	},
 	render: function(options){
 		this.$el.html(this.template(options));
+
+    // console.log('header rendered');
 	},
 	events: {
 		'click .show-content': 'showContent',
@@ -23,7 +25,8 @@ module.exports = window.Backbone.View.extend({
 		window.Backbone.trigger('ui:showIntro');
   },
   updateUiPrev: function(options){
-  	var prev = '.go-prev-button';
+    options = options || {};
+  	var prev = '.go-prev';
   	var $prev = this.$el.find(prev);
   	if (options.link) {
   		$prev.removeClass('hide').attr('href', options.link);
@@ -32,7 +35,8 @@ module.exports = window.Backbone.View.extend({
   	}
   },
   updateUiNext: function(options){
-  	var next = '.go-next-button';
+    options = options || {};
+  	var next = '.go-next';
   	var $next = this.$el.find(next);
   	if (options.link) {
   		$next.removeClass('hide').attr('href', options.link);
