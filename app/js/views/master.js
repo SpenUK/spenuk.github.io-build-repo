@@ -52,6 +52,12 @@ module.exports = window.Backbone.View.extend({
 	showIntro: function() {
 		$('body').addClass('intro').removeClass('content');
 	},
+	setNamespace: function(namespace) {	
+		document.body.className = $.trim(
+			document.body.className.split(' ').filter(function(c) { 
+				return c.lastIndexOf('page-', 0) !== 0; 
+			}).join(' ') + ' page-' +namespace );
+	},
 	nextContent: function(e){
 		e.preventDefault();
 		this.transitions.direction = 'next';
@@ -81,6 +87,7 @@ module.exports = window.Backbone.View.extend({
 
 		this.listenTo(window.Backbone, 'ui:showContent', this.showContent);
 		this.listenTo(window.Backbone, 'ui:showIntro', this.showIntro);
+		this.listenTo(window.Backbone, 'page:setNamespace', this.setNamespace);
 
 		this.listenTo(window.Backbone, 'transition:render', render);
 

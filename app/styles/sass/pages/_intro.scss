@@ -1,0 +1,20 @@
+#landing {
+	a.about,a.projects,a.blog,a.contact {
+		font-weight: bold;
+	}
+	a.about {
+		color: rgba(0,200,180,1);
+	}
+
+	a.projects {
+		color: rgba(150,75,200,1);
+	}
+
+	a.blog {
+		color: rgba(225,90,110,1);
+	}
+
+	a.contact {
+		color: rgba(225,200,90,1);
+	}
+}

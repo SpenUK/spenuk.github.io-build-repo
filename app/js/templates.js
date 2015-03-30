@@ -22,7 +22,7 @@ this["JST"]["contact"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"
   },"useData":true});
 
 this["JST"]["intro"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<ul class=\"links\">\n	<li class=\"about\"><a href=\"#/about\">about</a></li>\n	<li class=\"blog\"><a href=\"#/blog\">blog</a></li>\n	<li class=\"projects\"><a href=\"#/projects\">projects</a></li>\n	<li class=\"contact\"><a href=\"#/contact\">contact</a></li>\n</ul>\n";
+  return "\n<h1>Hi! I'm Spen Taylor</h1>\n\n<p>Here you can find out more <a href=\"#/about\" class=\"about\">about</a> me,<br> read my <a href=\"#/blog\" class=\"blog\">blog posts</a><br> or check out some of my <a href=\"#/projects\" class=\"projects\">projects</a>.<br> Oh and feel free to <a href=\"#/contact\" class=\"contact\">get in touch!</a>\n</p>";
   },"useData":true});
 
 this["JST"]["master"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -40,7 +40,7 @@ this["JST"]["master"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"m
 this["JST"]["project"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<div class=\"grid-container\">\n	\n	<h2 class=\"title\">"
     + escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"title","hash":{},"data":data}) : helper)))
-    + "</h2>\n	<div class=\"grid-row\">\n		<div class=\"small-12\">\n			<div class=\"panel\">\n				\n				";
+    + "</h2>\n	<ul></ul>\n	<div class=\"grid-row\">\n		<div class=\"small-12\">\n			<div class=\"panel\">\n				\n				";
   stack1 = ((helper = (helper = helpers.content || (depth0 != null ? depth0.content : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"content","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
   return buffer + "\n			</div>\n		</div>\n	</div>\n	\n</div>";

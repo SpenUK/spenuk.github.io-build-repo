@@ -46,6 +46,10 @@ fieldset {
 	border: none;
 }
 
+.centered {
+	transform: translateY(-50%);
+}
+
 .hidden {
 	display: none !important;
 }

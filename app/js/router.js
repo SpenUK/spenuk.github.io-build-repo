@@ -26,6 +26,7 @@ var AppRouter = window.Backbone.Router.extend({
   			model: {},
   			template: context.templates.intro
   		});
+  		$('body').addClass('intro');
   		
 		});
 
