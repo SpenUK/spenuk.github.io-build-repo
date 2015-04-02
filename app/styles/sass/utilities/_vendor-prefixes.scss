@@ -1,0 +1,36 @@
+// $prefixes: "-moz-", "-webkit-", "-ms-", "";
+
+// -webkit-transition: all 0.4s cubic-bezier(0.100, 0.005, 0.4, 1); /* older webkit */
+// -webkit-transition: all 0.4s cubic-bezier(0.100, 0.005, 0.4, 2.6); 
+//    -moz-transition: all 0.4s cubic-bezier(0.100, 0.005, 0.4, 2.6); 
+//      -o-transition: all 0.4s cubic-bezier(0.100, 0.005, 0.4, 2.6); 
+//         transition: all 0.4s cubic-bezier(0.100, 0.005, 0.4, 2.6); /* custom */
+
+// -webkit-transition-timing-function: cubic-bezier(0.100, 0.005, 0.4, 1); /* older webkit */
+// -webkit-transition-timing-function: cubic-bezier(0.100, 0.005, 0.4, 2.6); 
+//    -moz-transition-timing-function: cubic-bezier(0.100, 0.005, 0.4, 2.6); 
+//      -o-transition-timing-function: cubic-bezier(0.100, 0.005, 0.4, 2.6); 
+//         transition-timing-function: cubic-bezier(0.100, 0.005, 0.4, 2.6); /* custom */
+
+@mixin transform ($effect) {
+	-webkit-transform: $effect;
+		 -moz-transform: $effect;
+      -ms-transform: $effect;
+       -o-transform: $effect;
+          transform: $effect;
+}
+
+// @mixin transition ($effect, $duration, $easing) {
+// 	-webkit-transition: $effect $duration $easing;
+// 		 -moz-transition: $effect $duration $easing;
+//       -ms-transition: $effect $duration $easing;
+//           transition: $effect $duration $easing;
+// }
+
+@mixin transition ($effect) {
+	-webkit-transition: $effect;
+		 -moz-transition: $effect;
+      -ms-transition: $effect;
+       -o-transition: $effect;
+          transition: $effect;
+}
