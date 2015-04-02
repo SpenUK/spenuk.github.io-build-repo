@@ -2,7 +2,7 @@ $landing-trans-time: 1s;
 
  body {
   .go-prev, .go-next {
-    transition: all 0.3s ease;
+    @include transition( all 0.3s ease);
     transition-delay: $landing-trans-time;
     display: inline-block;
     vertical-align: middle;
@@ -17,7 +17,7 @@ $landing-trans-time: 1s;
     }
 
     i {
-      // transition: all 0.3s ease;
+      // @include transition( all 0.3s ease);
       height: $header-height;
       width: $header-height;
       line-height: $header-height;

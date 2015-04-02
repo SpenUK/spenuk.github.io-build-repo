@@ -32,7 +32,8 @@ var AppRouter = window.Backbone.Router.extend({
 
 		this.on('route:blog' ,function(slug){
 
-			// var options = (arguments[1] || {});
+			// Only transition if the current view is not changing (but the resource is).
+			var transition = (this.currentContentView === context.views.blog);
 
 			if (!context.views.blog.initialized) {
 				context.views.blog = new context.views.blog({
@@ -42,19 +43,12 @@ var AppRouter = window.Backbone.Router.extend({
 	  		});
 			}
 
-			var transition = (this.currentContentView === context.views.blog);
-
-			if (!slug) {
+			if (!slug || !context.views.blog.checkSlug(slug)) {
 				slug = context.views.blog.defaultSlug();
 				this.navigate(context.views.blog.defaultRoute());
-  			context.views.blog.render({slug: slug});
-  		} else {
-  			if (context.views.blog.checkSlug(slug)) {
-  				context.views.blog.render({slug: slug, transition: transition});
-  			} else {
-  				context.views.blog.render({transition: transition});
-  			}
   		}
+
+  		context.views.blog.render({slug: slug, transition: transition});
 
 			this.currentContentRoute = window.Backbone.history.fragment;
 			this.currentContentView = context.views.blog;
@@ -62,6 +56,9 @@ var AppRouter = window.Backbone.Router.extend({
 		});
 
 		this.on('route:projects' ,function(slug){
+
+			// Only transition if the current view is not changing (but the resource is).
+			var transition = (this.currentContentView === context.views.projects);
 
 			if (!context.views.projects.initialized) {
 				context.views.projects = new context.views.projects({
@@ -71,20 +68,12 @@ var AppRouter = window.Backbone.Router.extend({
 	  		});
 			}
 
-			var transition = (this.currentContentView === context.views.projects);
-
-			if (!slug) {
-
+			if (!slug || !context.views.projects.checkSlug(slug)) {
 				slug = context.views.projects.defaultSlug();
 				this.navigate(context.views.projects.defaultRoute());
-  			context.views.projects.render({slug: slug});
-  		} else {
-  			if (context.views.projects.checkSlug(slug)) {
-  				context.views.projects.render({slug: slug, transition: transition});
-  			} else {
-  				context.views.projects.render({transition: transition});
-  			}
   		}
+
+  		context.views.projects.render({slug: slug, transition: transition});
 
   		this.currentContentRoute = window.Backbone.history.fragment;
   		this.currentContentView = context.views.projects;
@@ -94,7 +83,6 @@ var AppRouter = window.Backbone.Router.extend({
 		this.on('route:contact' ,function(){
 			if (!context.views.contact.initialized) {
 				context.views.contact = new context.views.contact({
-	  			model: {},
 	  			el: context.mainPanel,
 	  			template: context.templates.contact
 	  		});
@@ -131,27 +119,14 @@ var AppRouter = window.Backbone.Router.extend({
 		this.navigate(this.currentContentRoute);
 	},
 	goToPrevContent: function () {
-		console.log('goToPrevContent');
 		if (!_.isFunction(this.currentContentView.getPrevModel)) { return false; }
-		// var route = this.currentContentView.namespace;
 		var route = this.currentContentView.prevRoute();
-		console.log('route', route);
-		// var slug = this.currentContentView.getPrevModel().get('slug');
-		// this.trigger('route:' + route, slug, {transition: 'prev'});
 		this.navigate(route);
-
-		// return {slug: slug, route: 'route:'+ route, v: this.currentContentView};
 	},
 	goToNextContent: function () {
 		if (!_.isFunction(this.currentContentView.getNextModel)) { return false; }
-		// var route = this.currentContentView.namespace;
 		var route = this.currentContentView.nextRoute();
-		// var slug = this.currentContentView.getNextModel().get('slug');
-		// this.trigger('route:' + route, slug, {transition: 'next'});
-		// console.log(route);
 		this.navigate(route);
-
-		// return {slug: slug, route: 'route:'+ route, v: this.currentContentView};
 	},
 	defaultContentRoute: function () {
 		return '#/about';

@@ -7,6 +7,10 @@ html, body {
 	height: 100%;
 }
 
+html {
+	overflow: hidden;
+}
+
 body {
   min-height: 100%;
   background-color: $background-color;
@@ -47,7 +51,7 @@ fieldset {
 }
 
 .centered {
-	transform: translateY(-50%);
+	@include transform(translateY(-50%));
 }
 
 .hidden {

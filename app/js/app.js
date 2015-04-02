@@ -33,7 +33,7 @@ var App = {
 
     this.views.master = new this.views.master();
 
-  	window.r = this.router = new router(this);
+  	this.router = new router(this);
 
     // use local storage to define he first view? fix this up at a higher level first?
     // $(this.mainPanel).html();

@@ -14,14 +14,14 @@ body {
 	}
 
 	.landing-container {
-		transition: height $landing-trans-time $easing;
+		@include transition(height $landing-trans-time $easing);
 		height: 100%;
 	}
 
 	.page-wrap {
 		box-sizing: border-box;
-		transition: all 0 $easing;
-		// transition: all $landing-trans-time $easing;
+		@include transition(all 0 $easing);
+		// @include transition(all $landing-trans-time $easing);
 		height: 200%;
 		width: 100%;
 		padding-bottom: 0;
@@ -43,23 +43,23 @@ body {
 			// padding-top: $header-height;
 
 			&.animating-next {
-				transition: all $slide-in-time ease;
-				transform: translateX(-100%);
+				@include transition(all $slide-in-time ease);
+				@include transform(translateX(-100%));
 
 
 				.content.transitioner {
-					transform: translateX(100%);					
+					@include transform(translateX(100%));
 					display: block;
 				}
 
 			}
 
 			&.animating-prev {
-				transition: all $slide-in-time ease;
-				transform: translateX(100%);
+				@include transition(all $slide-in-time ease);
+				@include transform(translateX(100%));
 
 				.content.transitioner {
-					transform: translateX(-100%);
+					@include transform(translateX(-100%));
 					display: block;
 				}
 			}
@@ -83,10 +83,10 @@ body {
 
 		.landing {
 			position: relative;
-			transition: margin-top $landing-trans-time $easing;
+			@include transition(margin-top $landing-trans-time $easing);
 			height: 50%;
 			width: 100%;
-			padding-top: $header-height;
+			// padding-top: $header-height;
 			display: table;
 			vertical-align: middle;
 
@@ -106,7 +106,7 @@ body {
 	}
 
 	.landing-footer-content, .header-content {
-		transition: all 0.6s ease;
+		@include transition(all 0.6s ease);
 		height: 100%;
 		width: 100%;
 		position: absolute;
@@ -120,60 +120,60 @@ body {
 
 // body.landing-route.intro .page-wrap,
 // body.landing-route.content .page-wrap {
-// 	transition: none;
+// 	@include transition(none);
 // }
 
 body.content-landing.content {
-	transition: none;
+	@include transition(none);
 	.page-wrap {
-		transition: none;
+		@include transition(none);
 	}
 }
 
 body.intro-landing.intro {
-	transition: none;
+	@include transition(none);
 	.page-wrap {
-		transition: none;
+		@include transition(none);
 	}
 }
 
 .block-transition, .block-initial-transition {
-	transition: none !important;
+	@include transition(none !important);
 }
 
 .block-initial-transition {
-	transition: none !important;
+	@include transition(none !important);
 	.page-wrap, .landing-footer-content, .header, i, .go-prev, .go-next {
-		transition: none !important;
+		@include transition(none !important);
 	}
 }
 
 body.intro {
-	transition: all $landing-trans-time $easing;
+	@include transition(all $landing-trans-time $easing);
 	.header {
 		background-color: rgba(0,0,0,0.1);
 	}
 
 	.page-wrap {
-		transition: all $landing-trans-time $easing;
-		transform: translate(0%, -$header-height);
+		@include transition(all $landing-trans-time $easing);
+		@include transform(translate(0%, -$header-height));
 	}
 
 	.landing-footer-content {
 		transition-delay: $landing-trans-time;
 		opacity: 1;
-		transform: translateY(0);
+		@include transform(translateY(0));
 	}
 
 	.header-content {
 		transition-delay: 0s;
 		opacity: 0;
-		transform: translateY(-100%);
+		@include transform(translateY(-100%));
 	}
 }
 
 body.content {
-	transition: all $landing-trans-time $easing;
+	@include transition(all $landing-trans-time $easing);
 
 
 	.header {
@@ -181,20 +181,20 @@ body.content {
 	}
 
 	.page-wrap {
-		transition: all $landing-trans-time $easing;
-		transform: translate(0%, -50%);
+		@include transition(all $landing-trans-time $easing);
+		@include transform(translate(0%, -50%));
 	}
 
 	.landing-footer-content {
 		transition-delay: 0s;
 		opacity: 0;
-		transform: translateY(-100%);
+		@include transform(translateY(-100%));
 	}
 
 	.header-content {
 		transition-delay: $landing-trans-time;
 		opacity: 1;
-		transform: translateY(0);
+		@include transform(translateY(0));
 	}
 
 }

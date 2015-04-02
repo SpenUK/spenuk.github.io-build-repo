@@ -11,6 +11,7 @@ module.exports = window.Backbone.View.extend({
 		this.initialized = true;
 
 		if (false) {
+			window.Backbone.trigger('ui:StartLoadingIndicators');
 			collection.fetch({
   			remove: false,
 				success: function(){
@@ -23,13 +24,8 @@ module.exports = window.Backbone.View.extend({
 		} else {
 			this.addStubs();
 		}
-
-		window.blogC = collection;
-
-		console.log({collection: collection});
 		
 		this.template = options.template;
-
 
 		if (!this.checkSlug(options.slug)) {
 			var latest = collection.first();
@@ -48,7 +44,7 @@ module.exports = window.Backbone.View.extend({
 		return this.template(this.currentRecord.attributes);
 	},
 	render: function(options){
-		if (options.slug && this.collection.where({slug: options.slug})) {
+		if (options.slug && this.collection.where({slug: options.slug}).length) {
 			this.currentRecord = this.collection.where({slug: options.slug})[0];
 			this.position = this.collection.indexOf(this.currentRecord);
 		}

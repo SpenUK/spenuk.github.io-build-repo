@@ -2,7 +2,7 @@ $easing: ease;
 $landing-trans-time: 0.5s;
 
 .header {
-	transition: all $landing-trans-time $easing;
+	@include transition(all $landing-trans-time $easing);
 	height: $header-height;
 	width: 100%;
 	position: absolute;
@@ -17,7 +17,7 @@ $landing-trans-time: 0.5s;
 	.icon {
 		display: inline-block;
 		i {
-			transition: color $landing-trans-time $easing;
+			@include transition(color $landing-trans-time $easing);
 			color: white;
 			display: inline-block;
 			vertical-align: middle;
