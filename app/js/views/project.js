@@ -6,61 +6,139 @@ var ProjectCollection = require('../collections/projects.js');
 module.exports = window.Backbone.View.extend({	
 	namespace: 'projects',
 	initialize: function(options){
-		var collection = this.collection = new ProjectCollection();
+		this.collection = new ProjectCollection();
 		this.initialized = true;
 
-		this.addStubs();
 		this.template = options.template;
 
+		return this;
+	},
+	setCurrent: function(slug){
+		slug = (slug || '');
 
-		if (!this.checkSlug(options.slug)) {
-			var latest = collection.first();
-
-			this.currentRecord = latest;
+		if (!this.checkSlug(slug)) {
+			this.currentRecord = this.collection.first();
 			this.position = 0;
 		} else {
-
-			this.currentRecord = collection.where({slug: options.slug})[0];
-			this.position = collection.indexOf(this.currentRecord);			
+			this.currentRecord = this.collection.where({slug: slug})[0];
+			this.position = this.collection.indexOf(this.currentRecord);			
 		}
 
 		return this;
 	},
 	stringToRender: function(){
-		return this.template(this.currentRecord.attributes);
+		return this.template({attributes: this.currentRecord.attributes});
 	},
 	render: function(options){
+		var view = this;
+		options = options;
 
-		if (options.slug && this.collection.where({slug: options.slug})) {
-			this.currentRecord = this.collection.where({slug: options.slug})[0];
-			this.position = this.collection.indexOf(this.currentRecord);
-		}
+		if (!this.collection.length) {
+			this.$el.html(this.template());
 
-		window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
-		window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
+			window.Backbone.trigger('ui:showContent');
+			window.Backbone.trigger('ui:updatePrev');
+			window.Backbone.trigger('ui:updateNext');
+			window.Backbone.trigger('page:setNamespace', this.namespace );
+			this.fetchRender(options);
 
-		if (options.transition) {
-			window.Backbone.trigger('transition:render', this.stringToRender() );	
 		} else {
-			this.$el.html(this.stringToRender());	
+ 
+			if (options.slug && this.collection.where({slug: options.slug}).length) {
+				this.currentRecord = this.collection.where({slug: options.slug})[0];
+				this.position = this.collection.indexOf(this.currentRecord);
+			} else {
+				window.Backbone.trigger('router:redirect', view.defaultRoute());
+			}
+
+			if (options.transition) {
+				window.Backbone.trigger('transition:render', this.stringToRender() );	
+			} else {
+				this.$el.html(this.stringToRender());	
+			}	
+			window.Backbone.trigger('ui:showContent');
+			window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
+			window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
+			window.Backbone.trigger('page:setNamespace', this.namespace );
 		}
 
-		window.Backbone.trigger('ui:showContent');
-		window.Backbone.trigger('page:setNamespace', this.namespace );
 		return this;
+	},
+	fetchRender: function(options){
+		var view = this;
+		if (false) {
+			this.collection.fetch({
+  			remove: false,
+				success: function(){
+
+					if (options.slug && view.collection.where({slug: options.slug}).length) {
+						view.currentRecord = view.collection.where({slug: options.slug})[0];
+						view.position = view.collection.indexOf(view.currentRecord);
+					}
+
+					window.Backbone.trigger('transition:render', view.stringToRender() );	
+
+					// window.Backbone.trigger('transition:render', view.stringToRender() );	
+
+				},
+				error: function(){
+					view.addStubs({success: function(){
+
+						if (options.slug && view.collection.where({slug: options.slug}).length) {
+							view.currentRecord = view.collection.where({slug: options.slug})[0];
+							view.position = view.collection.indexOf(view.currentRecord);
+						}
+
+						window.Backbone.trigger('transition:render', view.stringToRender() );	
+
+					}});
+				}
+			});
+		} else {
+			this.addStubs({success: function(){
+
+				if (options.slug && view.collection.where({slug: options.slug}).length) {
+					view.currentRecord = view.collection.where({slug: options.slug})[0];
+					view.position = view.collection.indexOf(view.currentRecord);
+				} else {
+					view.currentRecord = view.collection.first();
+					view.position = view.collection.indexOf(view.currentRecord);
+				}
+
+				window.Backbone.trigger('router:redirect', view.defaultRoute());
+
+				window.Backbone.trigger('ui:showContent');
+				window.Backbone.trigger('ui:updatePrev', {link: view.prevRoute()});
+				window.Backbone.trigger('ui:updateNext', {link: view.nextRoute()});
+				window.Backbone.trigger('page:setNamespace', view.namespace );
+
+				window.Backbone.trigger('transition:render', view.stringToRender() );	
+
+			}});
+		}
+	},
+	transitionRender: function(){
+
 	},
 	setListeners: function(){
 		// 
 	},
-	addStubs: function(){
-		var collection = this.collection;
-		var i,response = projectStubs;
-		for (i = response.length - 1; i >= 0; i--) {
-			var record = response[i];
-			if (!collection.where({ID: record.ID}).length) {
-				collection.add(record);
-			}
-		}
+	addStubs: function(options){
+		options = (options || {});
+		var view = this;
+
+		window.setTimeout(function(){
+			var i,response = projectStubs;
+
+			for (i = response.length - 1; i >= 0; i--) {
+				var record = response[i];
+				if (!view.collection.where({ID: record.ID}).length) {
+					view.collection.add(record);
+				}
+			}	
+			(options.success || $.noop)();
+
+		}, 500); // faking async
 
 		return this;
 	},

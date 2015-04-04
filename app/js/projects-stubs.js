@@ -43,6 +43,62 @@ module.exports = [
 			ruby: ['Ruby on Rails']
 		},
 		content: '<img src="assets/images/projects/rpg.png" style="width:100%;"><p>For my final project at Bitmaker Labs, I decided to build an RPG browser game that allows players to create a character, battle NPCs and other players, collect gold &amp; items, level up and keep track of their rank compared to other players.</p><p>This was hard work, especially due to the limited time frame which involved a few ~18 hour sessions and one 36 hour session! (We had roughly two weeks to hack on our final projects). However, as much as it was hardwork it was a lot of fun!</p><p>I learned a heap about Ruby on Rails in this time, particularly since there were some complex relationships going on between the different resources and entities in this game.</p><p>The project has since been laid to rest but I do still aim to find the time to re-build it with some extra features, such as using websockets and HTML5 canvas! - it\'d be a fun side project to have on the go!</p>'
-	}
+		// },{
+		// 	ID: XX,
+		// 	title: 'River Island Checkout',
+		// 	slug: 'river-island-checkout',
+		// 	stack: {
+		// 		js: ['jQuery'],
+		// 		'c#': ['Razor', '.net']
+		// 	},
+		// 	apis: ['Google Maps'],
+		// 	content: '<img src="assets/images/projects/river-island-checkout.png" style="width:100%;"><p></p>'
+		// },{
+		// 	ID: XX,
+		// 	title: 'Nintendo Customer Service',
+		// 	slug: 'nintendo-customer-service',
+		// 	stack: {
+		// 		js: ['jQuery'],
+		// 		php: ['SilverStripe']
+		// 	},
+		// 	content: '<img src="assets/images/projects/nintendo-customer-service.png" style="width:100%;"><p></p>'
+		// },{
+		// 	ID: XX,
+		// 	title: 'Jura Tastival 2015',
+		// 	slug: 'jura-tastival-2015',
+		// 	stack: {
+		// 		js: ['jQuery', 'Grunt']
+		// 	},
+		// 	content: '<img src="assets/images/projects/jura-tastival-2015.png" style="width:100%;"><p></p>'
+		// },{
+		// 	ID: XX,
+		// 	title: 'Whyte & Mackay',
+		// 	slug: 'whyte-and-mackay',
+		// 	stack: {
+		// 		js: ['jQuery', 'Grunt', 'Skrollr']
+		// 	},
+		// 	content: '<img src="assets/images/projects/whyte-and-mackay.png" style="width:100%;"><p></p>'
+		// },{
+		// 	ID: XX,
+		// 	title: 'CapriSun Minions',
+		// 	slug: 'capriSun-minions',
+		// 	stack: {
+		// 		js: ['jQuery'],
+		// 		php: ['SilverStripe']
+		// 	},
+		// 	content: '<img src="assets/images/projects/capriSun-minions.png" style="width:100%;"><p></p>'
+		// },{
+		// 	ID: 5,
+		// 	title: 'Greenvale Potatopals',
+		// 	slug: 'greenvale-potatopals',
+		// 	stack: {
+		// 		js: ['jQuery'],
+		// 		php: ['SilverStripe']
+		// 	},
+		// 	content: '<img src="assets/images/projects/greenvale.png" style="width:100%;"><p></p>'
+		}
 
 ];
+
+
+

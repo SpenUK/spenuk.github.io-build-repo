@@ -41,7 +41,7 @@ module.exports = window.Backbone.View.extend({
 		return this;
 	},
 	stringToRender: function(){
-		return this.template(this.currentRecord.attributes);
+		return this.template(this.currentRecord);
 	},
 	render: function(options){
 		if (options.slug && this.collection.where({slug: options.slug}).length) {

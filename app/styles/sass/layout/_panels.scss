@@ -4,4 +4,22 @@ $box-shadow: 0 4px 0 rgba(0,0,0,.1);
 	background-color: $white;
 	padding: 2em 4em;
 	box-shadow: $box-shadow;
+	position: relative;
+
+	img, p, h1,h2,h3,h4 {
+		max-width: 100%;
+	}
+}
+
+.content .panel {
+	max-width: 96%;
+	display: block;
+	margin: 0 auto;
+}
+
+.main.animating-prev,
+.main.animating-next {
+	.content {
+		overflow-y: hidden;
+	}
 }

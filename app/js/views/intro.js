@@ -9,7 +9,6 @@ module.exports = window.Backbone.View.extend({
 	},
 	render: function(options){
 		options = options;
-		console.log('rendering intro');
 		this.$el.html(this.template());
 		window.Backbone.trigger('page:setNamespace', this.namespace);
 

@@ -3,6 +3,10 @@
 var router = require('./router.js');
 var templates = require('./templates.js');
 
+window.testWpApi = function(){
+  $.get('http://public-api.wordpress.com/rest/v1.1/sites/ijustwanttotesttheapi.wordpress.com/posts', function(r){console.log(r);}, function(){console.log('error');});
+};
+
 
 var App = {
   introPanel: '#landing',
@@ -33,7 +37,7 @@ var App = {
 
     this.views.master = new this.views.master();
 
-  	this.router = new router(this);
+  	window.r = this.router = new router(this);
 
     // use local storage to define he first view? fix this up at a higher level first?
     // $(this.mainPanel).html();

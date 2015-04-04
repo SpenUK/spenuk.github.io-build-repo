@@ -39,6 +39,14 @@ $ui-rounded: 5px;
 
 }
 
+.loading-spinner {
+	width: 80px;
+	height: 80px;
+	display: block;
+	margin: 20px auto;
+	opacity: 0.2;
+}
+
 @mixin custom-select ($height, $width, $border-radius, $arrow-image, $arrow-image-hover) {
 	position: relative;
 	display: inline-block;

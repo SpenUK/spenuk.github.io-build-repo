@@ -17,17 +17,18 @@ var AppRouter = window.Backbone.Router.extend({
 		this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
 		this.listenTo(window.Backbone, 'router:nextContent', this.goToNextContent);
 		this.listenTo(window.Backbone, 'router:prevContent', this.goToPrevContent);
+		this.listenTo(window.Backbone, 'router:setCurrentContent', this.setCurrentContent);
 
 		this.currentContentRoute = this.defaultContentRoute();
 		
 		this.on('route:root' ,function(){
 
   		new context.views.intro({
-  			model: {},
   			template: context.templates.intro
   		});
   		$('body').addClass('intro');
-  		
+
+  		this.lastRoute = window.Backbone.history.fragment;
 		});
 
 		this.on('route:blog' ,function(slug){
@@ -50,33 +51,26 @@ var AppRouter = window.Backbone.Router.extend({
 
   		context.views.blog.render({slug: slug, transition: transition});
 
-			this.currentContentRoute = window.Backbone.history.fragment;
+			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
 			this.currentContentView = context.views.blog;
 			
 		});
 
 		this.on('route:projects' ,function(slug){
-
 			// Only transition if the current view is not changing (but the resource is).
-			var transition = (this.currentContentView === context.views.projects);
+			var transition = (this.currentContentView === context.views.projects && this.lastRoute !== '');
 
 			if (!context.views.projects.initialized) {
 				context.views.projects = new context.views.projects({
-	  			slug: slug,
 	  			el: context.mainPanel,
-	  			template: context.templates.project
+	  			template: context.templates.project,
 	  		});
 			}
 
-			if (!slug || !context.views.projects.checkSlug(slug)) {
-				slug = context.views.projects.defaultSlug();
-				this.navigate(context.views.projects.defaultRoute());
-  		}
+			context.views.projects.render({slug: slug, transition: transition});
 
-  		context.views.projects.render({slug: slug, transition: transition});
-
-  		this.currentContentRoute = window.Backbone.history.fragment;
-  		this.currentContentView = context.views.projects;
+			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			this.currentContentView = context.views.projects;
   		
 		});
 
@@ -89,7 +83,7 @@ var AppRouter = window.Backbone.Router.extend({
 			}
 
   		context.views.contact.render();
-  		this.currentContentRoute = window.Backbone.history.fragment;
+  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
   		this.currentContentView = context.views.contact;
   		
 		});
@@ -104,7 +98,7 @@ var AppRouter = window.Backbone.Router.extend({
 			}
 
   		context.views.about.render();
-  		this.currentContentRoute = window.Backbone.history.fragment;
+  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
   		this.currentContentView = context.views.about;
   		
 		});
@@ -115,8 +109,12 @@ var AppRouter = window.Backbone.Router.extend({
 		window.Backbone.history.start();
 
 	},
+	setCurrentContent: function(content){
+		if (content.view) {this.currentContentView = content.view; }
+		if (content.route) {this.currentContentRoute = this.lastRoute = content.route; }
+	},
 	goToCurrentContent: function () {
-		this.navigate(this.currentContentRoute);
+		this.navigate(this.currentContentRoute, {trigger: true});
 	},
 	goToPrevContent: function () {
 		if (!_.isFunction(this.currentContentView.getPrevModel)) { return false; }
@@ -132,7 +130,7 @@ var AppRouter = window.Backbone.Router.extend({
 		return '#/about';
 	},
 	redirect: function(route){
-		this.navigate(route);
+		this.navigate(route, {trigger: true});
 	}
 
 });

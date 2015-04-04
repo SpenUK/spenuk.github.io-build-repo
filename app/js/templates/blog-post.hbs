@@ -1,13 +1,32 @@
-<div class="grid-container">
-	
-	<h2 class="title">{{title}}</h2>
-	<div class="grid-row">
-		<div class="small-12">
-			<div class="panel">
-				
-				{{{content}}}
+{{#if attributes }}
+	{{#with attributes}}
+		<div class="grid-container">
+			<h2 class="title">{{title}}</h2>
+			<ul></ul>
+			<div class="grid-row">
+				<div class="small-12">
+					<div class="panel">
+						
+						{{{content}}}
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/with}}
+
+{{ else }}
+
+	<div class="grid-container placeholder-view">
+		<div class="h2-title"></div>
+		<ul></ul>
+		<div class="grid-row">
+			<div class="small-12">
+				<div class="panel ">
+					<img src="assets/images/ui/385.gif" class="loading-spinner">
+
+				</div>
 			</div>
 		</div>
 	</div>
-	
-</div>
+
+{{/if}}
