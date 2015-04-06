@@ -2,7 +2,8 @@
 
 var templates = require('../templates.js');
 var headerView = require('./ui/header.js');
-var transitions = require('../modules/page-transitions.js');
+// var transitions = require('../modules/page-transitions.js');
+var transitions2 = require('../modules/page-transitions2.js');
 
 module.exports = window.Backbone.View.extend({
 	el: 'html',
@@ -18,17 +19,17 @@ module.exports = window.Backbone.View.extend({
 			introContent: templates.intro()
 		});
 
-		this.transitions = new transitions({
-			container: '.page-wrap .main',
-			content: '.content',
-			transitionClass: '.transitioner'
-		});
-
-		// transitions.initialize({
-		// 	el: '.page-wrap .main',
-		// 	main: '.content',
-		// 	transitioner: '.transition-content'
+		// this.transitions = new transitions({
+		// 	container: '.page-wrap .main',
+		// 	content: '.content',
+		// 	transitionClass: '.transitioner'
 		// });
+
+		this.transitions = new transitions2({
+			container: '.page-wrap .main',
+			main: '.content-main',
+			transitioner: '.transitioner'
+		});
 
 		this.$header = $(this.header);
 		this.headerView = new headerView({template: templates['ui/header']});
@@ -73,14 +74,6 @@ module.exports = window.Backbone.View.extend({
   	window.Backbone.trigger('router:goToCurrentContent');
   },
 	setListeners: function(){
-		var this_ = this;
-		$(window).on('keypress', function(e){
-			if (e.keyCode === 119) {
-				this_.transitions.next();
-			} else if (e.keyCode === 113) {
-				this_.transitions.prev();	
-			}
-		});
 
 		var transitions = this.transitions;
 

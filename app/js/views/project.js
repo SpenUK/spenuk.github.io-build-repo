@@ -33,6 +33,7 @@ module.exports = window.Backbone.View.extend({
 		var view = this;
 		options = options;
 
+
 		if (!this.collection.length) {
 			this.$el.html(this.template());
 

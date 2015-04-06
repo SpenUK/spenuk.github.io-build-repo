@@ -1,3 +1,106 @@
-.page-colors body.page-contact .header {
-		background-color: rgba(225,200,90,1);
+body.page-contact {
+	.content {
+		ul.social-icons {
+			li {
+				width: 100%;
+			}
+			i,p {
+				display: inline-block;
+				vertical-align: middle;
+				text-align: center;
+			}
+
+			i {
+				color: $contrast-color-1;
+				font-size: 2em;
+			}
+		}
+	}
+}
+
+$box-shadow: 0 4px 0 rgba(0,0,0,.1);
+
+form.contact-form {
+	// width: 480px;
+	max-width: 95%;
+	margin: 0 auto;
+	// table {
+	// 	max-width: 100%;
+	// 	width: 100%;
+	// }
+
+	// td.label {
+	// 	width: 0px;
+	// 	text-align: right;
+	// }
+
+	// label, button.submit,input	{
+		font-size: 1.2em;
+	// }
+
+	input, input:focus {
+		border: none;
+    overflow: auto;
+    outline: none;
+    resize: none;
+
+    -webkit-box-shadow: $box-shadow;
+    -moz-box-shadow: $box-shadow;
+    box-shadow: $box-shadow;
+    width: 100%;
+    margin: 8px auto;
+    padding: 0.2em 0.6em;
+    background-color: $white;
+	}
+
+	textarea, textarea:focus {
+    border: none;
+    overflow: auto;
+    outline: none;
+    resize: none;
+
+    -webkit-box-shadow: $box-shadow;
+    -moz-box-shadow: $box-shadow;
+    box-shadow: $box-shadow;
+    width: 100%;
+    margin: 8px auto;
+    padding: 0.7em 0.6em;
+    background-color: $white;
+	}
+
+	button.submit {
+		margin-top: 20px;
+		border: none;
+		outline: none;
+		width: 100%;
+		color: white;
+		padding: 0.5em;
+		background-color: $header-color;
+		-webkit-box-shadow: 0 4px 0 darken($header-color,15);
+    -moz-box-shadow: 0 4px 0 darken($header-color,15);
+    box-shadow: 0 4px 0 darken($header-color,15);
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+
+    &:active {
+    	margin-top: 22px;
+    	-webkit-box-shadow: 0 2px 0 darken($header-color,15);
+    	-moz-box-shadow: 0 2px 0 darken($header-color,15);
+    	box-shadow: 0 2px 0 darken($header-color,15);
+    }
+
+	}
+
+	.field.error {
+  	input, textarea {
+  		background-color: rgba(255,225,225,1);
+  		-webkit-box-shadow: 0 4px 0 darken(rgba(255,225,225,1),15);
+    	-moz-box-shadow: 0 4px 0 darken(rgba(255,225,225,1),15);
+    	box-shadow: 0 4px 0 darken(rgba(255,225,225,1),15);
+  	}
+  }
+
+	// .field label {
+	// 	width: 
+	// }
+
 }

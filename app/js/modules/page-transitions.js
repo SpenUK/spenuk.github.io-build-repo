@@ -6,9 +6,13 @@ var afterTrans = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionE
 function transitions (options) {
 	/*jshint validthis:true */
 	this.container = options.container;
-	this.content = options.content;
-	this.transitionClass = options.transitionClass;
+	this.$main = $(this.main = options.main);
+	this.$transitioner = $(this.transitioner = options.transitioner);
 	this.animating = false;
+
+	this.$transitioner.remove();
+
+	console.log({tr: this.$transitioner, m: this.$main});
 
 	this.render = function(content){
 		return this[this.direction === 'prev' ? 'prev' : 'next'](content);
@@ -16,49 +20,44 @@ function transitions (options) {
 
 	this.next = function(content){
 		if (this.animating) {return false;}
-		var $container = $(this.container);
-		var $target = $container.find(this.transitionClass);
-		var this_ = this;
 
-		$target.html(content);
+		var transitions = this;
+		var $container = $(this.container);
+
+		this.$transitioner.html(content).insertAfter(this.$main);
 
 		this.animating = true;
-		window.setTimeout(function(){
+		// window.setTimeout(function(){
 			$container.addClass('animating-next').removeClass('animating-prev').one(afterTrans, function(){
+
+				transitions.$main.html(content);
 				$container.removeClass('animating-next');
-				this_.switchElements();
-				this_.animating = false;
+				transitions.$transitioner.remove();
+				// this_.switchElements();
+				transitions.animating = false;
 			});
-		},0);
+		// },0);
 	};
 
 	this.prev = function(content){
 		if (this.animating) {return false; }
-		var $container = $(this.container);
-		var $target = $container.find(this.transitionClass);
-		var this_ = this;
 
-		$target.html(content);
+		var transitions = this;
+		var $container = $(this.container);
+
+		this.$transitioner.html(content).insertBefore(this.$main);
 
 		this.animating = true;
-
-		window.setTimeout(function(){
+		// window.setTimeout(function(){
 			$container.addClass('animating-prev').removeClass('animating-next').one(afterTrans, function(){
+
+				transitions.$main.html(content);
 				$container.removeClass('animating-prev');
-				this_.switchElements();
-				this_.animating = false;
+				transitions.$transitioner.remove();
+				transitions.animating = false;
 			});
-		},0);
+		// },0);
 	};
-
-	this.switchElements = function(){
-		var content = $(this.container).find(this.content);
-
-		content.toggleClass(this.transitionClass.replace('.',''));
-
-		return this;
-	};
-
 
 	return this;	
 }
