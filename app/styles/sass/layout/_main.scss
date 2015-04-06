@@ -50,6 +50,15 @@ fieldset {
 	border: none;
 }
 
+i.left {
+	position: absolute;
+	left: 0;
+}
+i.right {
+	position: absolute;
+	right: 0;
+}
+
 .centered {
 	@include transform(translateY(-50%));
 }

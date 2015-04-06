@@ -1,7 +1,5 @@
 'use strict';
 
-var originalLabels;
-
 function validEmail(string) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(string);
@@ -33,18 +31,12 @@ module.exports = window.Backbone.View.extend({
 		window.Backbone.trigger('ui:updateNext');
 		window.Backbone.trigger('page:setNamespace', this.namespace );
 
-		this.setOiginalLabels();
-
 		return this;
 
 	},
 	events: {
 		'submit .contact-form' : 'submitForm',
-		'keydown input.tester' : 'type'
-	},
-	type: function(e){
-		var code = e.keyCode || e.which;
-		console.log(code);
+		'click .submission-error .fa-close': 'removeFormError'
 	},
 	validateForm: function(){
 		var $form = this.$el.find('.contact-form');
@@ -57,7 +49,6 @@ module.exports = window.Backbone.View.extend({
 		var errors = [];
 
 		if ($message.val().length > 5) {
-			console.log('pass');
 			resetLabel($message);
 		} else if ($message.val().length) {
 			errors.push({$el: $message, message: 'not long enough'});
@@ -66,41 +57,40 @@ module.exports = window.Backbone.View.extend({
 		}
 
 		if (validEmail($email.val())) {
-			console.log('email pass');
 			resetLabel($email);
 		} else {
-			console.log('email fail');
 			errors.push({$el: $email});
 		}
 
 		if ($name.val().length > 1) {
-			console.log('name pass');
 			resetLabel($name);
 		} else {
-			console.log('name fail');
 			errors.push({$el: $name});
 		}
 
 		if (errors.length) {
 			$.each(errors, function(){
-				console.log(this.message);
 				addError(this.$el);
 			});
 
 			return false;
 		}
 
-
 		return true;
 	},
 	submitForm: function(e){
 		e.preventDefault();
+		var view = this;
 
-		console.log(this.originalLabels);
+		if (this.pending) { return false; }
 
 		var $form = this.$el.find('.contact-form');
 		
 		if (this.validateForm()) {
+
+			$form.addClass('pending');
+			this.pending = true;
+
 			var sendData = {
 				_subject: 'spentaylor.com',
 				message: $form.find('#message').val(),
@@ -111,19 +101,40 @@ module.exports = window.Backbone.View.extend({
 		    url: '//formspree.io/spen_@hotmail.co.uk', 
 		    method: 'POST',
 		    data: sendData,
-		    dataType: 'json'
+		    dataType: 'json',
+		    success: function(response){
+		    	view.formSuccess(response);
+		    },
+		    error: function(){
+		    	view.formError();
+		    }
 			});
-		} else {
-			console.log('form not valid');
 		}
 	
 		
 	},
-	setOiginalLabels: function(){
-		originalLabels = {
-			name: this.$el.find('form label[for="name"]').text(),
-			email: this.$el.find('form label[for="email"]').text(),
-			message:  this.$el.find('form label[for="message"]').text()
-		};
+	formSuccess: function(response){
+		var $form = this.$el.find('.contact-form');
+		$form.removeClass('pending');
+
+		if (response.success) {
+			$form.addClass('done').removeClass('error');
+			this.pending = true;
+		} else {
+			this.formError();
+			this.pending = false;
+		}
+		
+	},
+	formError: function(){
+		var $form = this.$el.find('.contact-form').addClass('error');
+
+		$form.removeClass('pending');
+		this.pending = false;
+	},
+	removeFormError: function(){
+		this.$el.find('.contact-form').removeClass('error');
 	}
 });
+
+

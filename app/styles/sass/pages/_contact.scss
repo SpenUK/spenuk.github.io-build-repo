@@ -1,42 +1,67 @@
 body.page-contact {
-	.content {
+
+	.connect {
+		max-width: 95%;
+		margin: 0 auto;
+
 		ul.social-icons {
-			li {
+			width: 100%;
+			.button {
+				
 				width: 100%;
+				margin: 8px auto;
+				padding: 0 50px;
+
+				&.twitter {
+					$brand-color: rgb(0,132,180);
+					@include ui-btn($brand-color, 50px); // 0, 172, 237
+				}
+
+				&.github {
+					$brand-color: rgb(102,102,102);
+					@include ui-btn($brand-color, 50px);
+				}
+
+				&.linked-in {
+					$brand-color: rgb(0,123,182);
+					@include ui-btn($brand-color, 50px);
+				}
 			}
+
+			li {
+				// margin: 0 auto;
+				min-width: 200px;
+				display: block;
+			}
+
 			i,p {
 				display: inline-block;
 				vertical-align: middle;
 				text-align: center;
+				color: $white;
+				margin: 0 .5em;
 			}
-
 			i {
-				color: $contrast-color-1;
-				font-size: 2em;
+				font-size: 1.6em;
 			}
 		}
+	}
+
+	.say-hello {
+		max-width: 95%;	
+		margin: 0 auto;
 	}
 }
 
 $box-shadow: 0 4px 0 rgba(0,0,0,.1);
 
 form.contact-form {
-	// width: 480px;
-	max-width: 95%;
-	margin: 0 auto;
-	// table {
-	// 	max-width: 100%;
-	// 	width: 100%;
-	// }
+	font-size: 1.2em;
+	position: relative;
 
-	// td.label {
-	// 	width: 0px;
-	// 	text-align: right;
-	// }
-
-	// label, button.submit,input	{
-		font-size: 1.2em;
-	// }
+	input, textarea {
+		transition: opacity 0.5s linear;
+	}
 
 	input, input:focus {
 		border: none;
@@ -81,13 +106,61 @@ form.contact-form {
     box-shadow: 0 4px 0 darken($header-color,15);
     text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 
-    &:active {
-    	margin-top: 22px;
-    	-webkit-box-shadow: 0 2px 0 darken($header-color,15);
-    	-moz-box-shadow: 0 2px 0 darken($header-color,15);
-    	box-shadow: 0 2px 0 darken($header-color,15);
+    i {
+    	display: none;
+    	margin: 0 auto;
+    	font-size: 1.2em;
     }
 
+    &:active {
+    	top: 3px;
+    	-webkit-box-shadow: 0 1px 0 darken($header-color,15);
+    	-moz-box-shadow: 0 1px 0 darken($header-color,15);
+    	box-shadow: 0 1px 0 darken($header-color,15);
+    }
+	}
+
+	i {
+		width: 50px;
+		text-align: center;
+	}
+
+	.thanks-message {
+		position: absolute;
+    left: 0px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 30px;
+    display: none;
+
+    .panel {
+    	margin: 0 auto;
+    }
+
+    h2 {
+    	margin: 0;
+    	text-align: center;
+    }
+
+    p {
+    	text-align: center;
+    }
+	}
+
+	.submission-error {
+		@include ui-btn-label(rgb(215,40,40), 50px);
+		margin: 8px auto;
+		color: $white;
+		padding: 0 50px;
+		display: none;
+
+		.fa-close {
+			cursor: pointer;
+			&:hover {
+				font-size: 1.2em;
+			}
+		}
 	}
 
 	.field.error {
@@ -99,8 +172,52 @@ form.contact-form {
   	}
   }
 
-	// .field label {
-	// 	width: 
-	// }
+  &.error {
+  	.submission-error {
+  		display: block;
+  	}
+  }
 
+  &.pending {
+  	.submit .fa-spinner {
+  		display: block;
+  	}
+
+  	.submit span {
+  		display: none;
+  	}
+  }
+
+  &.done {
+  	textarea, input {
+  		opacity: 0.4;
+  	}
+
+  	.thanks-message {
+  		display: block;
+  	}
+
+  	.submit {
+  		background-color: #8ECF6E;
+  		-webkit-box-shadow: 0 4px 0 #6FBA63;
+    	-moz-box-shadow: 0 4px 0 #6FBA63;
+    	box-shadow: 0 4px 0 #6FBA63;
+
+    	span {
+	  		display: none;
+	  	}
+
+    	.fa-thumbs-up {
+	  		display: block;
+	  	}
+
+			&:active {
+				top: 0;
+				-webkit-box-shadow: 0 4px 0 #6FBA63;
+	    	-moz-box-shadow: 0 4px 0 #6FBA63;
+	    	box-shadow: 0 4px 0 #6FBA63;
+			}
+  		
+  	}
+  }
 }

@@ -2,8 +2,7 @@
 
 var templates = require('../templates.js');
 var headerView = require('./ui/header.js');
-// var transitions = require('../modules/page-transitions.js');
-var transitions2 = require('../modules/page-transitions2.js');
+var transitions = require('../modules/page-transitions.js');
 
 module.exports = window.Backbone.View.extend({
 	el: 'html',
@@ -19,13 +18,7 @@ module.exports = window.Backbone.View.extend({
 			introContent: templates.intro()
 		});
 
-		// this.transitions = new transitions({
-		// 	container: '.page-wrap .main',
-		// 	content: '.content',
-		// 	transitionClass: '.transitioner'
-		// });
-
-		this.transitions = new transitions2({
+		this.transitions = new transitions({
 			container: '.page-wrap .main',
 			main: '.content-main',
 			transitioner: '.transitioner'
