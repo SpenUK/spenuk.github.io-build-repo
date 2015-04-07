@@ -55,11 +55,14 @@ module.exports = window.Backbone.View.extend({
 	},
 	nextContent: function(e){
 		e.preventDefault();
+		if ($('.animating-prev, .animating-next').length >= 1) {return false;}
 		this.transitions.direction = 'next';
 		window.Backbone.trigger('router:nextContent');
 	},
 	prevContent: function(e){
 		e.preventDefault();
+		if ($('.animating-prev, .animating-next').length >= 1) {return false;}
+		console.log('prev');
 		this.transitions.direction = 'prev';
 		window.Backbone.trigger('router:prevContent');
 	},

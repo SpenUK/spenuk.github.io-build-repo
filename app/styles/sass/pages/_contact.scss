@@ -1,4 +1,4 @@
-body.page-contact {
+.grid-container.contact {
 
 	.connect {
 		max-width: 95%;
@@ -13,8 +13,8 @@ body.page-contact {
 				padding: 0 50px;
 
 				&.twitter {
-					$brand-color: rgb(0,132,180);
-					@include ui-btn($brand-color, 50px); // 0, 172, 237
+					$brand-color: rgb(0,172,237); // 0,132,180
+					@include ui-btn($brand-color, 50px); 
 				}
 
 				&.github {
