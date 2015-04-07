@@ -10,8 +10,6 @@ module.exports = window.Backbone.View.extend({
 	},
 	render: function(options){
 		this.$el.html(this.template(options));
-
-    // console.log('header rendered');
 	},
 	events: {
 		'click .show-content': 'showContent',

@@ -1,7 +1,6 @@
 'use strict';
 
-var afterTrans = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
-
+var transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
 
 function transitions (options) {
 	/*jshint validthis:true */
@@ -11,8 +10,6 @@ function transitions (options) {
 	this.animating = false;
 
 	this.$transitioner.remove();
-
-	console.log({tr: this.$transitioner, m: this.$main});
 
 	this.render = function(content){
 		return this[this.direction === 'prev' ? 'prev' : 'next'](content);
@@ -27,16 +24,14 @@ function transitions (options) {
 		this.$transitioner.html(content).insertAfter(this.$main);
 
 		this.animating = true;
-		// window.setTimeout(function(){
-			$container.addClass('animating-next').removeClass('animating-prev').one(afterTrans, function(){
 
-				transitions.$main.html(content);
-				$container.removeClass('animating-next');
-				transitions.$transitioner.remove();
-				// this_.switchElements();
-				transitions.animating = false;
-			});
-		// },0);
+		$container.addClass('animating-next').removeClass('animating-prev').one(transitionEnd, function(){
+
+			transitions.$main.html(content);
+			$container.removeClass('animating-next');
+			transitions.$transitioner.remove();
+			transitions.animating = false;
+		});
 	};
 
 	this.prev = function(content){
@@ -48,15 +43,14 @@ function transitions (options) {
 		this.$transitioner.html(content).insertBefore(this.$main);
 
 		this.animating = true;
-		// window.setTimeout(function(){
-			$container.addClass('animating-prev').removeClass('animating-next').one(afterTrans, function(){
 
-				transitions.$main.html(content);
-				$container.removeClass('animating-prev');
-				transitions.$transitioner.remove();
-				transitions.animating = false;
-			});
-		// },0);
+		$container.addClass('animating-prev').removeClass('animating-next').one(transitionEnd, function(){
+
+			transitions.$main.html(content);
+			$container.removeClass('animating-prev');
+			transitions.$transitioner.remove();
+			transitions.animating = false;
+		});
 	};
 
 	return this;	

@@ -12,7 +12,6 @@ module.exports = window.Backbone.View.extend({
 	initialize: function(){
 
 		var state = (window.location.hash.length >= 1) ? 'content' : 'intro';
-		console.log('state:', state);
 		this.render({
 			state: state,
 			introContent: templates.intro()
@@ -62,7 +61,6 @@ module.exports = window.Backbone.View.extend({
 	prevContent: function(e){
 		e.preventDefault();
 		if ($('.animating-prev, .animating-next').length >= 1) {return false;}
-		console.log('prev');
 		this.transitions.direction = 'prev';
 		window.Backbone.trigger('router:prevContent');
 	},

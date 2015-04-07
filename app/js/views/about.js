@@ -7,9 +7,6 @@ module.exports = window.Backbone.View.extend({
 		this.template = options.template;
 	},
 	render: function(options){
-
-		console.log('render about');
-
 		
 		this.$el.html(this.template(options));
 

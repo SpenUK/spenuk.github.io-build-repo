@@ -13,7 +13,7 @@
 				padding: 0 50px;
 
 				&.twitter {
-					$brand-color: rgb(0,172,237); // 0,132,180
+					$brand-color: rgb(0,172,237);
 					@include ui-btn($brand-color, 50px); 
 				}
 
@@ -29,7 +29,6 @@
 			}
 
 			li {
-				// margin: 0 auto;
 				min-width: 200px;
 				display: block;
 			}
@@ -69,9 +68,7 @@ form.contact-form {
     outline: none;
     resize: none;
 
-    -webkit-box-shadow: $box-shadow;
-    -moz-box-shadow: $box-shadow;
-    box-shadow: $box-shadow;
+    @include box-shadow($box-shadow);
     width: 100%;
     margin: 8px auto;
     padding: 0.2em 0.6em;
@@ -84,9 +81,7 @@ form.contact-form {
     outline: none;
     resize: none;
 
-    -webkit-box-shadow: $box-shadow;
-    -moz-box-shadow: $box-shadow;
-    box-shadow: $box-shadow;
+    @include box-shadow($box-shadow);
     width: 100%;
     margin: 8px auto;
     padding: 0.7em 0.6em;
@@ -95,15 +90,14 @@ form.contact-form {
 
 	button.submit {
 		margin-top: 20px;
+		position: relative;
 		border: none;
 		outline: none;
 		width: 100%;
 		color: white;
 		padding: 0.5em;
 		background-color: $header-color;
-		-webkit-box-shadow: 0 4px 0 darken($header-color,15);
-    -moz-box-shadow: 0 4px 0 darken($header-color,15);
-    box-shadow: 0 4px 0 darken($header-color,15);
+    @include box-shadow (0 4px 0 darken($header-color,15));
     text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 
     i {
@@ -114,9 +108,7 @@ form.contact-form {
 
     &:active {
     	top: 3px;
-    	-webkit-box-shadow: 0 1px 0 darken($header-color,15);
-    	-moz-box-shadow: 0 1px 0 darken($header-color,15);
-    	box-shadow: 0 1px 0 darken($header-color,15);
+    	@include box-shadow(0 1px 0 darken($header-color,15));
     }
 	}
 
@@ -166,9 +158,7 @@ form.contact-form {
 	.field.error {
   	input, textarea {
   		background-color: rgba(255,225,225,1);
-  		-webkit-box-shadow: 0 4px 0 darken(rgba(255,225,225,1),15);
-    	-moz-box-shadow: 0 4px 0 darken(rgba(255,225,225,1),15);
-    	box-shadow: 0 4px 0 darken(rgba(255,225,225,1),15);
+  		@include box-shadow(0 4px 0 darken(rgba(255,225,225,1),15));
   	}
   }
 
@@ -199,9 +189,7 @@ form.contact-form {
 
   	.submit {
   		background-color: #8ECF6E;
-  		-webkit-box-shadow: 0 4px 0 #6FBA63;
-    	-moz-box-shadow: 0 4px 0 #6FBA63;
-    	box-shadow: 0 4px 0 #6FBA63;
+    	@include box-shadow(0 4px 0 #6FBA63);
 
     	span {
 	  		display: none;
@@ -213,9 +201,7 @@ form.contact-form {
 
 			&:active {
 				top: 0;
-				-webkit-box-shadow: 0 4px 0 #6FBA63;
-	    	-moz-box-shadow: 0 4px 0 #6FBA63;
-	    	box-shadow: 0 4px 0 #6FBA63;
+	    	@include box-shadow(0 4px 0 #6FBA63);
 			}
   		
   	}

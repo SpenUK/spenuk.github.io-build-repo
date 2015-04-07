@@ -36,8 +36,6 @@ var AppRouter = window.Backbone.Router.extend({
 			// Only transition if the current view is not changing (but the resource is).
 			var transition = (this.currentContentView === context.views.blog && this.lastRoute !== '');
 
-			console.log('transition: ', transition);
-
 			if (!context.views.blog.initialized) {
 				context.views.blog = new context.views.blog({
 	  			slug: slug,
@@ -87,7 +85,6 @@ var AppRouter = window.Backbone.Router.extend({
   		context.views.contact.render();
   		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
   		this.currentContentView = context.views.contact;
-  		console.log(this.currentContentRoute);
   		
 		});
 
@@ -116,7 +113,6 @@ var AppRouter = window.Backbone.Router.extend({
 		if (content.route) {this.currentContentRoute = this.lastRoute = content.route; }
 	},
 	goToCurrentContent: function () {
-		console.log(this.currentContentView);
 		this.navigate(this.currentContentRoute, {trigger: true});
 	},
 	goToPrevContent: function () {

@@ -12,25 +12,24 @@
 //      -o-transition-timing-function: cubic-bezier(0.100, 0.005, 0.4, 2.6); 
 //         transition-timing-function: cubic-bezier(0.100, 0.005, 0.4, 2.6); /* custom */
 
-@mixin transform ($effect) {
-	-webkit-transform: $effect;
-		 -moz-transform: $effect;
-      -ms-transform: $effect;
-       -o-transform: $effect;
-          transform: $effect;
+@mixin transform ($options) {
+	-webkit-transform: $options;
+		 -moz-transform: $options;
+      -ms-transform: $options;
+       -o-transform: $options;
+          transform: $options;
 }
 
-// @mixin transition ($effect, $duration, $easing) {
-// 	-webkit-transition: $effect $duration $easing;
-// 		 -moz-transition: $effect $duration $easing;
-//       -ms-transition: $effect $duration $easing;
-//           transition: $effect $duration $easing;
-// }
+@mixin transition ($options) {
+	-webkit-transition: $options;
+		 -moz-transition: $options;
+      -ms-transition: $options;
+       -o-transition: $options;
+          transition: $options;
+}
 
-@mixin transition ($effect) {
-	-webkit-transition: $effect;
-		 -moz-transition: $effect;
-      -ms-transition: $effect;
-       -o-transition: $effect;
-          transition: $effect;
+@mixin box-shadow ($options) {
+  -webkit-box-shadow: $options;
+  -moz-box-shadow: $options;
+  box-shadow: $options;
 }

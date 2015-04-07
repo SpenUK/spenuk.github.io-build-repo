@@ -13,19 +13,6 @@ module.exports = window.Backbone.View.extend({
 
 		return this;
 	},
-	setCurrent: function(slug){
-		slug = (slug || '');
-
-		if (!this.checkSlug(slug)) {
-			this.currentRecord = this.collection.first();
-			this.position = 0;
-		} else {
-			this.currentRecord = this.collection.where({slug: slug})[0];
-			this.position = this.collection.indexOf(this.currentRecord);			
-		}
-
-		return this;
-	},
 	stringToRender: function(){
 		return this.template({attributes: this.currentRecord.attributes});
 	},
@@ -118,11 +105,18 @@ module.exports = window.Backbone.View.extend({
 			}});
 		}
 	},
-	transitionRender: function(){
+	setCurrent: function(slug){
+		slug = (slug || '');
 
-	},
-	setListeners: function(){
-		// 
+		if (!this.checkSlug(slug)) {
+			this.currentRecord = this.collection.first();
+			this.position = 0;
+		} else {
+			this.currentRecord = this.collection.where({slug: slug})[0];
+			this.position = this.collection.indexOf(this.currentRecord);			
+		}
+
+		return this;
 	},
 	addStubs: function(options){
 		options = (options || {});

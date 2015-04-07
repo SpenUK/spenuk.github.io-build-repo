@@ -20,10 +20,11 @@ module.exports = window.Backbone.View.extend({
 		this.initialized = true;
 		this.emailAddress = 'smt_@hotmail.co.uk';
 
-		console.log(this.$el);
 	},
 	render: function(options){
 		this.$el.html(this.template(options));
+
+		this.pending = false;
 
 		window.Backbone.trigger('ui:showContent');
 
@@ -41,10 +42,10 @@ module.exports = window.Backbone.View.extend({
 	validateForm: function(){
 		var $form = this.$el.find('.contact-form');
 
-				var $name = $form.find('#name');
-				var $email = $form.find('#email');
-		// // $subject = $form.find('#subject'),
-				var $message = $form.find('#message');
+		var $name = $form.find('#name');
+		var $email = $form.find('#email');
+// // $subject = $form.find('#subject'),
+		var $message = $form.find('#message');
 
 		var errors = [];
 

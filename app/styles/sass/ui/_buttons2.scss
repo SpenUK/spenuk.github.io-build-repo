@@ -1,7 +1,7 @@
 // UI labels for buttons, appear the same but with no pseudos
 @mixin ui-btn-label($background-color, $height){
 	background-color: $background-color;
-	box-shadow: 0 4px 0 darken($background-color, 10);
+	@include box-shadow (0 4px 0 darken($background-color, 10));
 	// color: rgba(255,255,255,0.8);
 	text-shadow: 0 2px 0 rgba(0,0,0,0.2);
 	height: $height;
@@ -10,7 +10,6 @@
 	text-align: center;
 	position: relative;
 	display: inline-block;
-	padding: 0;
 	vertical-align: top;
 
 	* {
