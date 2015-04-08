@@ -53,7 +53,6 @@ module.exports = window.Backbone.View.extend({
 		return this;
 	},
 	fetchRender: function(options){
-		console.log('fetch render');
 		var view = this;
 		if (false) {
 			this.collection.fetch({
@@ -82,7 +81,7 @@ module.exports = window.Backbone.View.extend({
 				}
 			});
 		} else {
-			this.addStubs({success: function(){
+			this.collection.addStubs({success: function(){
 
 				if (options.slug && view.collection.where({slug: options.slug}).length) {
 					view.currentRecord = view.collection.where({slug: options.slug})[0];
@@ -99,6 +98,7 @@ module.exports = window.Backbone.View.extend({
 				window.Backbone.trigger('ui:updateNext', {link: view.nextRoute()});
 				window.Backbone.trigger('page:setNamespace', view.namespace );
 
+
 				window.Backbone.trigger('transition:render', view.stringToRender() );	
 
 			}});
@@ -107,7 +107,6 @@ module.exports = window.Backbone.View.extend({
 	addStubs: function(options){
 		options = (options || {});
 		var view = this;
-		console.log('adding stubs', view.stubs);
 
 		window.setTimeout(function(){
 			var i,response = view.getRecordsFromResponse(view.stubs);
@@ -115,10 +114,7 @@ module.exports = window.Backbone.View.extend({
 			for (i = response.length - 1; i >= 0; i--) {
 				var record = response[i];
 				if (!view.collection.where({ID: record.ID}).length) {
-					console.log('adding', i);
 					view.collection.add(record);
-				} else {
-					console.log('not adding');
 				}
 			}	
 			(options.success || $.noop)();
@@ -150,7 +146,6 @@ module.exports = window.Backbone.View.extend({
 		return (this.collection.where({slug: slug}).length >= 1);
 	},
 	defaultSlug: function(){
-		console.log(this.currentRecord, this.collection);
 		return this.currentRecord ? this.currentRecord.get('slug') : this.collection.first().get('slug');
 	},
 	defaultRoute: function(){

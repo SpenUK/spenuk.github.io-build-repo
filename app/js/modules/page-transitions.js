@@ -24,9 +24,7 @@ function transitions (options) {
 		this.$transitioner.html(content).insertAfter(this.$main);
 
 		this.animating = true;
-
 		$container.addClass('animating-next').removeClass('animating-prev').one(transitionEnd, function(){
-
 			transitions.$main.html(content);
 			$container.removeClass('animating-next');
 			transitions.$transitioner.remove();
@@ -43,9 +41,7 @@ function transitions (options) {
 		this.$transitioner.html(content).insertBefore(this.$main);
 
 		this.animating = true;
-
 		$container.addClass('animating-prev').removeClass('animating-next').one(transitionEnd, function(){
-
 			transitions.$main.html(content);
 			$container.removeClass('animating-prev');
 			transitions.$transitioner.remove();
