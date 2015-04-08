@@ -38,16 +38,10 @@ var AppRouter = window.Backbone.Router.extend({
 
 			if (!context.views.blog.initialized) {
 				context.views.blog = new context.views.blog({
-	  			slug: slug,
 	  			el: context.mainPanel,
 	  			template: context.templates['blog-post']
 	  		});
 			}
-
-			if (!slug || !context.views.blog.checkSlug(slug)) {
-				slug = context.views.blog.defaultSlug();
-				this.navigate(context.views.blog.defaultRoute());
-  		}
 
   		context.views.blog.render({slug: slug, transition: transition});
 
