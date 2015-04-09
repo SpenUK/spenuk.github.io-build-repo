@@ -1,26 +1,15 @@
 'use strict';
 
 module.exports = window.Backbone.View.extend({	
-	setCurrent: function(slug){
-		slug = (slug || '');
-
-		if (!this.checkSlug(slug)) {
-			this.currentRecord = this.collection.first();
-			this.position = 0;
-		} else {
-			this.currentRecord = this.collection.where({slug: slug})[0];
-			this.position = this.collection.indexOf(this.currentRecord);			
-		}
-
-		return this;
-	},
 	stringToRender: function(){
-		return this.template({attributes: this.currentRecord.attributes});
+		return this.template({attributes: this.collection.currentRecord.attributes});
 	},
 	render: function(options){
-		var view = this;
-		options = options;
+		options = (options || {});
 
+		var view = this,
+				collection = this.collection;
+		
 		if (!this.collection.length) {
 			this.$el.html(this.template());
 
@@ -32,9 +21,8 @@ module.exports = window.Backbone.View.extend({
 
 		} else {
  
-			if (options.slug && this.collection.where({slug: options.slug}).length) {
-				this.currentRecord = this.collection.where({slug: options.slug})[0];
-				this.position = this.collection.indexOf(this.currentRecord);
+			if (options.slug && collection.where({slug: options.slug}).length) {
+				collection.setCurrentRecord({slug: options.slug});
 			} else {
 				window.Backbone.trigger('router:redirect', view.defaultRoute());
 			}
@@ -53,15 +41,15 @@ module.exports = window.Backbone.View.extend({
 		return this;
 	},
 	fetchRender: function(options){
-		var view = this;
-		if (false) {
-			this.collection.fetch({
+		var view = this,
+				collection = this.collection;
+		if (false) { // to be set to something more meaningful when an api is available
+			collection.fetch({
   			remove: false,
 				success: function(){
 
-					if (options.slug && view.collection.where({slug: options.slug}).length) {
-						view.currentRecord = view.collection.where({slug: options.slug})[0];
-						view.position = view.collection.indexOf(view.currentRecord);
+					if (options.slug && collection.where({slug: options.slug}).length) {
+						collection.setCurrentRecord({slug: options.slug});
 					}
 
 					window.Backbone.trigger('transition:render', view.stringToRender() );		
@@ -70,9 +58,8 @@ module.exports = window.Backbone.View.extend({
 				error: function(){
 					view.addStubs({success: function(){
 
-						if (options.slug && view.collection.where({slug: options.slug}).length) {
-							view.currentRecord = view.collection.where({slug: options.slug})[0];
-							view.position = view.collection.indexOf(view.currentRecord);
+						if (options.slug && collection.where({slug: options.slug}).length) {
+							collection.setCurrentRecord({slug: options.slug});
 						}
 
 						window.Backbone.trigger('transition:render', view.stringToRender() );	
@@ -81,14 +68,12 @@ module.exports = window.Backbone.View.extend({
 				}
 			});
 		} else {
-			this.collection.addStubs({success: function(){
+			collection.addStubs({success: function(){
 
-				if (options.slug && view.collection.where({slug: options.slug}).length) {
-					view.currentRecord = view.collection.where({slug: options.slug})[0];
-					view.position = view.collection.indexOf(view.currentRecord);
+				if (options.slug && collection.where({slug: options.slug}).length) {
+					collection.setCurrentRecord({slug: options.slug});
 				} else {
-					view.currentRecord = view.collection.first();
-					view.position = view.collection.indexOf(view.currentRecord);
+					collection.setCurrentRecord(collection.first());
 				}
 
 				window.Backbone.trigger('router:redirect', view.defaultRoute());
@@ -104,49 +89,30 @@ module.exports = window.Backbone.View.extend({
 			}});
 		}
 	},
-	addStubs: function(options){
-		options = (options || {});
-		var view = this;
-
-		window.setTimeout(function(){
-			var i,response = view.getRecordsFromResponse(view.stubs);
-
-			for (i = response.length - 1; i >= 0; i--) {
-				var record = response[i];
-				if (!view.collection.where({ID: record.ID}).length) {
-					view.collection.add(record);
-				}
-			}	
-			(options.success || $.noop)();
-
-		}, 500); // faking async
+	setCurrent: function(slug){
+		this.collection.setCurrentRecord({slug:slug});
 
 		return this;
 	},
-	getRecordsFromResponse: function(response){
-		return response;
-	},
 	getNextModel: function(){
-		var collection = this.collection;
-		return collection.at((this.position +1 > collection.length -1)?  false : this.position + 1);
+		return this.collection.getNextModel();
 	},
 	getPrevModel: function(){
-		var collection = this.collection;
-		return collection.at((this.position -1 < 0) ? false : this.position - 1);
+		return this.collection.getPrevModel();
 	},
 	nextRoute: function(){
-		var model = this.getNextModel();
+		var model = this.collection.getNextModel();
 		return model? '#/'+ this.namespace +'/' + model.get('slug') : false;
 	},
 	prevRoute: function(){
-		var model = this.getPrevModel();
+		var model = this.collection.getPrevModel();
 		return model? '#/'+ this.namespace +'/' + model.get('slug') : false;
 	},
 	checkSlug: function(slug){
-		return (this.collection.where({slug: slug}).length >= 1);
+		return this.collection.checkSlug(slug);
 	},
 	defaultSlug: function(){
-		return this.currentRecord ? this.currentRecord.get('slug') : this.collection.first().get('slug');
+		return this.collection.defaultSlug();
 	},
 	defaultRoute: function(){
 		return '/'+ this.namespace +'/' + this.defaultSlug();

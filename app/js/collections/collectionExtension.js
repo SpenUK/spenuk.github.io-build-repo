@@ -9,6 +9,16 @@ module.exports = window.Backbone.Collection.extend({
   	this.totalRecords = response.length;
     return response;
   },
+  setCurrentRecord: function(options){
+    if (options.slug && this.where({slug: options.slug}).length) {
+      this.currentRecord = this.where({slug: options.slug})[0];
+    } else if (options.model && this.contains(options.model)) {
+      this.currentRecord = options.model;
+    }
+
+    this.position = this.indexOf(this.currentRecord);
+    return this.currentRecord;
+  },
   getCurrentRecord: function(){
     return this.at(this.position);
   },
@@ -33,5 +43,17 @@ module.exports = window.Backbone.Collection.extend({
       (options.success || $.noop)();
     }, (options.time || 0));
 
+  },
+  getNextModel: function(){
+    return this.at((this.position +1 > this.length -1)?  false : this.position + 1);
+  },
+  getPrevModel: function(){
+    return this.at((this.position -1 < 0) ? false : this.position - 1);
+  },
+  checkSlug: function(slug){
+    return (this.collection.where({slug: slug}).length >= 1);
+  },
+  defaultSlug: function(){
+    return this.currentRecord ? this.currentRecord.get('slug') : this.first().get('slug');
   }
 });
