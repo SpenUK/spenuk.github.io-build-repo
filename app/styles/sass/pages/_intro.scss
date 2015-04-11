@@ -24,18 +24,34 @@
 	@include transform(translateY(60px));
   background-color: #244454;
 
-  .page-icons-wrapper {}
+  .page-icons-wrapper {
+  	max-width: 900px;
+  	margin: 0 auto;
+  	@include clearfix();
+  }
 
   .page-icon-wrapper {
   	display: inline-block;
+  	position: relative;
+  	width: 33.333%;
+  	float: left;
 
+  	a {
+  		max-width: 100%;
+  		margin: 0 auto;
+  	}
+
+  	img, h4 {
+	  	max-width: 90%;
+  	}
   	h4 {
   		font-weight: normal;
+  		margin: 0.4em auto;
   	}
   }
 
   .page-icon {
-  	height: 100px;
+  	max-height: 100px;
   }
 
 	ul.social-icons {
@@ -62,7 +78,7 @@
 
 	a.about,a.projects,a.blog,a.contact {
 		font-weight: bold;
-		margin: 10px;
+		// margin: 10px;
 		color: darken($white, 10);
 	}
 	a.about {
