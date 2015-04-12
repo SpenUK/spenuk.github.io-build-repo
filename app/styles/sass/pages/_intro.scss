@@ -39,15 +39,30 @@
   	a {
   		max-width: 100%;
   		margin: 0 auto;
+  		display: inline-block;
+  		&:hover {
+	  		h4 {
+	  			transition: all 0.2s ease-out;
+	  			opacity: 1;
+	  			top: 0;
+	  		}
+	  	}
   	}
 
   	img, h4 {
 	  	max-width: 90%;
   	}
   	h4 {
+  		position: relative;
+  		opacity: 0;
   		font-weight: normal;
   		margin: 0.4em auto;
+  		text-transform: uppercase;
+  		color: $contrast-color-1;
+  		top: -15px;
   	}
+
+
   }
 
   .page-icon {

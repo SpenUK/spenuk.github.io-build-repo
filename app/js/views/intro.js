@@ -5,6 +5,7 @@ module.exports = window.Backbone.View.extend({
 	initialize: function(options){
 		options = options || {};
 		this.template = options.template;
+		this.initialized = true;
 		this.render(options);
 	},
 	render: function(options){

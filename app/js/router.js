@@ -15,6 +15,7 @@ var AppRouter = window.Backbone.Router.extend({
 
 		this.listenTo(window.Backbone, 'router:redirect', this.redirect);
 		this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
+		this.listenTo(window.Backbone, 'router:goToLanding', this.goToLanding);
 		this.listenTo(window.Backbone, 'router:nextContent', this.goToNextContent);
 		this.listenTo(window.Backbone, 'router:prevContent', this.goToPrevContent);
 		this.listenTo(window.Backbone, 'router:setCurrentContent', this.setCurrentContent);
@@ -23,10 +24,19 @@ var AppRouter = window.Backbone.Router.extend({
 		
 		this.on('route:root' ,function(){
 
-  		new context.views.intro({
-  			template: context.templates.intro
-  		});
-  		$('body').addClass('intro');
+			if (!context.views.intro.initialized) {
+				context.views.intro = new context.views.intro({
+	  			el: context.introPanel,
+	  			template: context.templates.intro
+	  		});
+			}
+
+			window.Backbone.trigger('ui:showIntro');
+
+  		// new context.views.intro({
+  		// 	template: context.templates.intro
+  		// });
+  		// $('body').addClass('intro');
 
   		this.lastRoute = window.Backbone.history.fragment;
 		});
@@ -44,6 +54,7 @@ var AppRouter = window.Backbone.Router.extend({
 			}
 
   		context.views.blog.render({slug: slug, transition: transition});
+  		window.Backbone.trigger('page:message', '<p>Eek, lots of Ipsum! I\'ll start writing actual posts once this site is fixed up properly. For now, enjoy all the various ipsums!</p>');
 
 			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
 			this.currentContentView = context.views.blog;
@@ -105,6 +116,9 @@ var AppRouter = window.Backbone.Router.extend({
 	setCurrentContent: function(content){
 		if (content.view) {this.currentContentView = content.view; }
 		if (content.route) {this.currentContentRoute = this.lastRoute = content.route; }
+	},
+	goToLanding: function () {
+		this.navigate('', {trigger: true});
 	},
 	goToCurrentContent: function () {
 		this.navigate(this.currentContentRoute, {trigger: true});

@@ -2,7 +2,7 @@ $easing: ease;
 $landing-trans-time: 0.5s;
 
 .header {
-	@include transition(all $landing-trans-time $easing);
+	@include transition(background-color $landing-trans-time $easing);
 	height: $header-height;
 	width: 100%;
 	position: absolute;
@@ -29,8 +29,15 @@ $landing-trans-time: 0.5s;
 	}
 
 	.landing-footer-content {
+		top: 0;
+		height: auto;
 		i {
 			color: $contrast-color-1;
 		}
 	}
+	.header-content {
+		bottom: 0;
+  	height: auto;
+	}
+	  
 }

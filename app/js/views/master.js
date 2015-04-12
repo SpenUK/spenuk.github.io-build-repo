@@ -3,6 +3,7 @@
 var templates = require('../templates.js');
 var headerView = require('./ui/header.js');
 var transitions = require('../modules/page-transitions.js');
+var scrollTracker = require('../helpers/scroll-tracker.js');
 
 module.exports = window.Backbone.View.extend({
 	el: 'html',
@@ -23,6 +24,8 @@ module.exports = window.Backbone.View.extend({
 			transitioner: '.transitioner'
 		});
 
+
+
 		this.$header = $(this.header);
 		this.headerView = new headerView({template: templates['ui/header']});
 		this.initialized = true;
@@ -39,6 +42,8 @@ module.exports = window.Backbone.View.extend({
   },
   render: function(options){
   	$('body').html(templates.master(options));
+
+  	scrollTracker.initialize();
   },
   showContent: function() {
 		$('body').addClass('content').removeClass('intro');
@@ -67,6 +72,14 @@ module.exports = window.Backbone.View.extend({
   goToCurrentContent: function(){
   	window.Backbone.trigger('router:goToCurrentContent');
   },
+  mesageUpdate: function(message){
+  	var $el = this.$el.find('.message');
+  	if (!message) {
+  		$el.hide().html('');
+  	} else {
+  		$el.show().html(message);
+  	}
+  },
 	setListeners: function(){
 
 		var transitions = this.transitions;
@@ -76,6 +89,7 @@ module.exports = window.Backbone.View.extend({
 		this.listenTo(window.Backbone, 'ui:showContent', this.showContent);
 		this.listenTo(window.Backbone, 'ui:showIntro', this.showIntro);
 		this.listenTo(window.Backbone, 'page:setNamespace', this.setNamespace);
+		this.listenTo(window.Backbone, 'page:message', this.messageUpdate);
 
 		this.listenTo(window.Backbone, 'transition:render', render);
 
