@@ -24,7 +24,15 @@ module.exports = window.Backbone.View.extend({
 			transitioner: '.transitioner'
 		});
 
-
+		var view = this;
+		$(document).on('keypress', function(e){
+			if (e.keyCode === 119) {
+				window.Backbone.trigger('page:nextContent');
+			}
+			if (e.keyCode === 113) {
+				window.Backbone.trigger('page:prevContent');
+			}
+		});
 
 		this.$header = $(this.header);
 		this.headerView = new headerView({template: templates['ui/header']});
@@ -58,27 +66,21 @@ module.exports = window.Backbone.View.extend({
 			}).join(' ') + ' page-' +namespace );
 	},
 	nextContent: function(e){
-		e.preventDefault();
+		if (e) { e.preventDefault(); }
+		// if (this.transitions.animating) { return false; }
 		if ($('.animating-prev, .animating-next').length >= 1) {return false;}
 		this.transitions.direction = 'next';
 		window.Backbone.trigger('router:nextContent');
 	},
 	prevContent: function(e){
-		e.preventDefault();
+		if (e) { e.preventDefault(); }
+		// if (this.transitions.animating) { return false; }
 		if ($('.animating-prev, .animating-next').length >= 1) {return false;}
 		this.transitions.direction = 'prev';
 		window.Backbone.trigger('router:prevContent');
 	},
   goToCurrentContent: function(){
   	window.Backbone.trigger('router:goToCurrentContent');
-  },
-  mesageUpdate: function(message){
-  	var $el = this.$el.find('.message');
-  	if (!message) {
-  		$el.hide().html('');
-  	} else {
-  		$el.show().html(message);
-  	}
   },
 	setListeners: function(){
 
@@ -89,7 +91,8 @@ module.exports = window.Backbone.View.extend({
 		this.listenTo(window.Backbone, 'ui:showContent', this.showContent);
 		this.listenTo(window.Backbone, 'ui:showIntro', this.showIntro);
 		this.listenTo(window.Backbone, 'page:setNamespace', this.setNamespace);
-		this.listenTo(window.Backbone, 'page:message', this.messageUpdate);
+		this.listenTo(window.Backbone, 'page:nextContent', this.nextContent);
+		this.listenTo(window.Backbone, 'page:prevContent', this.prevContent);
 
 		this.listenTo(window.Backbone, 'transition:render', render);
 

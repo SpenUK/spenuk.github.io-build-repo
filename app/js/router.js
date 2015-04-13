@@ -126,11 +126,13 @@ var AppRouter = window.Backbone.Router.extend({
 	goToPrevContent: function () {
 		if (!_.isFunction(this.currentContentView.getPrevModel)) { return false; }
 		var route = this.currentContentView.prevRoute();
+		if (!route) { return false; }
 		this.navigate(route);
 	},
 	goToNextContent: function () {
 		if (!_.isFunction(this.currentContentView.getNextModel)) { return false; }
 		var route = this.currentContentView.nextRoute();
+		if (!route) { return false; }
 		this.navigate(route);
 	},
 	defaultContentRoute: function () {

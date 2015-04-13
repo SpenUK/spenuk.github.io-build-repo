@@ -17,6 +17,12 @@ module.exports = {
 
 		var module = this;
 
+		// $(document).on('keypress', function(e){
+		// 	if (e.keyCode === 113) {
+		// 		window.Backbone.trigger('router:nextContent');
+		// 	}
+		// });
+
 		var $header = $('.header');
 		var $body = $('body');
 		var headerInlineStyles = ($header.attr('style') || '');
@@ -25,6 +31,18 @@ module.exports = {
 		var trackScroll = function(e){
 			var evt = (window.event || e);//equalize event object
 			var delta= evt.detail ? evt.detail*(-120) : evt.wheelDelta; //check for detail first so Opera uses that instead of wheelDelta
+			var deltaX = evt.deltaX;
+
+			if (deltaX > 160) {
+				console.log('right swipe');
+				window.Backbone.trigger('page:prevContent');
+				// return;
+			} else if (deltaX < -160) {
+				window.Backbone.trigger('page:nextContent');
+				console.log('left swipe');
+				// return;
+			}
+			if (Math.abs(deltaX) >= 50) {return;}
 
 			var reset = false;
 			var lastDirection = direction;
@@ -32,7 +50,7 @@ module.exports = {
 
 			if (TO !== null) {
 				clearTimeout(TO);
-				if (lastDirection === direction) {
+				if (lastDirection === direction && Math.abs(delta) >= 10) {
 					// needs stricter timing... currently relies on JS process rate, so not reliably 1 to 1.
 					scrollTime += 1;	
 				} else {
@@ -85,8 +103,18 @@ module.exports = {
 
 };
 
-// function displaywheel(e){
-//     var evt=window.event || e //equalize event object
-//     var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
-//     document.getElementById('wheelvalue').innerHTML=delta //delta returns +120 when wheel is scrolled up, -120 when down
-// }
+
+// $(document).mousewheel(function(event, delta, deltaX, deltaY) {
+//   	if (deltaX > 10){
+// 		$(".square").addClass("animation");
+// 	}else if(deltaX < -10){
+// 		$(".square").removeClass("animation");
+// 	}
+// 	if (deltaY != 0){
+// 	    ///Anything that makes vertical wheelscroll keeps normal
+//     } else {
+//         event.preventDefault();
+//     }
+//     // I have to preventDefault only the horizontal scroll, otherwise page will go back or go forward in history
+	
+// });
