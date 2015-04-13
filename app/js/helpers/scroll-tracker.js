@@ -36,12 +36,23 @@ module.exports = {
 			if (deltaX > 160) {
 				console.log('right swipe');
 				window.Backbone.trigger('page:prevContent');
-				// return;
+				return;
 			} else if (deltaX < -160) {
 				window.Backbone.trigger('page:nextContent');
 				console.log('left swipe');
-				// return;
+				return;
 			}
+
+			if (delta > 320) {
+				console.log('right swipe');
+				window.Backbone.trigger('router:goToLanding');	
+				return;
+			} else if (delta < -320) {
+				window.Backbone.trigger('router:goToCurrentContent');	
+				console.log('left swipe');
+				return;
+			}
+
 			if (Math.abs(deltaX) >= 50) {return;}
 
 			var reset = false;
