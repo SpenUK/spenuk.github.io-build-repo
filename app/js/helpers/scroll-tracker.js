@@ -41,12 +41,12 @@ module.exports = {
 				}
 				
 			}
-
-			if (scrollTime > 20) {
-				// $header.css('background-color', 'cyan');
-				// $header.css('height', headerHeight + ((scrollTime -20) * 0.5));
+			// hardcoded 60px urgh. But grabbing the header height causes rendering issue
+			if (scrollTime > 20 && direction === up) {
+				$header.css('padding-top', ((scrollTime -20) * 0.5)+ 60);
+			} else if (scrollTime > 20 && direction === down) {
+				$header.css({paddingBottom: ((scrollTime -20) * 0.5) + 60, marginTop: -(((scrollTime -20) * 0.5))});
 			} else {
-				// console.log(headerInlineStyles);
 				$header.attr('style', headerInlineStyles);
 			}
 
