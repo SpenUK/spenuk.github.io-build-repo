@@ -1,100 +1,44 @@
 'use strict';
 
-var TO = null;
 var wheelEvent = (/Firefox/i.test(navigator.userAgent))? 'DOMMouseScroll' : 'mousewheel';
-var up = 'up';
-var down = 'down';
 
 module.exports = {
 	initialize: function(options){ 
 		options = (options || {});
 
-		this.tolerance = (options.tolerance || 200);
-
-		var scrollTime = 0;
+		this.cooldownTime = (options.cooldownTime || 1000);
+		this.ready = true;
 
 		var direction;
 
 		var module = this;
 
-		// $(document).on('keypress', function(e){
-		// 	if (e.keyCode === 113) {
-		// 		window.Backbone.trigger('router:nextContent');
-		// 	}
-		// });
-
-		var $header = $('.header');
-		var $body = $('body');
-		var headerInlineStyles = ($header.attr('style') || '');
-		// var headerHeight = $header.height();
-
 		var trackScroll = function(e){
-			var evt = (window.event || e);//equalize event object
-			var delta= evt.detail ? evt.detail*(-120) : evt.wheelDelta; //check for detail first so Opera uses that instead of wheelDelta
+			if (!module.ready) { return false; }
+
+			var evt = (window.event || e); // equalize event object
+			var delta= evt.detail ? evt.detail*(-120) : evt.wheelDelta; // check for detail first so Opera uses that instead of wheelDelta
 			var deltaX = evt.deltaX;
 
 			if (deltaX > 160) {
-				console.log('right swipe');
 				window.Backbone.trigger('page:prevContent');
-				return;
+				return module.swiperCooldown();
 			} else if (deltaX < -160) {
 				window.Backbone.trigger('page:nextContent');
-				console.log('left swipe');
-				return;
+				return module.swiperCooldown();
 			}
+
+			// An up or down swipe should be near enough vertical.
+			// If the X-delta is at all significant then return early before the Y-delta is considered.
+			if (Math.abs(deltaX) >= 50) { console.log('ignoring Y-delta'); return false; }
 
 			if (delta > 320) {
-				console.log('right swipe');
 				window.Backbone.trigger('router:goToLanding');	
-				return;
+				return module.swiperCooldown();
 			} else if (delta < -320) {
 				window.Backbone.trigger('router:goToCurrentContent');	
-				console.log('left swipe');
-				return;
+				return module.swiperCooldown();
 			}
-
-			if (Math.abs(deltaX) >= 50) {return;}
-
-			var reset = false;
-			var lastDirection = direction;
-			direction = (delta > 0)? up : down;
-
-			if (TO !== null) {
-				clearTimeout(TO);
-				if (lastDirection === direction && Math.abs(delta) >= 10) {
-					// needs stricter timing... currently relies on JS process rate, so not reliably 1 to 1.
-					scrollTime += 1;	
-				} else {
-					scrollTime = 0;
-					reset = true;
-				}
-				
-			}
-			// hardcoded 60px urgh. But grabbing the header height causes rendering issue
-			if (scrollTime > 20 && direction === up) {
-				$header.css('padding-top', ((scrollTime -20) * 0.5)+ 60);
-			} else if (scrollTime > 20 && direction === down) {
-				$header.css({paddingBottom: ((scrollTime -20) * 0.5) + 60, marginTop: -(((scrollTime -20) * 0.5))});
-			} else {
-				$header.attr('style', headerInlineStyles);
-			}
-
-			if (scrollTime >= 80 ) {
-				if (direction === up && $body.hasClass('content')) {
-					module.trigger(up);
-				}
-				if (direction === down && $body.hasClass('intro')) {
-					module.trigger(down);
-				}
-
-				scrollTime = 0;
-				$header.attr('style', headerInlineStyles);
-			}
-
-			TO = setTimeout(function(){
-				scrollTime = 0;
-				$header.attr('style', headerInlineStyles);
-			}, module.tolerance);
 		};
 
 		if (document.attachEvent){ //if IE (and Opera depending on user setting)
@@ -104,12 +48,13 @@ module.exports = {
 		}
 
 	},
-	trigger: function(direction) {
-		if (direction === up) {
-			window.Backbone.trigger('router:goToLanding');	
-		} else {
-			window.Backbone.trigger('router:goToCurrentContent');	
-		}
+	swiperCooldown: function(){
+		var module = this;
+		module.ready = false;
+
+		window.setTimeout(function(){
+			module.ready = true;
+		}, module.cooldownTime);
 	}
 
 };

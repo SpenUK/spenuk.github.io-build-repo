@@ -2,7 +2,7 @@ $box-shadow: 0 4px 0 rgba(0,0,0,.1);
 
 .panel {
 	background-color: $white;
-	
+	padding: 2em 4em;
 	@include box-shadow($box-shadow);
 	position: relative;
 
@@ -11,10 +11,10 @@ $box-shadow: 0 4px 0 rgba(0,0,0,.1);
 	}
 }
 
-.panel-content {
-	padding: 2em 4em;
-	width: 100%;
-}
+// .panel-content {
+// 	padding: 2em 4em;
+// 	width: 100%;
+// }
 
 .content .panel {
 	max-width: 96%;

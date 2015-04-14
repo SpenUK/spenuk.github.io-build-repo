@@ -24,7 +24,7 @@ module.exports = window.Backbone.View.extend({
 			transitioner: '.transitioner'
 		});
 
-		var view = this;
+		// var view = this;
 		$(document).on('keypress', function(e){
 			if (e.keyCode === 119) {
 				window.Backbone.trigger('page:nextContent');
