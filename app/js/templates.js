@@ -5,7 +5,7 @@ var exports = (function () {
 this["JST"] = this["JST"] || {};
 
 this["JST"]["about"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"grid-container about\">\n	<h2>about</h2>\n</div>";
+  return "<div class=\"grid-container about\">\n	\n	<h2>About Me....</h2>\n	<div class=\"panel\" style=\"color: rgba(180,180,180,1); text-align: center;\">\n		<h2>Eek!</h2>\n		<p>This bit's coming soon I promise!</p>\n	</div>\n\n</div>";
   },"useData":true});
 
 this["JST"]["blog-post"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {

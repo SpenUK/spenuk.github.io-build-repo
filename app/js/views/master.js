@@ -65,6 +65,34 @@ module.exports = window.Backbone.View.extend({
 				return c.lastIndexOf('page-', 0) !== 0; 
 			}).join(' ') + ' page-' +namespace );
 	},
+	swiperUp: function(){
+		if (!this.swiperUpReady()) { return false; }
+		this.showIntro();
+	},
+	swiperDown: function(){
+		if (!this.swiperDownReady()) { return false; }
+		this.showContent();
+	},
+	swiperLeft: function(){
+		if (!this.swiperLeftReady()) { return false; }
+		this.nextContent();
+	},
+	swiperRight: function(){
+		if (!this.swiperRightReady()) { return false; }
+		this.prevContent();
+	},
+	swiperUpReady: function(){
+		return !($('body.content .content-main').scrollTop() > 0);
+	},
+	swiperDownReady: function(){
+		return $('body.intro').length >= 1;
+	},
+	swiperLeftReady: function(){
+		return true;
+	},
+	swiperRightReady: function(){
+		return true;
+	},
 	nextContent: function(e){
 		if (e) { e.preventDefault(); }
 		// if (this.transitions.animating) { return false; }
@@ -93,6 +121,12 @@ module.exports = window.Backbone.View.extend({
 		this.listenTo(window.Backbone, 'page:setNamespace', this.setNamespace);
 		this.listenTo(window.Backbone, 'page:nextContent', this.nextContent);
 		this.listenTo(window.Backbone, 'page:prevContent', this.prevContent);
+
+		this.listenTo(window.Backbone, 'swiper:up', this.swiperUp);
+		this.listenTo(window.Backbone, 'swiper:down', this.swiperDown);
+		this.listenTo(window.Backbone, 'swiper:left', this.swiperLeft);
+		this.listenTo(window.Backbone, 'swiper:right', this.swiperRight);
+
 
 		this.listenTo(window.Backbone, 'transition:render', render);
 

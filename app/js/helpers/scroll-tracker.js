@@ -9,8 +9,6 @@ module.exports = {
 		this.cooldownTime = (options.cooldownTime || 1000);
 		this.ready = true;
 
-		var direction;
-
 		var module = this;
 
 		var trackScroll = function(e){
@@ -21,22 +19,26 @@ module.exports = {
 			var deltaX = evt.deltaX;
 
 			if (deltaX > 160) {
-				window.Backbone.trigger('page:prevContent');
+				// window.Backbone.trigger('page:prevContent');
+				window.Backbone.trigger('swiper:right');
 				return module.swiperCooldown();
 			} else if (deltaX < -160) {
-				window.Backbone.trigger('page:nextContent');
+				// window.Backbone.trigger('page:nextContent');
+				window.Backbone.trigger('swiper:left');
 				return module.swiperCooldown();
 			}
 
 			// An up or down swipe should be near enough vertical.
 			// If the X-delta is at all significant then return early before the Y-delta is considered.
-			if (Math.abs(deltaX) >= 50) { console.log('ignoring Y-delta'); return false; }
+			if (Math.abs(deltaX) >= 50) { return false; }
 
 			if (delta > 320) {
-				window.Backbone.trigger('router:goToLanding');	
+				// window.Backbone.trigger('router:goToLanding');	
+				window.Backbone.trigger('swiper:up');
 				return module.swiperCooldown();
 			} else if (delta < -320) {
-				window.Backbone.trigger('router:goToCurrentContent');	
+				// window.Backbone.trigger('router:goToCurrentContent');	
+				window.Backbone.trigger('swiper:down');
 				return module.swiperCooldown();
 			}
 		};
