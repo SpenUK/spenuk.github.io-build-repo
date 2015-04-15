@@ -21,10 +21,3 @@ $box-shadow: 0 4px 0 rgba(0,0,0,.1);
 	display: block;
 	margin: 0 auto;
 }
-
-.main.animating-prev,
-.main.animating-next {
-	.content {
-		overflow-y: hidden;
-	}
-}

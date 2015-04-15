@@ -42,6 +42,13 @@ body {
 			// overflow: hidden;
 			// padding-top: $header-height;
 
+			&.animating-prev,
+			&.main.animating-next {
+				.content {
+					overflow-y: hidden;
+				}
+			}
+
 			&.animating-next {
 				@include transition(all $slide-in-time ease);
 				@include transform(translateX(-100%));
