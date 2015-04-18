@@ -42,7 +42,7 @@ this["JST"]["master"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"m
   buffer += "\n  		</div>\n    </div>\n	</div>\n  <div class=\"content-wrapper\">\n    <div class=\"header\">\n\n    </div>\n  	<div class=\"main\">\n      <div class=\"transition-container\">\n        <div class=\"content content-main\" id=\"main\">";
   stack1 = ((helper = (helper = helpers.mainContent || (depth0 != null ? depth0.mainContent : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"mainContent","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</div>\n        <div class=\"content transitioner\" id=\"trans\"></div>\n      </div>\n  	</div>\n\n  </div>\n</div>\n\n<style type=\"text/css\">\n  .content-main .grid-container,\n  .transitioner .grid-container{\n    /*min-height: 100%;*/\n    background-color: rgba(200,0,0,0.1);\n  }\n\n</style>";
+  return buffer + "</div>\n        <div class=\"content transitioner\" id=\"trans\"></div>\n      </div>\n  	</div>\n\n  </div>\n</div>";
 },"useData":true});
 
 this["JST"]["project"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
