@@ -35,14 +35,14 @@ $break-points: (
       "lower": 650px,
       "upper": 920px
     ),
-    "container-width": 626px
+    "container-width": 100%
   ), 
   "large": (
     "range": (
       "lower": 920px,
       "upper": 2000px
     ),
-    "container-width": 910px
+    "container-width": 920px
   )
 
 );
