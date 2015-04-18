@@ -3,12 +3,10 @@
 var templates = require('../templates.js');
 var headerView = require('./ui/header.js');
 var transitions = require('../modules/page-transitions.js');
-var scrollTracker = require('../helpers/scroll-tracker.js');
+// var scrollTracker = require('../helpers/scroll-tracker.js');
 
 module.exports = window.Backbone.View.extend({
 	el: 'html',
-	contentEl: '.main .content',
-	transitionEl: '.main .transition-content',
 	header: '.header',
 	initialize: function(){
 
@@ -19,7 +17,7 @@ module.exports = window.Backbone.View.extend({
 		});
 
 		this.transitions = new transitions({
-			container: '.page-wrap .main',
+			container: '.page-wrap .main .transition-container',
 			main: '.content-main',
 			transitioner: '.transitioner'
 		});
@@ -51,7 +49,7 @@ module.exports = window.Backbone.View.extend({
   render: function(options){
   	$('body').html(templates.master(options));
 
-  	scrollTracker.initialize();
+  	// scrollTracker.initialize();
   },
   showContent: function() {
 		$('body').addClass('content').removeClass('intro');
@@ -82,7 +80,7 @@ module.exports = window.Backbone.View.extend({
 		this.prevContent();
 	},
 	swiperUpReady: function(){
-		return !($('body.content .content-main').scrollTop() > 0);
+		return $('body.content .content-main').scrollTop() <= 0;
 	},
 	swiperDownReady: function(){
 		return $('body.intro').length >= 1;
@@ -95,15 +93,13 @@ module.exports = window.Backbone.View.extend({
 	},
 	nextContent: function(e){
 		if (e) { e.preventDefault(); }
-		// if (this.transitions.animating) { return false; }
-		if ($('.animating-prev, .animating-next').length >= 1) {return false;}
+		if (this.transitions.animating) {return false;}
 		this.transitions.direction = 'next';
 		window.Backbone.trigger('router:nextContent');
 	},
 	prevContent: function(e){
 		if (e) { e.preventDefault(); }
-		// if (this.transitions.animating) { return false; }
-		if ($('.animating-prev, .animating-next').length >= 1) {return false;}
+		if (this.transitions.animating) {return false;}
 		this.transitions.direction = 'prev';
 		window.Backbone.trigger('router:prevContent');
 	},

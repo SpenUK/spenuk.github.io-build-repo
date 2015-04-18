@@ -34,7 +34,7 @@ body {
 		}
 
 		.main {
-			$slide-in-time: .8s;
+			$slide-in-time: 2.8s;
 			position: relative;	
 			height: 100%;
 			padding-top: $header-height ; // + $page-padding
@@ -42,34 +42,93 @@ body {
 			// overflow: hidden;
 			// padding-top: $header-height;
 
-			&.animating-prev,
-			&.main.animating-next {
-				.content {
-					overflow-y: hidden;
+			// &.animating-prev,
+			// &.main.animating-next {
+			// 	// .content {
+			// 	.transition-content {
+			// 		overflow-y: hidden;
+			// 	}
+			// }
+
+			.content.transitioner { background-color: red;}
+
+			.transition-container {
+				position: relative;
+				top: $header-height;
+				// left: 0;
+				height: 60%;
+				// right: 0;
+				width: 200%;
+				// width: 100%;
+				bottom: 0;
+				// overflow: scroll;
+				overflow-y: scroll;
+				// overflow-x: visible;
+				background: rgba(0,0,0,0.1);
+
+				&.animating-prev,
+				&.animating-next {
+					// .content {
+					// .transition-content {
+						overflow-y: hidden;
+					// }
+				}
+
+				&.start-next {
+					@include transform(translateX(0%));
+
+					.content.transitioner {
+						@include transform(translateX(100%));
+						display: block;
+					}
+				}
+
+				&.start-prev {
+					@include transform(translateX(50%));
+
+					.content.content-main {
+						@include transform(translateX(100%));
+					}
+					.content.transitioner {
+						display: block;
+					}
+				}
+
+				&.animating-next {
+					@include transition(all $slide-in-time ease);
+					// @include transform(translateX(-50%));
+					@include transform(translateX(50%));
+					
+					.content.transitioner {
+						@include transform(translateX(100%));
+						display: block;
+					}
+
+				}
+
+				&.animating-prev {
+					@include transition(all $slide-in-time ease);
+					// @include transform(translateX(50%));
+					@include transform(translateX(-50%));
+
+					.content.content-main {
+						@include transform(translateX(100%));
+					}
+					.content.transitioner {
+						display: block;
+					}
 				}
 			}
 
-			&.animating-next {
-				@include transition(all $slide-in-time ease);
-				@include transform(translateX(-100%));
-
-
-				.content.transitioner {
-					@include transform(translateX(100%));
-					display: block;
-				}
-
-			}
-
-			&.animating-prev {
-				@include transition(all $slide-in-time ease);
-				@include transform(translateX(100%));
-
-				.content.transitioner {
-					@include transform(translateX(-100%));
-					display: block;
-				}
-			}
+			// .transition-container {
+				// position: absolute;
+				// top: $header-height;
+				// left: 0;
+				// right: 0;
+				// bottom: 0;
+				// overflow: scroll;
+				// background: rgba(0,0,0,0.1);
+			// }
 
 			.content {
 				position: absolute;
@@ -77,12 +136,14 @@ body {
 				padding-bottom: 40px;
 				top: $header-height;
 				left: 0;
-				right: 0;
-				bottom: 0;
-				overflow: scroll;
+				// right: 0;
+				width: 50%;
+				// bottom: 0;
+				// overflow: scroll;
 
 				&.transitioner {
-					display: none;
+					// display: none;
+					background-color: rgba(200,0,0,0.1);
 				}
 			}
 

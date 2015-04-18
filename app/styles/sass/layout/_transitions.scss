@@ -1,0 +1,59 @@
+$slide-in-time: .8s;
+
+.content.transitioner {
+	display: none;
+}
+
+.animate-next {
+	// set start location
+	&.go {
+		// set animate-to location
+		@include transition(all $slide-in-time ease);
+		// @include transition(all 0.8s ease);
+		@include transform(translateX(-50%));
+	}
+
+	.content.transitioner {
+		@include transform(translateX(100%));
+		display: block;
+	}
+
+	.content.transitioner {
+		// @include transform(translateX(100%));
+		// display: block;
+	}
+}
+
+.animate-prev {
+	// set start location
+	@include transform(translateX(-50%));
+	&.go {
+		// set animate-to location
+		@include transition(all $slide-in-time ease);
+		@include transform(translateX(0));
+	}
+
+	.content.transitioner {
+		@include transform(translateX(0));
+		display: block;
+	}
+
+	.content.content-main {
+		@include transform(translateX(100%));
+		display: block;
+	}
+}
+
+
+// &.animating-next {
+// 	@include transition(all $slide-in-time ease);
+// 	// @include transform(translateX(-50%));
+// 	@include transform(translateX(50%));
+	
+
+
+// 	.content.transitioner {
+// 		@include transform(translateX(100%));
+// 		display: block;
+// 	}
+// }

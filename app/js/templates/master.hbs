@@ -14,14 +14,23 @@
 
     </div>
   	<div class="main">
-      <div class="grid-container">
-        <div class="message" style=""></div>
-      </div>
-      {{!-- <div class="transition-container"> --}}
+      {{!-- <div class="grid-container"> --}}
+        {{!-- <div class="message" style=""></div> --}}
+      {{!-- </div> --}}
+      <div class="transition-container">
         <div class="content content-main" id="main">{{{mainContent}}}</div>
         <div class="content transitioner" id="trans"></div>
-      {{!-- </div> --}}
+      </div>
   	</div>
 
   </div>
 </div>
+
+<style type="text/css">
+  .content-main .grid-container,
+  .transitioner .grid-container{
+    /*min-height: 100%;*/
+    background-color: rgba(200,0,0,0.1);
+  }
+
+</style>
