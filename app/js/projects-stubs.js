@@ -87,15 +87,15 @@ module.exports = [
 		// 		php: ['SilverStripe']
 		// 	},
 		// 	content: '<img src="assets/images/projects/capriSun-minions.png" style="width:100%;"><p></p>'
-		// },{
-		// 	ID: 5,
-		// 	title: 'Greenvale Potatopals',
-		// 	slug: 'greenvale-potatopals',
-		// 	stack: {
-		// 		js: ['jQuery'],
-		// 		php: ['SilverStripe']
-		// 	},
-		// 	content: '<img src="assets/images/projects/greenvale.png" style="width:100%;"><p></p>'
+		},{
+			ID: 6,
+			title: 'Greenvale Potatopals',
+			slug: 'greenvale-potatopals',
+			stack: {
+				js: ['jQuery'],
+				php: ['SilverStripe']
+			},
+			content: '<img src="assets/images/projects/greenvale.png" style="width:100%;"><p></p><p>GreenVale Potatoes were running a promotion where customers buying their products could enter on-pack codes to redeem and collect points... or rather \'Potatokens\'!</p> <p>This was quite a fun project to work on. As well as it having a fun cartoony style it presented a few simple but interesting challenges to overcome.</p> <p>The main challenge was the handling of the token redemptions, there were a number of different ways for a user to earn these tokens, through different on-pack and magazine codes and through facebook friend referals - certain sources were repeatable, others were not. Another challenge was to integrate a third party API that handled the validation of the promo codes - which turned out to have a couple of bugs!</p> '
 		}
 
 ];

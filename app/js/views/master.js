@@ -3,7 +3,7 @@
 var templates = require('../templates.js');
 var headerView = require('./ui/header.js');
 var transitions = require('../modules/page-transitions.js');
-// var scrollTracker = require('../helpers/scroll-tracker.js');
+var scrollTracker = require('../helpers/scroll-tracker.js');
 
 module.exports = window.Backbone.View.extend({
 	el: 'html',
@@ -23,12 +23,13 @@ module.exports = window.Backbone.View.extend({
 		});
 
 		// var view = this;
-		$(document).on('keypress', function(e){
-			if (e.keyCode === 119) {
+		$(document).on('keydown', function(e){
+			if (e.which === 39) {
 				window.Backbone.trigger('page:nextContent');
-			}
-			if (e.keyCode === 113) {
+			} else if (e.which === 37) {
 				window.Backbone.trigger('page:prevContent');
+			} else {
+				return;
 			}
 		});
 
@@ -49,7 +50,7 @@ module.exports = window.Backbone.View.extend({
   render: function(options){
   	$('body').html(templates.master(options));
 
-  	// scrollTracker.initialize();
+  	scrollTracker.initialize();
   },
   showContent: function() {
 		$('body').addClass('content').removeClass('intro');
