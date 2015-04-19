@@ -10,6 +10,8 @@ module.exports = CollectionView.extend({
 		this.initialized = true;
 		this.template = options.template;
 
+		window.test = this;
+
 		return this;
 	}
 });

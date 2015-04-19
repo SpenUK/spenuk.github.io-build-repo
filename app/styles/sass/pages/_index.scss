@@ -23,11 +23,10 @@ body {
 	.page-wrap {
 		box-sizing: border-box;
 		@include transition(all 0 $easing);
-		// @include transition(all $landing-trans-time $easing);
+
 		height: 200%;
 		width: 100%;
 		padding-bottom: 0;
-		// background-color: $background-color;
 		position: relative;
 
 		.content-wrapper {
@@ -36,15 +35,16 @@ body {
 		}
 
 		.main {
-			position: relative;	
-			height: 100%;
-			padding-top: $header-height;
+			transition: top .8s ease;
+			position: absolute;	
+			@include cover();
+			top: $header-height;
 
 			.content {
 				position: absolute;
 				padding-top: 20px;
 				padding-bottom: 40px;
-				left: 0;;
+				left: 0;
 				width: 50%; // parent is 200%
 			}
 

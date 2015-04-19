@@ -11,15 +11,12 @@ function transitions (options) {
 
 	this.$transitioner.remove();
 
-	console.log(this.$transitioner, this.$main);
-
 	this.render = function(content){
 		return this[this.direction === 'prev' ? 'prev' : 'next'](content);
 	};
 
 	this.next = function(content){
-		console.log('is animating?', this.animating);
-		if (this.animating) {console.log('early return');return false;}
+		if (this.animating) {return false;}
 
 
 		var transitions = this;
@@ -32,7 +29,6 @@ function transitions (options) {
 		setTimeout(function(){
 			$container.addClass('go').one(transitionEnd, function(){
 				transitions.$main.html(content);
-				console.log('after tans callback', transitions.animating);
 				$container.removeClass('animate-next go');
 				transitions.$transitioner.remove();
 				transitions.animating = false;
@@ -42,8 +38,7 @@ function transitions (options) {
 	};
 
 	this.prev = function(content){
-		console.log('is animating?', this.animating);
-		if (this.animating) {console.log('early return');return false;}
+		if (this.animating) {return false;}
 
 		var transitions = this;
 		var $container = $(this.container);
@@ -56,47 +51,12 @@ function transitions (options) {
 		setTimeout(function(){
 			$container.addClass('go').one(transitionEnd, function(){
 				transitions.$main.html(content);
-				console.log('after tans callback', transitions.animating);
 				$container.removeClass('animate-prev go');
 				transitions.$transitioner.remove();
 				transitions.animating = false;
 			});
-		},10);
+		},10); // for some reason, setting to 0 causes a glitch?
 	};
-
-	// this.next = function(content){
-	// 	if (this.animating) {return false;}
-
-	// 	var transitions = this;
-	// 	var $container = $(this.container);
-
-	// 	this.$transitioner.html(content).insertAfter(this.$main);
-
-	// 	this.animating = true;
-	// 	$container.addClass('animating-next').removeClass('animating-prev').one(transitionEnd, function(){
-	// 		transitions.$main.html(content);
-	// 		$container.removeClass('animating-next');
-	// 		transitions.$transitioner.remove();
-	// 		transitions.animating = false;
-	// 	});
-	// };
-
-	// this.prev = function(content){
-	// 	if (this.animating) {return false; }
-
-	// 	var transitions = this;
-	// 	var $container = $(this.container);
-
-	// 	this.$transitioner.html(content).insertBefore(this.$main);
-
-	// 	this.animating = true;
-	// 	$container.addClass('animating-prev').removeClass('animating-next').one(transitionEnd, function(){
-	// 		transitions.$main.html(content);
-	// 		$container.removeClass('animating-prev');
-	// 		transitions.$transitioner.remove();
-	// 		transitions.animating = false;
-	// 	});
-	// };
 
 	return this;	
 }

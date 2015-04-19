@@ -60,19 +60,3 @@ module.exports = {
 	}
 
 };
-
-
-// $(document).mousewheel(function(event, delta, deltaX, deltaY) {
-//   	if (deltaX > 10){
-// 		$(".square").addClass("animation");
-// 	}else if(deltaX < -10){
-// 		$(".square").removeClass("animation");
-// 	}
-// 	if (deltaY != 0){
-// 	    ///Anything that makes vertical wheelscroll keeps normal
-//     } else {
-//         event.preventDefault();
-//     }
-//     // I have to preventDefault only the horizontal scroll, otherwise page will go back or go forward in history
-	
-// });

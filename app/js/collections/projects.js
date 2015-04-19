@@ -12,5 +12,6 @@ module.exports = CollectionExtension.extend({
 	isLoading: false,
   url: function(){
   	return 'http://public-api.wordpress.com/rest/v1/sites/ijustwanttotesttheapi.wordpress.com/posts';
-  }
+  },
+  stubbed: true
 });

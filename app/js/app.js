@@ -4,7 +4,13 @@ var router = require('./router.js');
 var templates = require('./templates.js');
 
 window.testWpApi = function(){
-  $.get('http://public-api.wordpress.com/rest/v1.1/sites/ijustwanttotesttheapi.wordpress.com/posts', function(r){console.log(r);}, function(){console.log('error');});
+  $.ajax({
+    url: 'http://public-api.wordpress.com/rest/v1.1/sites/ijustwanttotesttheapi.wordpress.com/posts',
+    dataType: 'jsonp',
+    success: function(r){console.log({response: r});},
+    error: function(){console.log('error');}
+      });
+  // $.get('http://public-api.wordpress.com/rest/v1.1/sites/ijustwanttotesttheapi.wordpress.com/posts', function(r){console.log(r);}, function(){console.log('error');});
 };
 
 

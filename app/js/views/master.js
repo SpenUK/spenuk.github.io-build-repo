@@ -71,6 +71,7 @@ module.exports = window.Backbone.View.extend({
 	swiperDown: function(){
 		if (!this.swiperDownReady()) { return false; }
 		this.showContent();
+		this.goToCurrentContent();
 	},
 	swiperLeft: function(){
 		if (!this.swiperLeftReady()) { return false; }

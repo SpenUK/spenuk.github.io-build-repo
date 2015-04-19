@@ -15,7 +15,6 @@ module.exports = window.Backbone.Collection.extend({
     } else if (options.model && this.contains(options.model)) {
       this.currentRecord = options.model;
     }
-
     this.position = this.indexOf(this.currentRecord);
     return this.currentRecord;
   },
