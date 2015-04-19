@@ -81,7 +81,8 @@ module.exports = window.Backbone.View.extend({
 		this.prevContent();
 	},
 	swiperUpReady: function(){
-		return $('body.content .content-main').scrollTop() <= 0;
+		return false;
+		// return $('body.content .content-main').scrollTop() <= 0;
 	},
 	swiperDownReady: function(){
 		return $('body.intro').length >= 1;

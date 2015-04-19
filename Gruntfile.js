@@ -249,7 +249,7 @@ module.exports = function (grunt) {
     },
 
     shell: {
-      pushBuilt: {
+      publish: {
         command: (function(message){ 
           if (typeof message === 'undefined') {
             return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update @ '+ new Date().toLocaleString() +'" && git push -u origin master';
@@ -334,9 +334,9 @@ module.exports = function (grunt) {
 		'copy:dist'
 	]);
 
-  grunt.registerTask('pushBuilt', [
+  grunt.registerTask('publish', [
     'export',
-    'shell:pushBuilt'
+    'shell:publish'
   ]);
 
   grunt.registerTask('devpush', [

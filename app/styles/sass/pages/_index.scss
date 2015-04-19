@@ -18,6 +18,8 @@ body {
 		height: 100%;
 	}
 
+	-webkit-overflow-scrolling: touch;
+
 	.page-wrap {
 		box-sizing: border-box;
 		@include transition(all 0 $easing);
@@ -40,6 +42,7 @@ body {
 
 			.content {
 				position: absolute;
+				padding-top: 20px;
 				padding-bottom: 40px;
 				left: 0;;
 				width: 50%; // parent is 200%
