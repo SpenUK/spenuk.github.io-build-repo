@@ -47,7 +47,7 @@ module.exports = window.Backbone.View.extend({
 	fetchRender: function(options){
 		var view = this,
 				collection = this.collection;
-		if (!collection.stubbed) { // to be set to something more meaningful when an api is available
+		if (!collection.stubs) { // to be set to something more meaningful when an api is available
 			collection.fetch({
   			remove: false,
   			dataType: (collection.jsonp ? 'jsonp':'json'),
