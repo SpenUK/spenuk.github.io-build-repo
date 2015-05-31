@@ -94,16 +94,10 @@ module.exports = function (grunt) {
   			files: ['gruntfile.js']
   		},
 
-      // html: {
-      //   files: ['<%= config.app %>/html/**/*.html'],
-      //   tasks: ['concat:html']
-      // },
-
       hbs: {
-        // files: ['<%= config.app %>/scripts/{,*/}*.hbs','<%= config.app %>/scripts/**/*.hbs'],
         files: [
-          '<%= config.app %><% config.jsfolder %>/**/*.hbs', 
-          '<%= config.app %><% config.jsfolder %>/{,*/}*.handlebars'
+          '<%= config.app %>/templates/**/*.hbs', 
+          '<%= config.app %>/templates/{,*/}*.handlebars'
         ],
         tasks: ['handlebars', 'concat:templates']
       },
@@ -214,16 +208,30 @@ module.exports = function (grunt) {
   		}
   	}, // sass end
 
+    // handlebars: {
+    //     all: {
+    //       options: {
+    //         processName: function(filePath) {
+    //           return filePath.replace('app/js/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
+    //         },
+    //         // wrapped: false
+    //       },
+    //       files: {
+    //         '<%= config.app %>/js/templates.js': ['app/js/**/*.hbs']
+    //       } 
+    //     }
+    // }, // handlbars end
+
     handlebars: {
         all: {
           options: {
             processName: function(filePath) {
-              return filePath.replace('app/js/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
+              return filePath.replace('app/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
             },
             // wrapped: false
           },
           files: {
-            '<%= config.app %>/js/templates.js': ['app/js/**/*.hbs']
+            '<%= config.app %>/js/templates.js': ['app/templates/**/*.hbs']
           } 
         }
     }, // handlbars end
