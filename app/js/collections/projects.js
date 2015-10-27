@@ -1,6 +1,6 @@
 'use strict';
 
-var CollectionExtension = require('./collectionExtension.js');
+var CollectionExtension = require('../extensions/collection');
 var stubs = require('../projects-stubs.js');
 
 module.exports = CollectionExtension.extend({

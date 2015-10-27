@@ -1,13 +1,17 @@
 'use strict';
 
-module.exports = window.Backbone.View.extend({
+var View = require('../extensions/view'),
+
+AboutView = View.extend({
+
 	namespace: 'about',
+
 	initialize: function(options){
 		this.initialized = true;
 		this.template = options.template;
 	},
+
 	render: function(options){
-		
 		this.$el.html(this.template(options));
 
 		window.Backbone.trigger('ui:updatePrev');
@@ -17,7 +21,11 @@ module.exports = window.Backbone.View.extend({
 
 		return this;
 	},
+
 	setListeners: function(){
 		// 
 	}
+
 });
+
+module.exports = AboutView;
