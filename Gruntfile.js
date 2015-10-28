@@ -167,8 +167,7 @@ module.exports = function (grunt) {
         '!<%= config.app %>/js/modules/**/templates/*.*',
         '!<%= config.app %>/js/modules/**/templates/**/*.*',
         '!<%= config.app %>/js/bundle.js',
-        '!<%= config.app %>/js/blog-post-stubs.js',
-        '!<%= config.app %>/js/blog-post-stubs2.js',
+        '!<%= config.app %>/js/modules/blog/blog-post-stubs.js',
         '!<%= config.app %>/js/templates.js'
         
   		]
@@ -235,7 +234,10 @@ module.exports = function (grunt) {
             // wrapped: false
           },
           files: {
+            'app/js/modules/contact/templates/contact.js': 'app/js/modules/contact/templates/contact.hbs',
+            'app/js/modules/about/templates/about.js': 'app/js/modules/about/templates/about.hbs',
             'app/js/modules/blog/templates/blogpost.js': 'app/js/modules/blog/templates/blogpost.hbs',
+            'app/js/modules/blog/templates/blogposts.js': 'app/js/modules/blog/templates/blogposts.hbs',
             'app/js/modules/ui/templates/header.js': 'app/js/modules/ui/templates/header.hbs',
             'app/js/modules/projects/templates/projects.js': 'app/js/modules/projects/templates/projects.hbs',
             'app/js/modules/projects/templates/project.js': 'app/js/modules/projects/templates/project.hbs',

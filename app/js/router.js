@@ -1,20 +1,23 @@
 'use strict';
 
 var _ = require('underscore'),
+	// Backbone = require('backbone'), // update once all is converted
+	AboutView = require('./modules/about/views/about'),
+	ContactView = require('./modules/contact/views/contact'),
+	BlogPostsView = require('./modules/blog/views/blogposts'),
+	ProjectsView = require('./modules/projects/views/projects'),
 
 	AppRouter = window.Backbone.Router.extend({
 		routes: {
 			'': 'root',
 			'blog(/)(/:post)': 'blog',
+			// 'projects(/)(/:project)': 'projects',
 			'projects(/:project)': 'projects',
 			'contact': 'contact',
 			'about': 'about'
 		},
 
 		initialize: function(context){
-
-			console.log('router init');
-
 			this.listenTo(window.Backbone, 'router:redirect', this.redirect);
 			this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
 			this.listenTo(window.Backbone, 'router:goToLanding', this.goToLanding);
@@ -30,72 +33,51 @@ var _ = require('underscore'),
 			});
 
 			this.on('route:blog' ,function(slug){
-
 				// Only transition if the current view is not changing (but the resource is).
 				// Boolean to tell it to transition or not
 				// This is most likely causing the no trans bug.
-				var transition = (this.currentContentView === context.views.blog && this.lastRoute !== '');
+				// var transition = (this.currentContentView === context.views.blog && this.lastRoute !== '');
 
 				// Replace this pattern with a module pattern, collection cahing etc.
 				// Views should be re-instantietd each time they are routed to.
-				if (!context.views.blog.initialized) {
-					context.views.blog = new context.views.blog({
-			  			el: context.mainPanel
-			  		});
-				}
-
-		  		context.views.blog.render({slug: slug, transition: transition});
-		  		// window.Backbone.trigger('page:message', '<p>Eek, lots of Ipsum! I\'ll start writing actual posts once this site is fixed up properly. For now, enjoy all the various ipsums!</p>');
+				this.currentContentView = new BlogPostsView({
+		  			el: context.mainPanel,
+		  			slug: slug
+		  		});
 
 				this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-				this.currentContentView = context.views.blog;
-				
 			});
 
 			this.on('route:projects' ,function(slug){
-				var transition = (this.currentContentView === context.views.projects && this.lastRoute !== '');
+				this.currentContentView = new ProjectsView({
+		  			el: context.mainPanel,
+		  			slug: slug
+		  		});
 
-					new context.views.projects({
-			  			el: context.mainPanel,
-			  			slug: slug,
-			  			transition: transition
-			  		});
-
+				window.Backbone.trigger('ui:showContent');
 				this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-				console.log(this.currentContentRoute);
-				this.currentContentView = context.views.projects;
-	  		
 			});
 
 			this.on('route:contact' ,function(){
-				if (!context.views.contact.initialized) {
-					context.views.contact = new context.views.contact({
-			  			el: context.mainPanel,
-			  			template: context.templates.contact
-			  		});
-				}
+				this.currentContentView = new ContactView({
+		  			el: context.mainPanel
+		  		});
 
-	  		// context.views.contact.render();
-	  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-	  		this.currentContentView = context.views.contact;
-	  		
+				window.Backbone.trigger('ui:showContent');
+		  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
 			});
 
 			this.on('route:about' ,function(){
-				if (!context.views.about.initialized) {
-					context.views.about = new context.views.about({
-		  			el: context.mainPanel,
-		  			template: context.templates.about
+				this.currentContentView = new AboutView({
+		  			el: context.mainPanel
 		  		});
-				}
 
-	  		context.views.about.render();
-	  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-	  		this.currentContentView = context.views.about;
-	  		
+				window.Backbone.trigger('ui:showContent');
+	  			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
 			});
 
 			this.on('route:defaultRoute', function(){
+				console.log('defaultRoute');
 			});
 
 			window.Backbone.history.start();

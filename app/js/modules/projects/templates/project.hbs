@@ -1,0 +1,40 @@
+{{!-- {{#if attributes }} --}}
+	{{!-- {{#with attributes}} --}}
+		<div class="grid-container">
+			<div class="grid-row">
+				<div class="small-12">
+					<h1 class="title">{{title}} {{ind}}</h1>
+					<div class="panel">
+						
+						{{{content}}}
+					</div>
+				</div>
+			</div>
+		</div>
+	{{!-- {{/with}} --}}
+
+{{!-- {{ else }}
+	{{title}}
+	{{#if error}}
+		<div class="grid-container placeholder-view">
+			<div class="grid-row">
+				<div class="small-12">
+					<div class="panel">
+						<h2 style="text-align:center; color: #999">Eek!</h2>
+						<p>There seems to have been an error.</p>
+						<p>Not to worry! You should be able to see my projects on Wordpress.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{ else }}
+		<div class="grid-container placeholder-view">
+			<div class="grid-row">
+				<div class="small-12">
+						<h2 style="text-align:center; color: #999">Loading.. . {{title}}</h2>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+
+{{/if}} --}}

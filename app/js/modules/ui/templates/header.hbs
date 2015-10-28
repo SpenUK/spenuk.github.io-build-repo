@@ -1,0 +1,27 @@
+<div class="landing-footer-content">
+  <div class="icon menu">
+    <i class="fa fa-chevron-down fa-2x show-content"></i>
+  </div>
+</div>
+
+<div class="header-content">
+    <a {{#if prevLink}} href="{{prevLink}}" class="go-prev" {{ else }} class="go-prev hide"{{/if}}>
+      <div class="icon">
+        <i class="fa fa-chevron-left"></i>
+      </div>
+    </a>
+    
+    <a href="#">
+      <div class="icon menu">
+        <i class="fa fa-bars fa-2x show-intro"></i>
+      </div>
+    </a>
+  
+    <a {{#if nextLink}} href="{{nextLink}}" class="go-next" {{ else }} class="go-next hide"{{/if}}>
+      <div class="icon">
+        <i class="fa fa-chevron-right"></i>
+      </div>
+    </a>
+  
+</div>
+<div></div>

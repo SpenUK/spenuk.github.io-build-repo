@@ -18,7 +18,7 @@ var Router = require('./router.js'),
 
 var App = {
   introPanel: '#landing',
-  mainPanel: '.main .content',
+  mainPanel: '.content-wrapper .content',
   transitionPanel: '.main .transition-content',
 
   // templates: templates,
