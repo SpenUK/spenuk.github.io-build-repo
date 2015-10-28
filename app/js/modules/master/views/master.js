@@ -1,14 +1,11 @@
 'use strict';
 
-// var templates = require('../templates.js');
-
-// var Transitions = require('../modules/pagetransitions/pagetransitions');
-// var scrollTracker = require('../helpers/scroll-tracker.js');
-
 var View = require('../../../extensions/view'),
 	IntroView = require('../../../modules/intro/views/intro'),
 	HeaderView = require('../../../modules/ui/views/header.js'),
 	template = require('../../../modules/master/templates/master.js'),
+
+	scrollTracker = require('../../../helpers/scroll-tracker.js'),
 
 	MasterView = View.extend({
 		
@@ -59,11 +56,11 @@ var View = require('../../../extensions/view'),
 	  		};
 	  	},
 
-	  	// render: function(options){
-	  		// $('body').html(templates.master(options));
+	  	render: function(){
+	  		this._super.apply(this, arguments);
 
-	  		// scrollTracker.initialize();
-	  	// },
+	  		scrollTracker.initialize();
+	  	},
 
 	  	showContent: function() {
 			this.$page.addClass('content-state').removeClass('intro-state');

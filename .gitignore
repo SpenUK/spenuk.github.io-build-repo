@@ -13,3 +13,4 @@ bower_components
 npm-debug.log
 
 app/styles/css
+app/js/bundle.js

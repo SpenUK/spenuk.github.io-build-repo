@@ -96,9 +96,7 @@ module.exports = function (grunt) {
 
       hbs: {
         files: [
-          '<%= config.app %>/modules/**/*.hbs',
-          '<%= config.app %>/templates/**/*.hbs', 
-          '<%= config.app %>/templates/{,*/}*.handlebars'
+          '<%= config.app %>/js/modules/**/*.hbs',
         ],
         tasks: ['handlebars']
       },
@@ -168,8 +166,7 @@ module.exports = function (grunt) {
         '!<%= config.app %>/js/modules/**/templates/**/*.*',
         '!<%= config.app %>/js/bundle.js',
         '!<%= config.app %>/js/modules/blog/blog-post-stubs.js',
-        '!<%= config.app %>/js/templates.js'
-        
+        '!<%= config.app %>/js/modules/projects/projects-stubs.js'
   		]
   	}, 
   	// lint end
@@ -211,18 +208,6 @@ module.exports = function (grunt) {
   	}, // sass end
 
     handlebars: {
-        all: {
-          options: {
-            processName: function(filePath) {
-              return filePath.replace('app/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
-            },
-            commonjs: true
-            // wrapped: false
-          },
-          files: {
-            '<%= config.app %>/js/templates.js': ['app/templates/**/*.hbs']
-          } 
-        },
         modules: {
           options: {
             processName: function(filePath) {
@@ -249,26 +234,6 @@ module.exports = function (grunt) {
           }
         }
     }, // handlbars end
-
-    // concat: {
-    //   templates: {
-    //     files: {
-
-    //       // '<%= config.app %>/js/templates.js': ['<%= config.app %>/js/test/templates/templates.js'],
-    //       '<%= config.app %>/js/templates.js': ['<%= config.app %>/js/templates.js'],
-    //     },
-    //     options: {
-    //         // relative path is rubbish - but will do until porting over to gulp
-    //       banner: 'var exports = (function () { \n\n var Handlebars = window.Handlebars; \n\n',
-    //       footer: '\n return this[\'JST\'];\n})();\n\nmodule.exports = exports;'
-    //     }
-    //     // dist: {
-    //     //   src: ['<%= config.app %>/scripts/templates/templates.js'],
-    //     //   dest: '<%= config.app %>/scripts/templates.js',
-          
-    //     // }
-    //   }
-    // },
 
     shell: {
       publish: {

@@ -1,7 +1,7 @@
 'use strict';
 
 var CollectionExtension = require('../../../extensions/collection'),
-    stubs = require('../../../projects-stubs.js'),
+    stubs = require('../projects-stubs.js'),
 
     ProjectCollection = CollectionExtension.extend({
         
