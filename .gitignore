@@ -9,9 +9,6 @@ bower_components
 *.css
 *.css.map
 .idea
-app/js/modules/**/templates/**/*.js
-**/templates/**/*.js
-/app/js/modules/blog/templates/blogpost.js
 
 npm-debug.log
 
