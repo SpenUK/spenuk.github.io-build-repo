@@ -2,10 +2,10 @@
 
 var View = require('../../../extensions/view'),
 	IntroView = require('../../../modules/intro/views/intro'),
-	HeaderView = require('../../../modules/ui/views/header.js'),
-	template = require('../../../modules/master/templates/master.js'),
+	HeaderView = require('../../../modules/ui/views/header'),
+	template = require('../../../modules/master/templates/master.hbs'),
 
-	scrollTracker = require('../../../helpers/scroll-tracker.js'),
+	scrollTracker = require('../../../helpers/scroll-tracker'),
 
 	MasterView = View.extend({
 		

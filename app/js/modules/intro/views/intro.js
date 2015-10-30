@@ -3,7 +3,7 @@
 var ViewExtension = require('../../../extensions/view'),
 	SocialWatermarksView = require('./socialwatermarks/socialwatermarks'),
 	HeroSVGView = require('./herosvg/herosvg'),
-	template = require('../templates/intro'),
+	template = require('../templates/intro.hbs'),
 
 	IntroView = ViewExtension.extend({
 

@@ -3,7 +3,7 @@
 var CollectionViewExtension = require('../../../../extensions/collectionview'),
 	socialModule = require('../../../../modules/social/module'),
 	SocialButtonView = require('./socialbutton'),
-	template = require('../../templates/social/socialbuttons'),
+	template = require('../../templates/social/socialbuttons.hbs'),
 
 	/**
 	 * 

@@ -4,7 +4,7 @@ var	Module = require('../module'),
 	CollectionViewExtension = require('../../../extensions/collectionview'),
 	PagerCollectionViewExtension = require('../../../extensions/slidercollectionview'),
 	ProjectView = require('./project'),
-	template = require('../templates/projects'),
+	template = require('../templates/projects.hbs'),
 
 	CollectionViewExtension = CollectionViewExtension,
 	PagerCollectionViewExtension = PagerCollectionViewExtension;

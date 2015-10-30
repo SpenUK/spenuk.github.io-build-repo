@@ -1,7 +1,7 @@
 'use strict';
 
 var ViewExtension = require('../../../../extensions/view'),
-	template = require('../../templates/socialwatermarks/socialwatermark'),
+	template = require('../../templates/socialwatermarks/socialwatermark.hbs'),
 
 	SocialWatermarkView = ViewExtension.extend({
 

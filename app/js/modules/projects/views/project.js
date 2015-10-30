@@ -1,7 +1,7 @@
 'use strict';
 
 var ViewExtension = require('../../../extensions/view'),
-	template = require('../templates/project'),
+	template = require('../templates/project.hbs'),
 
 	ProjectView = ViewExtension.extend({
 

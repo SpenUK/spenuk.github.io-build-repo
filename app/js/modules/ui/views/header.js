@@ -1,7 +1,7 @@
 'use strict';
 
 var View = require('../../../extensions/view'),
-    template = require('../templates/header'),
+    template = require('../templates/header.hbs'),
 
     HeaderView = View.extend({
 

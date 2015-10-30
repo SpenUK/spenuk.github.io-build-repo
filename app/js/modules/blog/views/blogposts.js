@@ -4,7 +4,7 @@
 var CollectionViewExtension = require('../../../extensions/collectionview'),
 	BlogModule = require('../module'),
 	BlogPostView = require('./blogpost'),
-	template = require('../templates/blogposts'),
+	template = require('../templates/blogposts.hbs'),
 
 	BlogPostsView = CollectionViewExtension.extend({
 

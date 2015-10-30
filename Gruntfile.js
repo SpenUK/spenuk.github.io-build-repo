@@ -94,12 +94,12 @@ module.exports = function (grunt) {
   			files: ['gruntfile.js']
   		},
 
-      hbs: {
-        files: [
-          '<%= config.app %>/js/modules/**/*.hbs',
-        ],
-        tasks: ['handlebars']
-      },
+      // hbs: {
+      //   files: [
+      //     '<%= config.app %>/js/modules/**/*.hbs',
+      //   ],
+      //   tasks: ['handlebars']
+      // },
 
   		livereload: {
   			options: {
@@ -207,37 +207,6 @@ module.exports = function (grunt) {
   		}
   	}, // sass end
 
-    handlebars: {
-        modules: {
-          options: {
-            processName: function(filePath) {
-              return filePath.replace('app/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
-            },
-            commonjs: true,
-            namespace: false,
-            single: true
-            // wrapped: false
-          },
-          files: {
-            'app/js/modules/contact/templates/contact.js': 'app/js/modules/contact/templates/contact.hbs',
-            'app/js/modules/contact/templates/form/form.js': 'app/js/modules/contact/templates/form/form.hbs',
-            'app/js/modules/about/templates/about.js': 'app/js/modules/about/templates/about.hbs',
-            'app/js/modules/contact/templates/social/socialbutton.js': 'app/js/modules/contact/templates/social/socialbutton.hbs',
-            'app/js/modules/contact/templates/social/socialbuttons.js': 'app/js/modules/contact/templates/social/socialbuttons.hbs',
-            'app/js/modules/blog/templates/blogpost.js': 'app/js/modules/blog/templates/blogpost.hbs',
-            'app/js/modules/blog/templates/blogposts.js': 'app/js/modules/blog/templates/blogposts.hbs',
-            'app/js/modules/ui/templates/header.js': 'app/js/modules/ui/templates/header.hbs',
-            'app/js/modules/projects/templates/projects.js': 'app/js/modules/projects/templates/projects.hbs',
-            'app/js/modules/projects/templates/project.js': 'app/js/modules/projects/templates/project.hbs',
-            'app/js/modules/intro/templates/intro.js': 'app/js/modules/intro/templates/intro.hbs',
-            'app/js/modules/intro/templates/socialwatermarks/socialwatermarks.js': 'app/js/modules/intro/templates/socialwatermarks/socialwatermarks.hbs',
-            'app/js/modules/intro/templates/socialwatermarks/socialwatermark.js': 'app/js/modules/intro/templates/socialwatermarks/socialwatermark.hbs',
-            'app/js/modules/intro/templates/herosvg/herosvg.js': 'app/js/modules/intro/templates/herosvg/herosvg.hbs',
-            'app/js/modules/master/templates/master.js': 'app/js/modules/master/templates/master.hbs'
-          }
-        }
-    }, // handlbars end
-
     shell: {
       publish: {
         command: (function(message){ 
@@ -282,7 +251,8 @@ module.exports = function (grunt) {
         options: {
           browserifyOptions: {
              debug: true
-          }
+          },
+          transform: ['hbsfy']
         },
         files: {
           '<%= config.app %>/js/bundle.js': ['<%= config.app %>/js/main.js'],
@@ -305,6 +275,7 @@ module.exports = function (grunt) {
   	grunt.task.run([
   		'clean:server',
   		'sass:server',
+      'browserify:server',
   		'jshint',
   		'connect:livereload',
   		'watch'

@@ -5,7 +5,7 @@ var CollectionViewExtension = require('../../../../extensions/collectionview'),
 	// Collection = require('../../../../extensions/collection'),
 	socialModule = require('../../../../modules/social/module'),
 	SocialWatermarkView = require('./socialwatermark'),
-	template = require('../../templates/socialwatermarks/socialwatermarks'),
+	template = require('../../templates/socialwatermarks/socialwatermarks.hbs'),
 
 	SocialWatermarksView = CollectionViewExtension.extend({
 	// SocialWatermarksView = ViewExtension.extend({

@@ -1,7 +1,7 @@
 'use strict';
 
 var ViewExtension = require('../../../extensions/view'),
-	template = require('../templates/blogpost'),
+	template = require('../templates/blogpost.hbs'),
 
 	BlogPostView = ViewExtension.extend({
 

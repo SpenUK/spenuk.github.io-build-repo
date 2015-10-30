@@ -17,7 +17,7 @@ var ViewExtension = require('../../../extensions/view'),
 	contactModule = require('../module'),
 	SocialButtonsView = require('./social/socialbuttons'),
 	ContactFormView = require('./form/form'),
-	template = require('../templates/contact'),
+	template = require('../templates/contact.hbs'),
 
 	ContactView = ViewExtension.extend({
 

@@ -1,7 +1,7 @@
 'use strict';
 
 var ViewExtension = require('../../../../extensions/view'),
-	template = require('../../templates/herosvg/herosvg'),
+	template = require('../../templates/herosvg/herosvg.hbs'),
 
 	HeroSVGView = ViewExtension.extend({
 

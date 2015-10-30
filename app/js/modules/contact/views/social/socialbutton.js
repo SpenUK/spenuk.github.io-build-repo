@@ -1,7 +1,7 @@
 'use strict';
 
 var ViewExtension = require('../../../../extensions/view'),
-	template = require('../../templates/social/socialbutton'),
+	template = require('../../templates/social/socialbutton.hbs'),
 
 	/**
 	 *
