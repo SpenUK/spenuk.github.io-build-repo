@@ -96,9 +96,6 @@ var _ = require('underscore'),
             }, this);
         },
 
-        /**
-         * What a bloody mess! Must be a better way to expand out the definition.
-         */
         _renderSubview: function (viewDefinition, key) {
             var View,
                 view,
@@ -112,8 +109,6 @@ var _ = require('underscore'),
             view = this.subviewInstances[key] = new View(_.extend(options, {
                 el: key
             }));
-
-            console.log(view.cName, view.el);
 
             view.listenTo(this, 'afterRender', function(){
                 if (view.isReady) {

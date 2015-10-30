@@ -15,6 +15,8 @@ function addError(el){
 
 var ViewExtension = require('../../../extensions/view'),
 	contactModule = require('../module'),
+	SocialButtonsView = require('./social/socialbuttons'),
+	ContactFormView = require('./form/form'),
 	template = require('../templates/contact'),
 
 	ContactView = ViewExtension.extend({
@@ -31,6 +33,13 @@ var ViewExtension = require('../../../extensions/view'),
 			this._super.apply(this, arguments);
 
 			this.render();
+		},
+
+		views: function () {
+			return {
+				'.social-buttons': SocialButtonsView,
+				'.form-holder': ContactFormView
+			};
 		},
 
 		// render: function(){

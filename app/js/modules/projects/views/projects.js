@@ -12,9 +12,9 @@ var	Module = require('../module'),
 	/**
 	 *
 	 */
-	var ProjectsView = CollectionViewExtension.extend({
+	// var ProjectsView = CollectionViewExtension.extend({
 
-	// var ProjectsView = PagerCollectionViewExtension.extend({
+	var ProjectsView = PagerCollectionViewExtension.extend({
 
 		namespace: 'projects',
 

@@ -220,7 +220,10 @@ module.exports = function (grunt) {
           },
           files: {
             'app/js/modules/contact/templates/contact.js': 'app/js/modules/contact/templates/contact.hbs',
+            'app/js/modules/contact/templates/form/form.js': 'app/js/modules/contact/templates/form/form.hbs',
             'app/js/modules/about/templates/about.js': 'app/js/modules/about/templates/about.hbs',
+            'app/js/modules/contact/templates/social/socialbutton.js': 'app/js/modules/contact/templates/social/socialbutton.hbs',
+            'app/js/modules/contact/templates/social/socialbuttons.js': 'app/js/modules/contact/templates/social/socialbuttons.hbs',
             'app/js/modules/blog/templates/blogpost.js': 'app/js/modules/blog/templates/blogpost.hbs',
             'app/js/modules/blog/templates/blogposts.js': 'app/js/modules/blog/templates/blogposts.hbs',
             'app/js/modules/ui/templates/header.js': 'app/js/modules/ui/templates/header.hbs',

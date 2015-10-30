@@ -2,7 +2,8 @@
 
 var CollectionViewExtension = require('../../../../extensions/collectionview'),
 // var ViewExtension = require('../../../../extensions/view'),
-	Collection = require('../../../../extensions/collection'),
+	// Collection = require('../../../../extensions/collection'),
+	socialModule = require('../../../../modules/social/module'),
 	SocialWatermarkView = require('./socialwatermark'),
 	template = require('../../templates/socialwatermarks/socialwatermarks'),
 
@@ -18,25 +19,8 @@ var CollectionViewExtension = require('../../../../extensions/collectionview'),
 		template: template,
 
 		initialize: function(){
-			this.collection = new Collection([
-				{
-					title: 'twitter',
-					url: 'https://twitter.com/Spen_Taylor',
-					icon: 'fa-twitter'
-				}, {
-					title: 'github',
-					url: 'https://github.com/SpenUK',
-					icon: 'fa-github'
-				}, {
-					title: 'linkedin',
-					url: 'http://uk.linkedin.com/',
-					icon: 'fa-linkedin'
-				}, {
-					title: 'dribbble',
-					url: 'https://www.dribbble.com/',
-					icon: 'fa-dribbble'
-				}
-			]);
+			console.log(socialModule);
+			this.collection = socialModule.getSocialCollection();
 			this.initialized = true;
 			this._super.apply(this, arguments);
 		}

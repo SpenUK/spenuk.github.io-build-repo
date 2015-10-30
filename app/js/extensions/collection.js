@@ -1,6 +1,7 @@
 'use strict';
 
-var core = require('../core/core'),
+var _ = require('underscore'),
+    core = require('../core/core'),
 
     Collection = core.Collection.extend({
     	
@@ -11,7 +12,6 @@ var core = require('../core/core'),
     	isLoading: false,
 
         parse: function(response){ //, xhr
-            console.log(response);
           	this.totalRecords = response.length;
             return response;
         },
@@ -43,38 +43,19 @@ var core = require('../core/core'),
         },
 
         fetch: function () {
-            console.log('fetch');
-            if (this.stubbed) {
-                this.addStubs();
+            if (this.stubs) {
+                this.trigger('fetch');
+                _.delay(_.bind(this.addStubs, this), 0);
             } else {
                 this._super.apply(this, arguments);
             }
         },
 
-        addStubs: function(options){
+        addStubs: function(){
+            var stubs = this.parse(this.stubs || []);
 
-            console.log('addStubs');
-            this.trigger('fetch');
-            options = (options || {});
-
-            var collection = this;
-            var stubs = (options.stubs || this.stubs || []);
-            var records = this.parse(stubs);
-
-            var i;
-            window.setTimeout(function(){
-              for (i = records.length - 1; i >= 0; i--) {
-                var record = records[i];
-                if (!collection.where({ID: record.ID}).length) {
-                  collection.add(record);
-                }
-              }
-              (options.success || $.noop)();
-
-              collection.trigger('sync');
-
-            }, (options.delay || 0));
-            
+            _.each(stubs, this.add, this);
+            this.trigger('sync');
         },
 
         getNextModel: function(){

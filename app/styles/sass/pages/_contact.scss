@@ -4,7 +4,7 @@
 		max-width: 95%;
 		margin: 0 auto;
 
-		ul.social-icons {
+		ul.social-buttons {
 			width: 100%;
 			.button {
 				
@@ -22,8 +22,13 @@
 					@include ui-btn($brand-color, 50px);
 				}
 
-				&.linked-in {
+				&.linkedin {
 					$brand-color: rgb(0,123,182);
+					@include ui-btn($brand-color, 50px);
+				}
+
+				&.dribbble {
+					$brand-color: rgb(234,76,137);
 					@include ui-btn($brand-color, 50px);
 				}
 			}

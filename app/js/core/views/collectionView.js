@@ -67,9 +67,7 @@ var _ = require('underscore'),
             var ItemView = this.itemView,
                 buffer = this.buffer = this.buffer || document.createDocumentFragment(),
                 range = _.range(offset, offset + limit);
-
-                console.log(range);
-
+                
             _.each(range, function (i) {
                 var model = this.collection.at(i);
 
@@ -82,8 +80,6 @@ var _ = require('underscore'),
                 }
 
             }, this);
-
-            console.log(this.cName, this.el);
 
             this.$el.html(buffer);
         },
