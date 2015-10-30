@@ -96,10 +96,9 @@ module.exports = function (grunt) {
 
       hbs: {
         files: [
-          '<%= config.app %>/templates/**/*.hbs', 
-          '<%= config.app %>/templates/{,*/}*.handlebars'
+          '<%= config.app %>/js/modules/**/*.hbs',
         ],
-        tasks: ['handlebars', 'concat:templates']
+        tasks: ['handlebars']
       },
 
   		livereload: {
@@ -163,11 +162,11 @@ module.exports = function (grunt) {
   			'<%= config.app %>/js/**/*.js',
         '<%= config.app %>/js/{,*/}*.js',
         '!<%= config.app %>/js/vendor/**/*.*',
+        '!<%= config.app %>/js/modules/**/templates/*.*',
+        '!<%= config.app %>/js/modules/**/templates/**/*.*',
         '!<%= config.app %>/js/bundle.js',
-        '!<%= config.app %>/js/blog-post-stubs.js',
-        '!<%= config.app %>/js/blog-post-stubs2.js',
-        '!<%= config.app %>/js/templates.js'
-        
+        '!<%= config.app %>/js/modules/blog/blog-post-stubs.js',
+        '!<%= config.app %>/js/modules/projects/projects-stubs.js'
   		]
   	}, 
   	// lint end
@@ -208,53 +207,36 @@ module.exports = function (grunt) {
   		}
   	}, // sass end
 
-    // handlebars: {
-    //     all: {
-    //       options: {
-    //         processName: function(filePath) {
-    //           return filePath.replace('app/js/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
-    //         },
-    //         // wrapped: false
-    //       },
-    //       files: {
-    //         '<%= config.app %>/js/templates.js': ['app/js/**/*.hbs']
-    //       } 
-    //     }
-    // }, // handlbars end
-
     handlebars: {
-        all: {
+        modules: {
           options: {
             processName: function(filePath) {
               return filePath.replace('app/', '').replace('templates/', '').replace('modules/', '').replace('.hbs', '');
             },
+            commonjs: true,
+            namespace: false,
+            single: true
             // wrapped: false
           },
           files: {
-            '<%= config.app %>/js/templates.js': ['app/templates/**/*.hbs']
-          } 
+            'app/js/modules/contact/templates/contact.js': 'app/js/modules/contact/templates/contact.hbs',
+            'app/js/modules/contact/templates/form/form.js': 'app/js/modules/contact/templates/form/form.hbs',
+            'app/js/modules/about/templates/about.js': 'app/js/modules/about/templates/about.hbs',
+            'app/js/modules/contact/templates/social/socialbutton.js': 'app/js/modules/contact/templates/social/socialbutton.hbs',
+            'app/js/modules/contact/templates/social/socialbuttons.js': 'app/js/modules/contact/templates/social/socialbuttons.hbs',
+            'app/js/modules/blog/templates/blogpost.js': 'app/js/modules/blog/templates/blogpost.hbs',
+            'app/js/modules/blog/templates/blogposts.js': 'app/js/modules/blog/templates/blogposts.hbs',
+            'app/js/modules/ui/templates/header.js': 'app/js/modules/ui/templates/header.hbs',
+            'app/js/modules/projects/templates/projects.js': 'app/js/modules/projects/templates/projects.hbs',
+            'app/js/modules/projects/templates/project.js': 'app/js/modules/projects/templates/project.hbs',
+            'app/js/modules/intro/templates/intro.js': 'app/js/modules/intro/templates/intro.hbs',
+            'app/js/modules/intro/templates/socialwatermarks/socialwatermarks.js': 'app/js/modules/intro/templates/socialwatermarks/socialwatermarks.hbs',
+            'app/js/modules/intro/templates/socialwatermarks/socialwatermark.js': 'app/js/modules/intro/templates/socialwatermarks/socialwatermark.hbs',
+            'app/js/modules/intro/templates/herosvg/herosvg.js': 'app/js/modules/intro/templates/herosvg/herosvg.hbs',
+            'app/js/modules/master/templates/master.js': 'app/js/modules/master/templates/master.hbs'
+          }
         }
     }, // handlbars end
-
-    concat: {
-      templates: {
-        files: {
-
-          // '<%= config.app %>/js/templates.js': ['<%= config.app %>/js/test/templates/templates.js'],
-          '<%= config.app %>/js/templates.js': ['<%= config.app %>/js/templates.js'],
-        },
-        options: {
-            // relative path is rubbish - but will do until porting over to gulp
-          banner: 'var exports = (function () { \n\n var Handlebars = window.Handlebars; \n\n',
-          footer: '\n return this[\'JST\'];\n})();\n\nmodule.exports = exports;'
-        }
-        // dist: {
-        //   src: ['<%= config.app %>/scripts/templates/templates.js'],
-        //   dest: '<%= config.app %>/scripts/templates.js',
-          
-        // }
-      }
-    },
 
     shell: {
       publish: {

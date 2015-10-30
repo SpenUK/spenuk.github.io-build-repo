@@ -16,3 +16,4 @@ app/js/modules/*/templates/**/*.js
 npm-debug.log
 
 app/styles/css
+app/js/bundle.js

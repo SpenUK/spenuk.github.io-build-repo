@@ -1,147 +1,133 @@
 'use strict';
 
-var _=window._;
+var _ = require('underscore'),
+	// Backbone = require('backbone'), // update once all is converted
+	AboutView = require('./modules/about/views/about'),
+	ContactView = require('./modules/contact/views/contact'),
+	BlogPostsView = require('./modules/blog/views/blogposts'),
+	ProjectsView = require('./modules/projects/views/projects'),
 
-var AppRouter = window.Backbone.Router.extend({
-	routes: {
-		'': 'root',
-		'blog(/)(/:post)': 'blog',
-		'projects(/:project)': 'projects',
-		'contact': 'contact',
-		'about': 'about'
-	},
+	AppRouter = window.Backbone.Router.extend({
+		routes: {
+			'': 'root',
+			'blog(/)(/:post)': 'blog',
+			// 'projects(/)(/:project)': 'projects',
+			'projects(/:project)': 'projects',
+			'contact': 'contact',
+			'about': 'about'
+		},
 
-	initialize: function(context){
+		initialize: function(context){
+			this.listenTo(window.Backbone, 'router:redirect', this.redirect);
+			this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
+			this.listenTo(window.Backbone, 'router:goToLanding', this.goToLanding);
+			this.listenTo(window.Backbone, 'router:nextContent', this.goToNextContent);
+			this.listenTo(window.Backbone, 'router:prevContent', this.goToPrevContent);
+			this.listenTo(window.Backbone, 'router:setCurrentContent', this.setCurrentContent);
 
-		this.listenTo(window.Backbone, 'router:redirect', this.redirect);
-		this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
-		this.listenTo(window.Backbone, 'router:goToLanding', this.goToLanding);
-		this.listenTo(window.Backbone, 'router:nextContent', this.goToNextContent);
-		this.listenTo(window.Backbone, 'router:prevContent', this.goToPrevContent);
-		this.listenTo(window.Backbone, 'router:setCurrentContent', this.setCurrentContent);
-
-		this.currentContentRoute = this.defaultContentRoute();
-		
-		this.on('route:root' ,function(){
-
-			if (!context.views.intro.initialized) {
-				context.views.intro = new context.views.intro({
-	  			el: context.introPanel,
-	  			template: context.templates.intro
-	  		});
-			}
-
-			window.Backbone.trigger('ui:showIntro');
-
-  		// new context.views.intro({
-  		// 	template: context.templates.intro
-  		// });
-  		// $('body').addClass('intro');
-
-  		this.lastRoute = window.Backbone.history.fragment;
-		});
-
-		this.on('route:blog' ,function(slug){
-
-			// Only transition if the current view is not changing (but the resource is).
-			var transition = (this.currentContentView === context.views.blog && this.lastRoute !== '');
-
-			if (!context.views.blog.initialized) {
-				context.views.blog = new context.views.blog({
-	  			el: context.mainPanel,
-	  			template: context.templates['blog-post']
-	  		});
-			}
-
-  		context.views.blog.render({slug: slug, transition: transition});
-  		window.Backbone.trigger('page:message', '<p>Eek, lots of Ipsum! I\'ll start writing actual posts once this site is fixed up properly. For now, enjoy all the various ipsums!</p>');
-
-			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-			this.currentContentView = context.views.blog;
+			this.currentContentRoute = this.defaultContentRoute();
 			
-		});
+			this.on('route:root' ,function(){
+				window.Backbone.trigger('ui:showIntro');
+	  			this.lastRoute = window.Backbone.history.fragment;
+			});
 
-		this.on('route:projects' ,function(slug){
-			// Only transition if the current view is not changing (but the resource is).
-			var transition = (this.currentContentView === context.views.projects && this.lastRoute !== '');
+			this.on('route:blog' ,function(slug){
+				// Only transition if the current view is not changing (but the resource is).
+				// Boolean to tell it to transition or not
+				// This is most likely causing the no trans bug.
+				// var transition = (this.currentContentView === context.views.blog && this.lastRoute !== '');
 
-			if (!context.views.projects.initialized) {
-				context.views.projects = new context.views.projects({
-	  			el: context.mainPanel,
-	  			template: context.templates.project,
-	  		});
+				// Replace this pattern with a module pattern, collection cahing etc.
+				// Views should be re-instantietd each time they are routed to.
+				this.currentContentView = new BlogPostsView({
+		  			el: context.mainPanel,
+		  			slug: slug
+		  		});
+
+				this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			});
+
+			this.on('route:projects' ,function(slug){
+				this.currentContentView = new ProjectsView({
+		  			el: context.mainPanel,
+		  			slug: slug
+		  		});
+
+				window.Backbone.trigger('ui:showContent');
+				this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			});
+
+			this.on('route:contact' ,function(){
+				this.currentContentView = new ContactView({
+		  			el: context.mainPanel
+		  		});
+
+				window.Backbone.trigger('ui:showContent');
+		  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			});
+
+			this.on('route:about' ,function(){
+				this.currentContentView = new AboutView({
+		  			el: context.mainPanel
+		  		});
+
+				window.Backbone.trigger('ui:showContent');
+	  			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			});
+
+			this.on('route:defaultRoute', function(){
+				console.log('defaultRoute');
+			});
+
+			window.Backbone.history.start();
+
+		},
+		setCurrentContent: function(content){
+			if (content.view) {this.currentContentView = content.view; }
+			if (content.route) {this.currentContentRoute = this.lastRoute = content.route; }
+		},
+		goToLanding: function () {
+			this.navigate('', {trigger: true});
+		},
+		goToCurrentContent: function () {
+			this.navigate(this.currentContentRoute, {trigger: true});
+		},
+		goToPrevContent: function () {
+			console.log('goToPrevContent', this.currentContentView);
+			if (!_.isFunction(this.currentContentView.getPrevModel)) {
+				console.log('!function');
+				return false;
 			}
-
-			context.views.projects.render({slug: slug, transition: transition});
-
-			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-			this.currentContentView = context.views.projects;
-  		
-		});
-
-		this.on('route:contact' ,function(){
-			if (!context.views.contact.initialized) {
-				context.views.contact = new context.views.contact({
-	  			el: context.mainPanel,
-	  			template: context.templates.contact
-	  		});
+			var route = this.currentContentView.prevRoute();
+			if (!route) {
+				console.log('!route');
+				return false;
 			}
-
-  		context.views.contact.render();
-  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-  		this.currentContentView = context.views.contact;
-  		
-		});
-
-		this.on('route:about' ,function(){
-			if (!context.views.about.initialized) {
-				context.views.about = new context.views.about({
-	  			el: context.mainPanel,
-	  			template: context.templates.about
-	  		});
+			console.log('navigate');
+			this.navigate(route);
+		},
+		goToNextContent: function () {
+			console.log('goToNextContent', this.currentContentView);
+			if (!_.isFunction(this.currentContentView.getNextModel)) {
+				console.log('!function');
+				return false;
 			}
+			var route = this.currentContentView.nextRoute();
+			if (!route) {
+				console.log('!route');
+				return false; 
+			}
+			console.log('navigate');
+			this.navigate(route);
+		},
+		defaultContentRoute: function () {
+			return '#/about';
+		},
+		redirect: function(route){
+			this.navigate(route, {trigger: true});
+		}
 
-  		context.views.about.render();
-  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
-  		this.currentContentView = context.views.about;
-  		
-		});
-
-		this.on('route:defaultRoute', function(){
-		});
-
-		window.Backbone.history.start();
-
-	},
-	setCurrentContent: function(content){
-		if (content.view) {this.currentContentView = content.view; }
-		if (content.route) {this.currentContentRoute = this.lastRoute = content.route; }
-	},
-	goToLanding: function () {
-		this.navigate('', {trigger: true});
-	},
-	goToCurrentContent: function () {
-		this.navigate(this.currentContentRoute, {trigger: true});
-	},
-	goToPrevContent: function () {
-		if (!_.isFunction(this.currentContentView.getPrevModel)) { return false; }
-		var route = this.currentContentView.prevRoute();
-		if (!route) { return false; }
-		this.navigate(route);
-	},
-	goToNextContent: function () {
-		if (!_.isFunction(this.currentContentView.getNextModel)) { return false; }
-		var route = this.currentContentView.nextRoute();
-		if (!route) { return false; }
-		this.navigate(route);
-	},
-	defaultContentRoute: function () {
-		return '#/about';
-	},
-	redirect: function(route){
-		this.navigate(route, {trigger: true});
-	}
-
-});
+	});
 
 module.exports = AppRouter;

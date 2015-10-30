@@ -31,10 +31,10 @@
   }
 
   .page-icon-wrapper {
-  	display: inline-block;
-  	position: relative;
-  	width: 33.333%;
-  	float: left;
+  	// display: inline-block;
+  	// position: relative;
+  	// width: 33.333%;
+  	// float: left;
 
   	a {
   		max-width: 100%;
@@ -69,7 +69,7 @@
   	max-height: 100px;
   }
 
-	ul.social-icons {
+	ul.social-watermarks {
 		position: absolute;
 		right: 0;
 		margin: 0;
@@ -96,20 +96,43 @@
 		// margin: 10px;
 		color: darken($white, 10);
 	}
-	a.about {
-		// color: rgba(0,200,180,1);
+	// a.about,
+	// a[href="#/about"] {
+	// 	// color: rgba(0,200,180,1);
+	// 	color: rgba(55,160,200,1);
+	// }
+
+	// a.projects,
+	// a[href="#/projects"] {
+	// 	// color: rgba(150,75,200,1);
+	// 	color: rgba(255,90,110,1);
+	// }
+
+	// a.blog,
+	// a[href="#/blog"] {
+	// 	// color: rgba(225,90,110,1);
+	// 	color: rgba(238, 235, 95,1);
+	// }
+
+	// a.contact,
+	// a[href="#/contact"] {
+	// 	// color: rgba(225,200,90,1);
+	// 	color: rgba(0,200,180,1);
+	// }
+
+	a[href="#/about"],
+	a[href="#/projects"],
+	a[href="#/blog"],
+	a[href="#/contact"] {
+		// @include transition(color 0.2s linear);
+		// font-weight: bold;
+		color: rgba(0,200,180,1);
+
+		&:hover {
+			color: rgba(255,90,110,1);
+		}
 	}
 
-	a.projects {
-		// color: rgba(150,75,200,1);
-	}
 
-	a.blog {
-		// color: rgba(225,90,110,1);
-	}
-
-	a.contact {
-		// color: rgba(225,200,90,1);
-	}
 }
 

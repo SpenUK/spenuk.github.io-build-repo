@@ -116,15 +116,11 @@ body.intro-landing.intro {
 	}
 }
 
-body.intro {
+.page-wrap.intro-state {
 	@include transition(all $landing-trans-time $easing);
+	@include transform(translate(0%, -$header-height));
 	.header {
 		background-color: rgba(0,0,0,0.1);
-	}
-
-	.page-wrap {
-		@include transition(all $landing-trans-time $easing);
-		@include transform(translate(0%, -$header-height));
 	}
 
 	.landing-footer-content {
@@ -140,18 +136,15 @@ body.intro {
 	}
 }
 
-body.content {
+.page-wrap.content-state {
 	@include transition(all $landing-trans-time $easing);
+	@include transform(translate(0%, -50%));
 
 
 	.header {
 		background-color: $header-color;
 	}
 
-	.page-wrap {
-		@include transition(all $landing-trans-time $easing);
-		@include transform(translate(0%, -50%));
-	}
 
 	.landing-footer-content {
 		transition-delay: 0s;
