@@ -1,0 +1,13 @@
+$transition-time: .8s;
+
+.transition-fader {
+	@include transition(all $slide-in-time ease);
+
+	&.fade-out-left {
+		@include transform(translateX(-20%));
+	}
+
+	&.fade-out-right {
+		@include transform(translateX(20%));
+	}
+}

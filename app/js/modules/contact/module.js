@@ -4,9 +4,12 @@ var ModelExtension = require('../../extensions/model'),
 
 	contactModule = {
 		getContactModel: function () {
-			return this.contactModel ? this.contactModel : new ModelExtension({
-				emailAddress: 'smt_@hotmail.co.uk'
-			});
+			if (!this.contactModel) {
+				this.contactModel =  new ModelExtension({
+					emailAddress: 'smt_@hotmail.co.uk'
+				});
+			}
+			return this.contactModel;
 		}
 	};
 

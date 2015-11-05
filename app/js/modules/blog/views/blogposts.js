@@ -2,22 +2,21 @@
 
 
 var CollectionViewExtension = require('../../../extensions/collectionview'),
-	BlogModule = require('../module'),
+	blogModule = require('../module'),
 	BlogPostView = require('./blogpost'),
 	template = require('../templates/blogposts.hbs'),
 
 	BlogPostsView = CollectionViewExtension.extend({
 
 		namespace: 'blog posts',
-		
+
 		itemView: BlogPostView,
 
 		template: template,
 
-		initialize: function(options){
-			console.log(BlogModule);
-			this.collection = BlogModule.getBlogPostsCollection();
+		collection: blogModule.getBlogPostsCollection(),
 
+		initialize: function(options){
 			// This pattern could be a lot better...
 			var Super = this._super;
 

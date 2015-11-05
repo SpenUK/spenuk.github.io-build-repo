@@ -4,14 +4,14 @@ var CollectionViewExtension = require('../../../extensions/collectionview'),
 	ViewExtension = require('../../../extensions/view'),
 
     /**
-     * TransitionView should be responsible for holding a current page and 
+     * TransitionView should be responsible for holding a current page and
      * sliding new pages in and out (with CSS transitions)
      */
 
     ProjectsView = CollectionViewExtension.extend({
 
     	contentEl: 'content',
-        
+
         itemView: ViewExtension,
 
         isTransitioning: false,
@@ -35,7 +35,7 @@ var CollectionViewExtension = require('../../../extensions/collectionview'),
         },
 
         render: function () {
-            this.renderOne(this.collection.getCurrentRecord());
+            this.renderOne(this.collection.getCurrentModel());
         }
 
     });

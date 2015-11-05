@@ -2,10 +2,13 @@
 
 var ProjectsCollection = require('./collections/projects'),
 
-ProjectsModule = {
-	getProjectsCollection: function () {
-		return this.projectsCollection ? this.projectsCollection : new ProjectsCollection();
-	}
-};
+	ProjectsModule = {
+		getProjectsCollection: function () {
+			if (!this.projectsCollection) {
+				this.projectsCollection = new ProjectsCollection();
+			}
+			return this.projectsCollection;
+		}
+	};
 
 module.exports = ProjectsModule;

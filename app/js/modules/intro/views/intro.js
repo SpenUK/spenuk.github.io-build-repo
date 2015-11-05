@@ -15,7 +15,6 @@ var ViewExtension = require('../../../extensions/view'),
 
 		initialize: function(){
 			this._super.apply(this, arguments);
-			this.initialized = true;
 			this.render();
 		},
 
@@ -32,7 +31,7 @@ var ViewExtension = require('../../../extensions/view'),
 		},
 
 		setListeners: function(){
-			// 
+			//
 		}
 
 	});

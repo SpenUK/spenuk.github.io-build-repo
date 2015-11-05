@@ -15,15 +15,20 @@ var _ = require('underscore'),
 
         $body : $('body'),
 
-        /**
-         * Should be overriden an array of accepted paramaters
-         * Paramaters in this list will be set 
-         */
-        acceptedParams: [],
-
-        subviewInstances: {},
-
         isReady: false,
+
+        constructor: function () {
+
+            this.subviewInstances = new Backbone.Collection();
+
+            /**
+             * Should be overriden an array of accepted paramaters
+             * Paramaters in this list will be set
+             */
+            this.acceptedParams =  [];
+
+            Backbone.View.prototype.constructor.apply(this, arguments);
+        },
 
         /**
          *
@@ -106,9 +111,12 @@ var _ = require('underscore'),
             View = viewDefinition.View;
             options = viewDefinition.options;
 
-            view = this.subviewInstances[key] = new View(_.extend(options, {
-                el: key
+            view = new View(_.extend(options, {
+                el: key,
+                parentView: this
             }));
+
+            this.subviewInstances.add({view: view, key: key});
 
             view.listenTo(this, 'afterRender', function(){
                 if (view.isReady) {
@@ -133,11 +141,24 @@ var _ = require('underscore'),
             return view;
         },
 
+        _removeSubviewInstances: function () {
+            this.subviewInstances.each(this._removeSubviewInstance, this);
+        },
+
+        _removeSubviewInstance: function (model) {
+            if (_.isString(model)) {
+                model = this.subviewInstances.findWhere({key: model});
+            }
+
+            model.get('view').remove();
+            model.destroy();
+        },
+
         _expandViewDefinition: function (viewDefinition) {
             var View,
                 options = {},
                 definitionIsView = !!viewDefinition.extend;
-                
+
             if (definitionIsView) {
                 View = viewDefinition;
             } else {
@@ -161,15 +182,20 @@ var _ = require('underscore'),
             }
         },
 
+        _coreParams: ['parent', 'app'],
+
         /**
          * Uses the acceptedParams array to set those params on 'this'.
          */
         _setAcceptedParams: function (options) {
-            var self = this;
+            var self = this, params;
             if (!_.isArray(this.acceptedParams)) {
                 return false;
             }
-            _.each(this.acceptedParams, function(param){
+
+            params = _.union([],this._coreParams, this.acceptedParams);
+
+            _.each(params, function(param){
               if (options[param]) {
                 self[param] = options[param];
               }

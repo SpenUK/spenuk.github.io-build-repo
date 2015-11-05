@@ -15,7 +15,6 @@ var Backbone = require('backbone'),
     	},
 
     	onReady: function () {
-            console.log('ready');
     		this.status = 'ready';
     		this.trigger('ready');
     	},

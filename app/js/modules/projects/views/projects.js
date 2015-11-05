@@ -1,54 +1,66 @@
 'use strict';
 
-var	Module = require('../module'),
-	CollectionViewExtension = require('../../../extensions/collectionview'),
-	PagerCollectionViewExtension = require('../../../extensions/slidercollectionview'),
+var	projectsModule = require('../module'),
+	FaderViewExtension = require('../../../extensions/faderview'),
 	ProjectView = require('./project'),
 	template = require('../templates/projects.hbs'),
-
-	CollectionViewExtension = CollectionViewExtension,
-	PagerCollectionViewExtension = PagerCollectionViewExtension;
 
 	/**
 	 *
 	 */
-	// var ProjectsView = CollectionViewExtension.extend({
-
-	var ProjectsView = PagerCollectionViewExtension.extend({
+	ProjectsView = FaderViewExtension.extend({
 
 		namespace: 'projects',
 
 		itemView: ProjectView,
 
+		collectionEl: '.projects',
+
 		template: template,
 
-		initialize: function(options){
-			this.collection = Module.getProjectsCollection();
+		el: 'article',
 
+		tagName: 'article',
+
+		collection: projectsModule.getProjectsCollection(),
+
+		initialize: function(options){
 			var Super = this._super;
 
 			if (this.collection.isReady()) {
-				this.collection.setCurrentModel({slug: options.slug});
+				var initialModel = this.collection.findWhere({slug: options.slug});
+				this.collection.setCurrentModel(initialModel);
 				Super.apply(this, arguments);
 			} else {
 				this.listenToOnce(this.collection, 'sync', function(){
-					this.collection.setCurrentModel({slug: options.slug});
+					var initialModel = this.collection.findWhere({slug: options.slug});
+					this.collection.setCurrentModel(initialModel);
 					Super.apply(this, arguments);
 				});
 			}
 
-			this.initialized = true;
-			
+			console.log(this);
 		},
+
+		// views: function () {
+		// 	return {
+		// 		'.project': {
+		// 			view: ProjectView,
+		// 			options: {
+		// 				model: this.collection.getCurrentModel()
+		// 			}
+		// 		}
+		// 	};
+		// },
 
 		render: function () {
             this._super.apply(this, arguments);
 
-            window.Backbone.trigger('ui:showContent');
-            window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
-			window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
-            window.Backbone.trigger('page:setNamespace', this.namespace );
-            return this;
+			// window.Backbone.trigger('ui:showContent');
+			// window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
+			// window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
+			// window.Backbone.trigger('page:setNamespace', this.namespace );
+			return this;
         },
 
         nextRoute: function(){

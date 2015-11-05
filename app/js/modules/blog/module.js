@@ -4,7 +4,10 @@ var BlogPostsCollection = require('./collections/blogposts'),
 
 	BlogModule = {
 		getBlogPostsCollection: function () {
-			return this.blogPostsCollection ? this.blogPostsCollection : new BlogPostsCollection();
+			if (!this.blogPostsCollection) {
+				this.blogPostsCollection = new BlogPostsCollection();
+			}
+			return this.blogPostsCollection;
 		}
 	};
 

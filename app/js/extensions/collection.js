@@ -4,7 +4,7 @@ var _ = require('underscore'),
     core = require('../core/core'),
 
     Collection = core.Collection.extend({
-    	
+
     	position: 0,
 
     	totalRecords: 0,
@@ -15,27 +15,21 @@ var _ = require('underscore'),
           	this.totalRecords = response.length;
             return response;
         },
-        
-        setCurrentModel: function(options){
-            if (options.slug && this.where({slug: options.slug}).length) {
-                console.log('match slug');
-                this.currentRecord = this.find({slug: options.slug});
-                // console.log(this.currentRecord);
-            } else if (options.model && this.contains(options.model)) {
-                console.log('match model');
-                this.currentRecord = options.model;
-            } else {
-                console.log('no match', this.currentRecord);
-                this.currentRecord = this.currentRecord || this.first();
+
+        setCurrentModel: function (model) {
+            if (this.currentModel === model) {
+                return false;
             }
 
-            this.position = this.indexOf(this.currentRecord);
+            this.currentModel = this.contains(model) ? model : this.currentModel || this.first();
+            this.position = this.indexOf(this.currentModel);
+            this.trigger('updatedCurrent');
 
-            return this.currentRecord;
+            return this.currentModel;
         },
 
         getCurrentModel: function(){
-            return this.at(this.position);
+            return this.at(this.position) || this.setCurrentModel();
         },
 
         getLatest: function(){
@@ -59,7 +53,7 @@ var _ = require('underscore'),
         },
 
         getNextModel: function(){
-            return this.at((this.position +1 > this.length -1)?  false : this.position + 1);
+            return this.at((this.position + 1 > this.length -1)?  false : this.position + 1);
         },
 
         getPrevModel: function(){
@@ -71,7 +65,7 @@ var _ = require('underscore'),
         },
 
         defaultSlug: function(){
-            return this.currentRecord ? this.currentRecord.get('slug') : this.first().get('slug');
+            return this.currentModel ? this.currentModel.get('slug') : this.first().get('slug');
         }
 
     });

@@ -8,14 +8,13 @@ var View = require('../../../extensions/view'),
 	scrollTracker = require('../../../helpers/scroll-tracker'),
 
 	MasterView = View.extend({
-		
+
 		el: 'body',
 
 		template: template,
 
 		initialize: function(){
 			this.state = (window.location.hash.length >= 1) ? 'content-state' : 'intro-state';
-			console.log('state', this.state);
 			this.render({
 				state: this.state
 			});
@@ -70,10 +69,10 @@ var View = require('../../../extensions/view'),
 			this.$page.addClass('intro-state').removeClass('content-state');
 		},
 
-		// setNamespace: function(namespace) {	
+		// setNamespace: function(namespace) {
 		// 	document.body.className = $.trim(
-		// 		document.body.className.split(' ').filter(function(c) { 
-		// 			return c.lastIndexOf('page-', 0) !== 0; 
+		// 		document.body.className.split(' ').filter(function(c) {
+		// 			return c.lastIndexOf('page-', 0) !== 0;
 		// 		}).join(' ') + ' page-' +namespace );
 		// },
 

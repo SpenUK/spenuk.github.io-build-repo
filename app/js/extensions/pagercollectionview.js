@@ -4,17 +4,19 @@ var CollectionViewExtension = require('./collectionview'),
 	ViewExtension = require('./view'),
 
     /**
-     * TransitionView should be responsible for holding a current page and 
+     * PagerCollectionView should be responsible for holding a current page and 
      * sliding new pages in and out (with CSS transitions)
      */
 
-    ProjectsView = CollectionViewExtension.extend({
+    PagerCollectionView = CollectionViewExtension.extend({
 
     	contentEl: 'content',
         
         itemView: ViewExtension,
 
         isTransitioning: false,
+
+        acceptedParams: [],
 
         // initialize: function () {
         // 	this.$contentEl = $(this.contentEl);
@@ -40,7 +42,7 @@ var CollectionViewExtension = require('./collectionview'),
 
     });
 
-module.exports = ProjectsView;
+module.exports = PagerCollectionView;
 
 
 // this.transitions = new Transitions({

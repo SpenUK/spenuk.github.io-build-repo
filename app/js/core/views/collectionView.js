@@ -30,13 +30,14 @@ var _ = require('underscore'),
     	 *
     	 */
     	initialize: function(options) {
-            console.log(this.cName);
     		options = options || {};
     		this.renderedItems = new CoreCollection();
             this._super.apply(this, arguments);
     	},
 
         render: function () {
+            this.$el.html(this.template(this.serialize()));
+            this.$collectionEl = this.collectionEl ? $(this.collectionEl) : this.$el;
             this.renderAll();
             return this;
         },
@@ -53,6 +54,11 @@ var _ = require('underscore'),
             return this._renderOne.apply(this, arguments);
         },
 
+        renderCurrent: function () {
+            var current = this.collection.getCurrentModel();
+            this._renderOne(current);
+        },
+
     	/**
     	 *
     	 */
@@ -67,7 +73,7 @@ var _ = require('underscore'),
             var ItemView = this.itemView,
                 buffer = this.buffer = this.buffer || document.createDocumentFragment(),
                 range = _.range(offset, offset + limit);
-                
+
             _.each(range, function (i) {
                 var model = this.collection.at(i);
 
@@ -81,7 +87,7 @@ var _ = require('underscore'),
 
             }, this);
 
-            this.$el.html(buffer);
+            this.$collectionEl.html(buffer);
         },
 
     	/**
