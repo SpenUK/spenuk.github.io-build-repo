@@ -1,4 +1,5 @@
 'use strict';
+/*jshint -W087 */
 
 var _ = require('underscore'),
     core = require('../core/core'),
@@ -17,6 +18,7 @@ var _ = require('underscore'),
         },
 
         setCurrentModel: function (model) {
+            console.log('setting current model', model.attributes);
             if (this.currentModel === model) {
                 return false;
             }

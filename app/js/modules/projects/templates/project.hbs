@@ -1,11 +1,20 @@
+
+
 {{!-- {{#if attributes }} --}}
 	{{!-- {{#with attributes}} --}}
 		<div class="grid-container">
 			<div class="grid-row">
 				<div class="small-12">
+					<a href="{{{prevUrl}}}" class="prev-button" style="display: inline-block; padding: 4px 8px; background-color: tomato; color: whitesmoke;">prev</a>
+					<a href="{{{nextUrl}}}" class="next-button" style="display: inline-block; padding: 4px 8px; background-color: tomato; color: whitesmoke;">next</a>
+				</div>
+			</div>
+
+			<div class="grid-row">
+				<div class="small-12">
 					<h1 class="title">{{title}} {{ind}}</h1>
 					<div class="panel">
-						
+
 						{{{content}}}
 					</div>
 				</div>

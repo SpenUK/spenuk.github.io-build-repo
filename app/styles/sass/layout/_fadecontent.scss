@@ -5,9 +5,11 @@ $transition-time: .8s;
 
 	&.fade-out-left {
 		@include transform(translateX(-20%));
+		opacity: 0.2;
 	}
 
 	&.fade-out-right {
 		@include transform(translateX(20%));
+		opacity: 0.2;
 	}
 }

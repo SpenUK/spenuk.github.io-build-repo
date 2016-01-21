@@ -1,7 +1,8 @@
 'use strict';
 
 var CollectionViewExtension = require('./collectionview'),
-    // ViewExtension = require('./view'),
+    routerModule = require('../modules/router/module'),
+// var ViewExtension = require('./view'),
     // transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd',
 
     /**
@@ -14,9 +15,10 @@ var CollectionViewExtension = require('./collectionview'),
 
         isTransitioning: false,
 
-        initialize: function () {
+        initialize: function (options) {
+            console.log(options);
             this.$el.addClass('fader-view');
-            this.listenTo(this.collection, 'updatedCurrent', this.render);
+            this.listenTo(this.collection, 'updatedCurrent', this.renderCurrent);
         	this._super.apply(this, arguments);
         },
 
@@ -28,20 +30,35 @@ var CollectionViewExtension = require('./collectionview'),
         },
 
         render: function () {
-            this.$el.html(this.template(this.serialize()));
+            this._super.apply(this, arguments);
             this.renderCurrent();
         },
 
         goNext: function () {
-            var nextModel = this.collection.getNextModel();
-            console.log(nextModel);
-            this.collection.setCurrentModel(nextModel);
+            console.log(this.master);
+            // var nextModel = this.collection.getNextModel(),
+                // slug = '';
+
+
+            // if (nextModel) {
+            //     slug = nextModel.get('slug') || slug;
+            // }
+                // this.collection.setCurrentModel(prevModel);
+            // console.log(this.namespace + '/' + slug);
+            // routerModule.navigate(this.namespace + '/' + slug);
+            // this.collection.setCurrentModel(nextModel);
         },
 
         goPrev: function () {
-            var prevModel = this.collection.getPrevModel();
-            console.log(prevModel);
-            this.collection.setCurrentModel(prevModel);
+            var prevModel = this.collection.getPrevModel(),
+                slug = '';
+
+            if (prevModel) {
+                slug = prevModel.get('slug') || slug;
+            }
+            // this.collection.setCurrentModel(prevModel);
+            console.log(this.namespace + '/' + slug);
+            routerModule.navigate(this.namespace + '/' + slug);
         }
 
     });

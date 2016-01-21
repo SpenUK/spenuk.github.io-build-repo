@@ -1,8 +1,10 @@
 'use strict';
 
-var View = require('../../../extensions/view'),
+var _ = require('underscore'),
+	View = require('../../../extensions/view'),
 	IntroView = require('../../../modules/intro/views/intro'),
 	HeaderView = require('../../../modules/ui/views/header'),
+	TransitionView = require('../../../modules/pagetransitions/views/pagetransitions'),
 	template = require('../../../modules/master/templates/master.hbs'),
 
 	scrollTracker = require('../../../helpers/scroll-tracker'),
@@ -14,11 +16,8 @@ var View = require('../../../extensions/view'),
 		template: template,
 
 		initialize: function(){
+
 			this.state = (window.location.hash.length >= 1) ? 'content-state' : 'intro-state';
-			this.render({
-				state: this.state
-			});
-			this.$page = this.$el.find('.page-wrap');
 
 			this._super.apply(this, arguments);
 
@@ -45,18 +44,16 @@ var View = require('../../../extensions/view'),
 	  	views: function () {
 	  		return {
 	  			'.header': HeaderView,
-	  			'.landing': IntroView
-	  		};
-	  	},
-
-	  	serialize: function () {
-	  		return {
-	  			state: this.state || 'intro'
+	  			'.landing': IntroView,
+	  			'.transition-container': TransitionView
 	  		};
 	  	},
 
 	  	render: function(){
 	  		this._super.apply(this, arguments);
+
+	  		this.$page = this.$el.find('.page-wrap');
+	  		this.transitionView = this.subviewInstances.findWhere({key: '.transition-container'}).get('view');
 
 	  		scrollTracker.initialize();
 	  	},
@@ -67,6 +64,59 @@ var View = require('../../../extensions/view'),
 
 		showIntro: function() {
 			this.$page.addClass('intro-state').removeClass('content-state');
+		},
+
+		serialize: function () {
+			return _.extend({}, this._super(), {
+				state: this.state || 'intro'
+			});
+		},
+
+		setContent: function (ViewDefinition, options) {
+			var View, viewOptions;
+
+			options = options || {};
+
+			ViewDefinition = this._expandViewDefinition(ViewDefinition);
+
+			View = ViewDefinition.View;
+            viewOptions = _.extend({}, ViewDefinition.options, {
+            	master: this,
+				el: options.el || '.content-wrapper .content'
+			});
+
+			console.log(viewOptions);
+
+			if (this.currentContentClass !== View) {
+				console.log('new view');
+				this.currentContentClass = View;
+				this.currentContentView = new View(viewOptions);
+			}
+
+			window.Backbone.trigger('ui:showContent');
+		},
+
+		transition: function (ViewDefinition, options) {
+			var View, viewOptions;
+
+			options = options || {};
+
+			ViewDefinition = this._expandViewDefinition(ViewDefinition);
+
+			View = ViewDefinition.View;
+            viewOptions = _.extend({}, ViewDefinition.options, {
+            	master: this,
+				el: options.el || '.content-wrapper .content'
+			});
+
+			if (this.currentContentClass !== View) {
+				this.currentContentClass = View;
+				this.currentContentView = new View(viewOptions);
+			}
+
+			this.transitionView.transition(ViewDefinition);
+
+			window.Backbone.trigger('ui:showContent');
 		},
 
 		// setNamespace: function(namespace) {

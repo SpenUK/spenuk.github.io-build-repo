@@ -1,14 +1,20 @@
 'use strict';
 
 var	projectsModule = require('../module'),
+	// masterModule = require('../../master/module'),
 	FaderViewExtension = require('../../../extensions/faderview'),
+	ViewExtension = require('../../../extensions/view'),
 	ProjectView = require('./project'),
 	template = require('../templates/projects.hbs'),
+
+	FaderViewExtension = FaderViewExtension,
+	ViewExtension = ViewExtension,
 
 	/**
 	 *
 	 */
-	ProjectsView = FaderViewExtension.extend({
+	ProjectsView = ViewExtension.extend({
+	// ProjectsView = FaderViewExtension.extend({
 
 		namespace: 'projects',
 
@@ -27,6 +33,12 @@ var	projectsModule = require('../module'),
 		initialize: function(options){
 			var Super = this._super;
 
+			console.log(options);
+
+			// projectsModule = require('../module');
+
+			// this.collection = projectsModule.getProjectsCollection();
+
 			if (this.collection.isReady()) {
 				var initialModel = this.collection.findWhere({slug: options.slug});
 				this.collection.setCurrentModel(initialModel);
@@ -39,7 +51,7 @@ var	projectsModule = require('../module'),
 				});
 			}
 
-			console.log(this);
+			// console.log(this, masterModule);
 		},
 
 		// views: function () {
@@ -52,16 +64,23 @@ var	projectsModule = require('../module'),
 		// 		}
 		// 	};
 		// },
+		//
+		serialize: function () {
+			return {
+				nextUrl: '#/projects/surf-tracking-app-concept',
+				prevUrl: '#/projects/the-sauce'
+			};
+		},
 
-		render: function () {
-            this._super.apply(this, arguments);
+		// render: function () {
+            // this._super.apply(this, arguments);
 
 			// window.Backbone.trigger('ui:showContent');
 			// window.Backbone.trigger('ui:updatePrev', {link: this.prevRoute()});
 			// window.Backbone.trigger('ui:updateNext', {link: this.nextRoute()});
 			// window.Backbone.trigger('page:setNamespace', this.namespace );
-			return this;
-        },
+			// return this;
+   //      },
 
         nextRoute: function(){
 			var model = this.collection.getNextModel();

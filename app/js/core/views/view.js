@@ -36,19 +36,21 @@ var _ = require('underscore'),
         initialize: function (options) {
             options = options || {};
 
-            var self = this;
+            // var self = this;
 
             this._setAcceptedParams(options);
 
-            this.render = _.wrap(this.render, function(render) {
-                var args = arguments;
+            // this.render = _.wrap(this.render, function(render) {
+            //     var args = arguments;
 
-                self.beforeRender.apply(self,args);
-                render.apply(self,args);
-                self.afterRender.apply(self,args);
+            //     self.beforeRender.apply(self,args);
+            //     render.apply(self,args);
+            //     self.afterRender.apply(self,args);
 
-                return self;
-            });
+            //     return self;
+            // });
+            //
+            this.wrapRender();
         },
 
         beforeRender: function () {
@@ -62,7 +64,7 @@ var _ = require('underscore'),
         render: function () {
             this.$el.html(this.template(this.serialize()));
             this._renderSubviews();
-            // this._super.apply(this, arguments);
+            this._super.apply(this, arguments);
 
             return this;
         },
@@ -116,7 +118,10 @@ var _ = require('underscore'),
                 parentView: this
             }));
 
-            this.subviewInstances.add({view: view, key: key});
+            this.subviewInstances.add({
+                view: view,
+                key: key
+            });
 
             view.listenTo(this, 'afterRender', function(){
                 if (view.isReady) {
@@ -154,10 +159,48 @@ var _ = require('underscore'),
             model.destroy();
         },
 
+
         _expandViewDefinition: function (viewDefinition) {
+            var View,
+                options = {};
+
+                // console.log(viewDefinition);
+
+            if (_.isObject(viewDefinition) && (viewDefinition.view || viewDefinition.View)) {
+
+                View = viewDefinition.view || viewDefinition.View;
+                options = _.result(viewDefinition, 'options');
+
+            } else if (_.isFunction(viewDefinition)) {
+
+                View = viewDefinition;
+
+            }
+
+            if (!_.isFunction(View)) {
+
+                console.log('view is not a function');
+                return false;
+
+            }
+
+            // console.log({
+            //     View: View,
+            //     options: options
+            // });
+
+            return {
+                View: View,
+                options: options
+            };
+        },
+
+        _expandViewDefinitionx: function (viewDefinition) {
             var View,
                 options = {},
                 definitionIsView = !!viewDefinition.extend;
+
+
 
             if (definitionIsView) {
                 View = viewDefinition;
@@ -166,13 +209,16 @@ var _ = require('underscore'),
                     viewDefinition = viewDefinition();
                 }
 
-                View = !!viewDefinition.view.extend ? viewDefinition.view : _.result(viewDefinition, 'view');
+                // if (_isFunction(View && )) {}
+
+                View = viewDefinition.view ? viewDefinition.view :  viewDefinition;
                 options = _.result(viewDefinition, 'options');
             }
 
             options = _.extend(options, {});
 
             if (!_.isFunction(View)) {
+                console.log('view is not a function');
                 return false;
             } else {
                 return {

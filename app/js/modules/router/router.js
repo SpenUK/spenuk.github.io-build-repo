@@ -2,8 +2,14 @@
 
 var _ = require('underscore'),
 	// Backbone = require('backbone'), // update once all is converted
+	AboutView = require('../about/views/about'),
+    ContactView = require('../contact/views/contact'),
+    BlogPostsView = require('../blog/views/blogposts'),
+    ProjectsView = require('../projects/viewss/project'),
+
 
 	AppRouter = window.Backbone.Router.extend({
+
 		routes: {
 			'': 'root',
 			'blog(/)(/:post)': 'blog',
@@ -14,6 +20,7 @@ var _ = require('underscore'),
 
 		initialize: function(options){
 			var app = this.app = options.app;
+				// projectsModule = require('../projects/module');
 
 			this.listenTo(window.Backbone, 'router:redirect', this.redirect);
 			this.listenTo(window.Backbone, 'router:goToCurrentContent', this.goToCurrentContent);
@@ -24,56 +31,44 @@ var _ = require('underscore'),
 
 			this.currentContentRoute = this.defaultContentRoute();
 
-			this.on('route:root' ,function(){
-				window.Backbone.trigger('vui:showIntro');
+			this.on('route:root', function () {
+				window.Backbone.trigger('ui:showIntro');
 	  			this.lastRoute = window.Backbone.history.fragment;
 			});
 
-			this.on('route:blog' ,function(slug){
-				// Only transition if the current view is not changing (but the resource is).
-				// Boolean to tell it to transition or not
-				// This is most likely causing the no trans bug.
-				// var transition = (this.currentContentView === context.views.blog && this.lastRoute !== '');
+			this.on('route:blog', function (slug) {
+		  		app.setContent({
+					view: BlogPostsView,
+					options: {
+						slug: slug
+					}
+				});
 
-				// Replace this pattern with a module pattern, collection cahing etc.
-				// Views should be re-instantietd each time they are routed to.
-				this.currentContentView = new app.views.Blog({
-		  			el: app.mainPanel,
-		  			slug: slug
-		  		});
-
-				this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+				// this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
 			});
 
-			this.on('route:projects' ,function(slug){
-				this.currentContentView = new app.views.Projects({
-		  			el: app.mainPanel,
-		  			slug: slug
-		  		});
-
-				window.Backbone.trigger('ui:showContent');
-				this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			this.on('route:projects', function (slug){
+				app.transition({
+					view: ProjectsView,
+					options: {
+						slug: slug
+					}
+				});
 			});
 
-			this.on('route:contact' ,function(){
-				this.currentContentView = new app.views.Contact({
-		  			el: app.mainPanel
-		  		});
-
-				window.Backbone.trigger('ui:showContent');
-		  		this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			this.on('route:contact', function(){
+				app.setContent({
+					view: ContactView
+				});
 			});
 
-			this.on('route:about' ,function(){
-				this.currentContentView = new app.views.About({
-		  			el: app.mainPanel
-		  		});
-
-				window.Backbone.trigger('ui:showContent');
-	  			this.currentContentRoute = this.lastRoute = window.Backbone.history.fragment;
+			this.on('route:about', function (){
+				app.setContent({
+					view: AboutView
+				});
 			});
 
-			this.on('route:defaultRoute', function(){
+			this.on('route:defaultRoute', function (){
 				console.log('defaultRoute');
 			});
 
@@ -81,8 +76,13 @@ var _ = require('underscore'),
 
 		},
 		setCurrentContent: function(content){
-			if (content.view) {this.currentContentView = content.view; }
-			if (content.route) {this.currentContentRoute = this.lastRoute = content.route; }
+			if (content.view) {
+				this.currentContentView = content.view;
+			}
+
+			if (content.route) {
+				this.currentContentRoute = this.lastRoute = content.route;
+			}
 		},
 		goToLanding: function () {
 			this.navigate('', {trigger: true});

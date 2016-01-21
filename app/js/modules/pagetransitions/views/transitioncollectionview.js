@@ -8,7 +8,7 @@ var CollectionViewExtension = require('../../../extensions/collectionview'),
      * sliding new pages in and out (with CSS transitions)
      */
 
-    ProjectsView = CollectionViewExtension.extend({
+    TransitionCollectionView = CollectionViewExtension.extend({
 
     	contentEl: 'content',
 
@@ -40,8 +40,8 @@ var CollectionViewExtension = require('../../../extensions/collectionview'),
 
     });
 
-// module.exports = ProjectsView;
-ProjectsView = ProjectsView;
+// module.exports = TransitionCollectionView;
+TransitionCollectionView = TransitionCollectionView;
 
 module.exports = [2,2,2,2,2];
 

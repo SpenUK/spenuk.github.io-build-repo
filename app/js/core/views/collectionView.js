@@ -1,5 +1,6 @@
 'use strict';
 /*jshint bitwise: false*/
+/*jshint -W087 */
 
 var _ = require('underscore'),
     CoreView = require('./view'),
@@ -38,7 +39,6 @@ var _ = require('underscore'),
         render: function () {
             this.$el.html(this.template(this.serialize()));
             this.$collectionEl = this.collectionEl ? $(this.collectionEl) : this.$el;
-            this.renderAll();
             return this;
         },
 
@@ -55,8 +55,8 @@ var _ = require('underscore'),
         },
 
         renderCurrent: function () {
-            var current = this.collection.getCurrentModel();
-            this._renderOne(current);
+            this._removeAll();
+            this._renderSelection(this.collection.position, 1);
         },
 
     	/**
@@ -74,7 +74,10 @@ var _ = require('underscore'),
                 buffer = this.buffer = this.buffer || document.createDocumentFragment(),
                 range = _.range(offset, offset + limit);
 
+                this._removeAll();
+
             _.each(range, function (i) {
+                // debugger;
                 var model = this.collection.at(i);
 
                 if (model) {
@@ -83,11 +86,12 @@ var _ = require('underscore'),
                     });
 
                     buffer.appendChild(itemView.render().el);
+                    this.renderedItems.add({view: itemView});
                 }
 
             }, this);
 
-            this.$collectionEl.html(buffer);
+            $(this.collectionEl).html(buffer);
         },
 
     	/**
@@ -103,6 +107,7 @@ var _ = require('underscore'),
     			});
 
     			this[insertionMethod](itemView.render().el);
+                this.renderedItems.add({view: itemView});
 
     			return itemView;
     		}
@@ -110,17 +115,18 @@ var _ = require('underscore'),
     	},
 
         append: function (html) {
-            this.$el.append(html);
+            this.$collectionEl.append(html);
         },
 
         prepend: function (html) {
-            this.$el.prepend(html);
+            this.$collectionEl.prepend(html);
         },
 
     	/**
     	 *
     	 */
     	_removeOne: function (model) {
+            console.log(model);
     		model = model;
     		this.renderedItems.find(model).remove();
     	},
@@ -130,7 +136,7 @@ var _ = require('underscore'),
     	 */
     	_removeAll: function () {
     		this.renderedItems.each(function (item) {
-    			item.view.remove();
+    			item.get('view').remove();
     		});
     	}
 

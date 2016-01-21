@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (grunt) {
-	
+
   // Loading tasks Manually
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-sass');
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
           // "key1" refers to a key set in the .ftppass file.
           // This is ignored by git (for security reasons) so will have to be created in the format of the below
 
-          /* ./.ftppass 
+          /* ./.ftppass
             {
               "key1": {
                 "username": "<~ username ~>",
@@ -119,7 +119,7 @@ module.exports = function (grunt) {
   			open: true,
   			livereload: 35729,
   			base: 'app',
-  			hostname: 'localhost'
+  			hostname: 'localhost' // set to '*' for outside access
   		},
       livereload: {
         options: {
@@ -168,7 +168,7 @@ module.exports = function (grunt) {
         '!<%= config.app %>/js/modules/blog/blog-post-stubs.js',
         '!<%= config.app %>/js/modules/projects/projects-stubs.js'
   		]
-  	}, 
+  	},
   	// lint end
 
   	sass: {
@@ -209,7 +209,7 @@ module.exports = function (grunt) {
 
     shell: {
       publish: {
-        command: (function(message){ 
+        command: (function(message){
           if (typeof message === 'undefined') {
             return 'cd ../spenuk.github.io && git add . && git commit -am "Auto build update @ '+ new Date().toLocaleString() +'" && git push -u origin master';
           } else {

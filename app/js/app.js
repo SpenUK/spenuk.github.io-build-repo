@@ -5,7 +5,8 @@ var routerModule = require('./modules/router/module'),
     ContactView = require('./modules/contact/views/contact'),
     BlogPostsView = require('./modules/blog/views/blogposts'),
     ProjectsView = require('./modules/projects/views/projects'),
-    MasterView = require('./modules/master/views/master'),
+    // MasterView = require('./modules/master/views/master'),
+    masterModule = require('./modules/master/module'),
 
     /**
      *
@@ -16,7 +17,6 @@ var routerModule = require('./modules/router/module'),
         transitionPanel: '.main .transition-content',
 
         views: {
-            Master: MasterView,
             Projects: ProjectsView,
             Contact: ContactView,
             About: AboutView,
@@ -24,16 +24,23 @@ var routerModule = require('./modules/router/module'),
         },
 
         initialize: function(){
-            this.$introPanel = $(this.introPanel);
-            this.$mainPanel = $(this.mainPanel);
 
-            this.views.master = new MasterView();
+            this.views.master = masterModule.getView();
+            this.views.master.render();
 
             // Get rid of the need to pass in this eventually
             window.r = this.router = routerModule.getRouter({
                 app: this
             });
-        }
+        },
+
+        setContent: function () {
+            this.views.master.setContent.apply(this.views.master, arguments);
+        },
+
+        transition: function () {
+            this.views.master.transition.apply(this.views.master, arguments);
+        },
     };
 
 module.exports = App;

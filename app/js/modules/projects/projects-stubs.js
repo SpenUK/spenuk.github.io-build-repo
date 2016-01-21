@@ -2,7 +2,7 @@ module.exports = [
 	{
 		ID: 1,
 		title: 'Snowriders Logo',
-		slug: 'Snowriders-logo',
+		slug: 'snowriders-logo',
 		stack: {
 			graphics: ['Illustrator']
 		},

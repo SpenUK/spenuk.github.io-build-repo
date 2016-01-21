@@ -1,10 +1,11 @@
 'use strict';
 
 var CollectionExtension = require('../../../extensions/collection'),
+    Model = require('../models/project'),
     stubs = require('../projects-stubs.js'),
 
     ProjectCollection = CollectionExtension.extend({
-        
+
         position: 0,
 
         totalRecords: 0,
@@ -16,6 +17,8 @@ var CollectionExtension = require('../../../extensions/collection'),
         stubbed: true,
 
         stubs: stubs,
+
+        model: Model,
 
         initialize: function() {
             this._super.apply(this, arguments);
