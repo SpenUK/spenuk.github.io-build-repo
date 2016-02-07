@@ -8,10 +8,6 @@ var ViewExtension = require('../../../../extensions/view'),
 	 */
 	SocialButtonView = ViewExtension.extend({
 
-		cName: 'SocialButtonView',
-
-		namespace: 'social button',
-
 		template: template,
 
 		tagName: 'li',

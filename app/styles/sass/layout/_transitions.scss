@@ -1,63 +1,109 @@
 $slide-in-time: .8s;
 
 .transition-content {
-	// display: none;
+	opacity: 1;
 	float: left;
-	// width: 50%;
+	width: 100%;
 	height: 100%;
+
+	overflow: scroll;
+    padding-bottom: 40px;
+
+	position: absolute;
+
+	&.trans-out {
+		@include transition(all 2s linear);
+		@include transform(translateX(20%));
+		opacity: 0;
+
+		&.snap-back {
+			@include transition(all 1s linear);
+			@include transform(translateX(-20%));
+			opacity: 0.2;
+		}
+	}
+
+	&.trans-in {
+		@include transition(none);
+		@include transform(translateX(20%));
+		opacity: 0;
+	}
 }
 
 .transition-transitioner {
 	// display: none;
+	opacity: 0;
+	position: absolute;
+	@include transition-delay(1s);
+
+	@include transform(translateX(10%));
 	float: left;
-	width: 50%;
+	// width: 50%;
+	width: 100%;
 	height: 100%;
 }
 
 .transition-container {
 	position: relative;
 	height: 100%;
-	width: 200%;
+	// width: 200%;
+	width: 100%;
 	bottom: 0;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 }
 
-.animate-next {
-	// set start location
-	&.go {
-		// set animate-to location
-		@include transition(all $slide-in-time ease);
-		// @include transition(all 0.8s ease);
-		@include transform(translateX(-50%));
-	}
+.transition-container.transitioning {
 
 	.transition-transitioner {
-	// 	@include transform(translateX(100%));
-		display: block;
-	}
-
-	// .transition-transitioner {
-	// 	// transitioner is already at 0%;
-	// }
-}
-
-.animate-prev {
-	// set start location
-	@include transform(translateX(-50%));
-	&.go {
-		// set animate-to location
-		@include transition(all $slide-in-time ease);
+		opacity: 1;
+		@include transition-delay(1s);
+		@include transition(all $slide-in-time linear);
 		@include transform(translateX(0));
 	}
 
-	// .transition-transitioner {
-	// 	@include transform(translateX(0));
-	// 	display: block;
-	// }
-
-	// .transition-content {
-	// 	@include transform(translateX(100%));
-	// 	display: block;
-	// }
+	.transition-content {
+		opacity: 0;
+		@include transition(all $slide-in-time linear);
+		@include transform(translateX(-20%));
+	}
 }
+
+// .animate-next {
+// 	// set start location
+// 	&.go {
+// 		// set animate-to location
+// 		@include transition(all $slide-in-time ease);
+// 		// @include transition(all 0.8s ease);
+// 		@include transform(translateX(-50%));
+// 	}
+
+// 	.transition-transitioner {
+// 	// 	@include transform(translateX(100%));
+// 		display: block;
+// 	}
+
+// 	// .transition-transitioner {
+// 	// 	// transitioner is already at 0%;
+// 	// }
+// }
+
+// .animate-prev {
+// 	// set start location
+// 	@include transform(translateX(-50%));
+// 	&.go {
+// 		// set animate-to location
+// 		@include transition(all $slide-in-time ease);
+// 		@include transform(translateX(0));
+// 	}
+
+// 	// .transition-transitioner {
+// 	// 	@include transform(translateX(0));
+// 	// 	display: block;
+// 	// }
+
+// 	// .transition-content {
+// 	// 	@include transform(translateX(100%));
+// 	// 	display: block;
+// 	// }
+// }

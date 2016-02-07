@@ -1,8 +1,10 @@
 'use strict';
 
 var ModelExtension = require('../../extensions/model'),
+	ContactView = require('./views/contact'),
 
 	contactModule = {
+
 		getContactModel: function () {
 			if (!this.contactModel) {
 				this.contactModel =  new ModelExtension({
@@ -10,6 +12,17 @@ var ModelExtension = require('../../extensions/model'),
 				});
 			}
 			return this.contactModel;
+		},
+
+
+		getContactView: function () {
+			return {
+				view: ContactView,
+				options: {
+					module: this,
+					model: this.getContactModel()
+				}
+			};
 		}
 	};
 

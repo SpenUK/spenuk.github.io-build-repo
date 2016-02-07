@@ -1,62 +1,48 @@
 'use strict';
 
 var View = require('../../../extensions/view'),
+    ShowIntroButtonView = require('./header/showintrobutton'),
+    ShowContentButtonView = require('./header/showcontentbutton'),
+    NextButtonView = require('./header/nextbutton'),
+    PrevButtonView = require('./header/prevbutton'),
     template = require('../templates/header.hbs'),
 
     HeaderView = View.extend({
 
-        el: '.header',
-
         template: template,
 
-    	initialize: function(){
-    		this.render({});
-    		this.setListeners();
-    	},
-
-    	render: function(options){
-    		this.$el.html(this.template(options));
-    	},
-
-    	events: {
-    		'click .show-content': 'showContent',
-    		'click .show-intro': 'showIntro'
+        initialize: function() {
+            this._super.apply(this, arguments);
+            console.log(this);
+            this.listenTo(this.model, 'change:currentContentUrl', this.onContentUrlChange);
+            this.onContentUrlChange();
         },
 
-        showContent: function(){
-            window.Backbone.trigger('ui:showContent');
+        onContentUrlChange: function () {
+            var currentContentUrl = this.model.get('currentContentUrl');
+            if (currentContentUrl) {
+                this.show();
+            } else {
+                this.hide();
+            }
         },
 
-        showIntro: function(){
-            window.Backbone.trigger('ui:showIntro');
+        show: function () {
+            this.$el.removeClass('hide');
         },
 
-        updateUiPrev: function(options){
-            options = options || {};
-          	var prev = '.go-prev';
-          	var $prev = this.$el.find(prev);
-          	if (options.link) {
-          		$prev.removeClass('hide').attr('href', options.link);
-          	} else {
-          		$prev.addClass('hide').attr('href', '#');
-          	}
+        hide: function () {
+            this.$el.addClass('hide');
         },
 
-        updateUiNext: function(options){
-            options = options || {};
-          	var next = '.go-next';
-          	var $next = this.$el.find(next);
-          	if (options.link) {
-          		$next.removeClass('hide').attr('href', options.link);
-          	} else {
-          		$next.addClass('hide').attr('href', '#');
-          	}
-        },
-
-    	setListeners: function(){
-    		this.listenTo(window.Backbone, 'ui:updatePrev', this.updateUiPrev);
-    		this.listenTo(window.Backbone, 'ui:updateNext', this.updateUiNext);
-    	}
+        views: function () {
+            return {
+                '.show-intro-button': ShowIntroButtonView,
+                '.show-content-button': ShowContentButtonView,
+                '.next-button': NextButtonView,
+                '.prev-button': PrevButtonView
+            };
+        }
 
     });
 

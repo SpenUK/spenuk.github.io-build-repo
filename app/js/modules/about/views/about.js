@@ -5,17 +5,7 @@ var ViewExtension = require('../../../extensions/view'),
 
 	AboutView = ViewExtension.extend({
 
-		cName: 'AboutView',
-
-		namespace: 'about',
-
 		template: template,
-
-		initialize: function() {
-			this._super.apply(this, arguments);
-			// better handling of render?
-			this.render();
-		}
 
 	});
 

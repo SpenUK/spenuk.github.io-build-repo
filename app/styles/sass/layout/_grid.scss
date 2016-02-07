@@ -37,19 +37,17 @@ $rowClass: 'grid-row';
 
     margin-left: -($gutter-w);
     // margin-right: -($gutter-w);
-    
+
     &:first-child {
       margin-top: -($gutter-w);
     }
   }
-  
+
 }
 
 $screen: "only screen" !default;
 
 @each $size, $values in $break-points {
-
-
 
   $i: map-get($break-points, $size);
 

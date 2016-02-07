@@ -1,10 +1,11 @@
 'use strict';
 /*jshint bitwise: false*/
 
-// var _ = require('underscore'),
 var Backbone = require('backbone'),
 
     CoreCollection = Backbone.Collection.extend({
+
+        position: 0,
 
         status: 'initialized',
 

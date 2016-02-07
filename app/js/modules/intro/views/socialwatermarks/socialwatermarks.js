@@ -7,10 +7,6 @@ var CollectionViewExtension = require('../../../../extensions/collectionview'),
 
 	SocialWatermarksView = CollectionViewExtension.extend({
 
-		cName: 'SocialWatermarksView',
-
-		namespace: 'social watermarks',
-
 		itemView: SocialWatermarkView,
 
 		template: template,

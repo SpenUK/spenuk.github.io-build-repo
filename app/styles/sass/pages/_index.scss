@@ -36,7 +36,7 @@ body {
 
 		.main {
 			transition: top .8s ease;
-			position: absolute;	
+			position: absolute;
 			@include cover();
 			top: $header-height;
 
@@ -121,6 +121,9 @@ body.intro-landing.intro {
 	@include transform(translate(0%, -$header-height));
 	.header {
 		background-color: rgba(0,0,0,0.1);
+		&.hide {
+			background-color: rgba(0,0,0,0);
+		}
 	}
 
 	.landing-footer-content {

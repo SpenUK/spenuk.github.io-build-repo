@@ -1,20 +1,37 @@
 'use strict';
 
 var ProjectsCollection = require('./collections/projects'),
-	// ProjectsView = require('./views/projects'),
+	ProjectView = require('./views/project'),
 
 	ProjectsModule = {
 
+		getProjectView: function (slug) {
+			return {
+				view: ProjectView,
+				options: {
+					module: this,
+					collection: this.getProjectsCollection(),
+					slug: slug
+				}
+			};
+		},
+
 		getProjectsCollection: function () {
 			if (!this.projectsCollection) {
-				console.log('new collection');
 				this.projectsCollection = new ProjectsCollection();
-			} else {
-				console.log('straight return');
 			}
 
 			return this.projectsCollection;
+		},
+
+		getCurrentRoute: function () {
+			var collection = this.getProjectsCollection(),
+				model = collection.getCurrentModel(),
+				slug = model ? model.getSlug() : '';
+
+			return '/projects/' + slug;
 		}
+
 	};
 
 module.exports = ProjectsModule;

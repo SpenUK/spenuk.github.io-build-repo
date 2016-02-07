@@ -1,31 +1,25 @@
 'use strict';
 /*jshint bitwise: false*/
 
-// var _ = require('../../vendor/underscore'),
-    // Backbone = require('../../vendor/backbone'),
-
 var _ = require('underscore'),
     Backbone = require('backbone'),
 
     CoreView = Backbone.View.extend({
 
-        cName: 'CoreView',
-
         $window : $('window'),
 
         $body : $('body'),
 
-        isReady: false,
+        isReady: true,
+
+        /**
+         * Should be overriden with an array of accepted paramaters
+         * Paramaters in this list will be set
+         */
+        acceptedParams: [],
 
         constructor: function () {
-
             this.subviewInstances = new Backbone.Collection();
-
-            /**
-             * Should be overriden an array of accepted paramaters
-             * Paramaters in this list will be set
-             */
-            this.acceptedParams =  [];
 
             Backbone.View.prototype.constructor.apply(this, arguments);
         },
@@ -35,21 +29,7 @@ var _ = require('underscore'),
          */
         initialize: function (options) {
             options = options || {};
-
-            // var self = this;
-
             this._setAcceptedParams(options);
-
-            // this.render = _.wrap(this.render, function(render) {
-            //     var args = arguments;
-
-            //     self.beforeRender.apply(self,args);
-            //     render.apply(self,args);
-            //     self.afterRender.apply(self,args);
-
-            //     return self;
-            // });
-            //
             this.wrapRender();
         },
 
@@ -82,7 +62,8 @@ var _ = require('underscore'),
                 return self;
             });
         },
-
+        // should really be changed to ready(),
+        // onReady shouldnt be the trigger, it should be the response
         onReady: function () {
             this.trigger('ready');
             this.isReady = true;
@@ -112,6 +93,8 @@ var _ = require('underscore'),
 
             View = viewDefinition.View;
             options = viewDefinition.options;
+
+            options.model = options.model || this.model;
 
             view = new View(_.extend(options, {
                 el: key,
@@ -164,30 +147,18 @@ var _ = require('underscore'),
             var View,
                 options = {};
 
-                // console.log(viewDefinition);
-
             if (_.isObject(viewDefinition) && (viewDefinition.view || viewDefinition.View)) {
-
                 View = viewDefinition.view || viewDefinition.View;
                 options = _.result(viewDefinition, 'options');
 
             } else if (_.isFunction(viewDefinition)) {
-
                 View = viewDefinition;
-
             }
 
             if (!_.isFunction(View)) {
-
                 console.log('view is not a function');
                 return false;
-
             }
-
-            // console.log({
-            //     View: View,
-            //     options: options
-            // });
 
             return {
                 View: View,
@@ -200,16 +171,12 @@ var _ = require('underscore'),
                 options = {},
                 definitionIsView = !!viewDefinition.extend;
 
-
-
             if (definitionIsView) {
                 View = viewDefinition;
             } else {
                 if (_.isFunction(viewDefinition)) {
                     viewDefinition = viewDefinition();
                 }
-
-                // if (_isFunction(View && )) {}
 
                 View = viewDefinition.view ? viewDefinition.view :  viewDefinition;
                 options = _.result(viewDefinition, 'options');

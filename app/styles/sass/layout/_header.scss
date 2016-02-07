@@ -24,9 +24,9 @@ $landing-trans-time: 0.5s;
 			vertical-align: middle;
 			width: $header-height;
 			text-shadow: 0 2px 0 rgba(0,0,0,0.1);
-   		line-height: $header-height;
-   		height: $header-height;
-   	}
+	   		line-height: $header-height;
+	   		height: $header-height;
+   		}
 	}
 
 	.landing-footer-content {
@@ -38,7 +38,7 @@ $landing-trans-time: 0.5s;
 	}
 	.header-content {
 		bottom: 0;
-  	height: auto;
+  		height: auto;
 	}
-	  
+
 }

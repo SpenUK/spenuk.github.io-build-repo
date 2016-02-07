@@ -1,8 +1,8 @@
 'use strict';
 
-var core = require('../core/core'),
+var LoaderView = require('./loaderview'),
 
-View = core.View.extend({
+View = LoaderView.extend({
 
 	isRendered: false,
 

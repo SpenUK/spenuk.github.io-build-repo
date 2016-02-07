@@ -5,10 +5,6 @@ var ViewExtension = require('../../../../extensions/view'),
 
 	HeroSVGView = ViewExtension.extend({
 
-		cName: 'HeroSVGView',
-
-		namespace: 'hero SVG',
-
 		template: template
 
 	});

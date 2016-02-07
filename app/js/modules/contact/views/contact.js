@@ -14,9 +14,10 @@ function addError(el){
 }
 
 var ViewExtension = require('../../../extensions/view'),
-	contactModule = require('../module'),
+	// contactModule = require('../module'),
 	SocialButtonsView = require('./social/socialbuttons'),
 	ContactFormView = require('./form/form'),
+	socialModule = require('../../../modules/social/module'),
 	template = require('../templates/contact.hbs'),
 
 	ContactView = ViewExtension.extend({
@@ -27,35 +28,31 @@ var ViewExtension = require('../../../extensions/view'),
 
 		template: template,
 
-		initialize: function(){
-			this.model = contactModule.getContactModel();
+		acceptedParams: ['uiModel'],
 
+		initialize: function() {
 			this._super.apply(this, arguments);
 
-			this.render();
+			this.uiModel.set({
+				currentContentUrl: '#/contact',
+				nextUrl: null,
+				prevUrl: null
+			});
 		},
 
 		views: function () {
+			var socialCollection = socialModule.getSocialCollection();
+
 			return {
-				'.social-buttons': SocialButtonsView,
+				'.social-buttons': {
+					view: SocialButtonsView,
+					options: {
+						collection: socialCollection
+					}
+				},
 				'.form-holder': ContactFormView
 			};
 		},
-
-		// render: function(){
-		// 	// this.$el.html(this.template(options));
-
-		// 	this.pending = false;
-
-		// 	window.Backbone.trigger('ui:showContent');
-
-		// 	window.Backbone.trigger('ui:updatePrev');
-		// 	window.Backbone.trigger('ui:updateNext');
-		// 	window.Backbone.trigger('page:setNamespace', this.namespace );
-
-		// 	return this;
-
-		// },
 
 		events: {
 			'submit .contact-form' : 'submitForm',
@@ -107,7 +104,7 @@ var ViewExtension = require('../../../extensions/view'),
 			if (this.pending) { return false; }
 
 			var $form = this.$el.find('.contact-form');
-			
+
 			if (this.validateForm()) {
 
 				$form.addClass('pending');
@@ -120,7 +117,7 @@ var ViewExtension = require('../../../extensions/view'),
 				};
 
 				$.ajax({
-			    url: '//formspree.io/spen_@hotmail.co.uk', 
+			    url: '//formspree.io/spen_@hotmail.co.uk',
 			    method: 'POST',
 			    data: sendData,
 			    dataType: 'json',
@@ -145,7 +142,7 @@ var ViewExtension = require('../../../extensions/view'),
 				this.formError();
 				this.pending = false;
 			}
-			
+
 		},
 
 		formError: function(){

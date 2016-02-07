@@ -6,21 +6,18 @@ var _ = require('underscore'),
 
     Collection = core.Collection.extend({
 
-    	position: 0,
-
     	totalRecords: 0,
 
     	isLoading: false,
 
-        parse: function(response){ //, xhr
+        parse: function(response){
           	this.totalRecords = response.length;
             return response;
         },
 
         setCurrentModel: function (model) {
-            console.log('setting current model', model.attributes);
-            if (this.currentModel === model) {
-                return false;
+            if (model && this.currentModel === model) {
+                return this.currentModel;
             }
 
             this.currentModel = this.contains(model) ? model : this.currentModel || this.first();
@@ -39,9 +36,10 @@ var _ = require('underscore'),
         },
 
         fetch: function () {
+            this.status = 'fetch';
             if (this.stubs) {
                 this.trigger('fetch');
-                _.delay(_.bind(this.addStubs, this), 0);
+                _.delay(_.bind(this.addStubs, this), 1400);
             } else {
                 this._super.apply(this, arguments);
             }

@@ -11,16 +11,12 @@ var _ = require('underscore'),
      */
     CollectionView = CoreView.extend({
 
-        cName: 'CollectionView',
-
         /**
          * Set to true to allow updates to the collection without rendering
          */
         addSilently: false,
 
         collectionEl: null,
-
-        ordered: true,
 
     	/**
     	 * Initialises as a collection
@@ -38,7 +34,9 @@ var _ = require('underscore'),
 
         render: function () {
             this.$el.html(this.template(this.serialize()));
-            this.$collectionEl = this.collectionEl ? $(this.collectionEl) : this.$el;
+            this.collectionEl = this.collectionEl ? this.collectionEl : this.el;
+            this.$collectionEl = $(this.collectionEl);
+            this.renderAll();
             return this;
         },
 
@@ -77,7 +75,6 @@ var _ = require('underscore'),
                 this._removeAll();
 
             _.each(range, function (i) {
-                // debugger;
                 var model = this.collection.at(i);
 
                 if (model) {
@@ -126,7 +123,6 @@ var _ = require('underscore'),
     	 *
     	 */
     	_removeOne: function (model) {
-            console.log(model);
     		model = model;
     		this.renderedItems.find(model).remove();
     	},

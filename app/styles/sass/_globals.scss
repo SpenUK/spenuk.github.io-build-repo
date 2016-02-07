@@ -6,8 +6,6 @@ $black-hover: #333;
 
 $main-body-color: $black;
 
-// $background-color: rgba(225,225,225,1);
-
 $background-color: rgba(245,245,245,1);
 $header-color: rgba(255,90,110,1);
 $contrast-color-1: rgba(0,200,180,1);
@@ -29,14 +27,14 @@ $break-points: (
       "upper": 649px
     ),
     "container-width": 100%
-  ), 
+  ),
   "medium": (
     "range": (
       "lower": 650px,
       "upper": 920px
     ),
     "container-width": 100%
-  ), 
+  ),
   "large": (
     "range": (
       "lower": 960px,

@@ -6,7 +6,11 @@ var ModelExtension = require('../../../extensions/model'),
 
 		getSlug: function () {
 			return this.get('slug').toLowerCase();
-		}
+		},
+
+		getRoute: function () {
+           return '#/projects/' + this.get('slug');
+        }
 
 	});
 

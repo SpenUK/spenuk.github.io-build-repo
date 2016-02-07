@@ -1,17 +1,14 @@
 'use strict';
 /*jshint bitwise: false*/
 
-// var _ = require('underscore'),
 var Backbone = require('backbone'),
 
     CoreModel = Backbone.Model.extend({
 
-    	// For debugging shit
-    	cName: 'CoreModel',
-
     	isReady: false,
 
     	initialize: function() {
+            // Needs to be updated - assuming models don't fetch here.
     		this.onReady();
     	},
 

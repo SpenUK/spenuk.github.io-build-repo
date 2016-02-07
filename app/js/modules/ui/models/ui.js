@@ -2,8 +2,7 @@
 
 var ModelExtension = require('../../../extensions/model'),
 
-	BlogModel = ModelExtension.extend({
-
+	UIModel = ModelExtension.extend({
 	});
 
-module.exports = BlogModel;
+module.exports = UIModel;

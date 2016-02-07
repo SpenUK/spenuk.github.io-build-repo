@@ -2,19 +2,15 @@
 
 var CollectionExtension = require('../../../extensions/collection'),
     Model = require('../models/project'),
-    stubs = require('../projects-stubs.js'),
+    stubs = require('../projects-stubs'),
 
     ProjectCollection = CollectionExtension.extend({
-
-        position: 0,
 
         totalRecords: 0,
 
         isLoading: false,
 
         jsonp: true,
-
-        stubbed: true,
 
         stubs: stubs,
 
@@ -27,6 +23,21 @@ var CollectionExtension = require('../../../extensions/collection'),
 
         url: function(){
             return 'http://public-api.wordpress.com/rest/v1/sites/ijustwanttotesttheapi.wordpress.com/posts';
+        },
+
+        getCurrentRoute: function () {
+            var model = this.getCurrentModel();
+            return model ? model.getRoute() : false;
+        },
+
+        getNextRoute: function () {
+            var model = this.getNextModel();
+            return model ? model.getRoute() : false;
+        },
+
+        getPrevRoute: function () {
+            var model = this.getPrevModel();
+            return model ? model.getRoute() : false;
         },
 
         parse: function(response){

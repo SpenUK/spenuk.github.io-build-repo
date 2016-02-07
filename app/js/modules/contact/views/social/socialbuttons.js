@@ -1,12 +1,12 @@
 'use strict';
 
 var CollectionViewExtension = require('../../../../extensions/collectionview'),
-	socialModule = require('../../../../modules/social/module'),
+
 	SocialButtonView = require('./socialbutton'),
 	template = require('../../templates/social/socialbuttons.hbs'),
 
 	/**
-	 * 
+	 *
 	 */
 	SocialButtonsView = CollectionViewExtension.extend({
 
@@ -16,12 +16,7 @@ var CollectionViewExtension = require('../../../../extensions/collectionview'),
 
 		itemView: SocialButtonView,
 
-		template: template,
-
-		initialize: function(){
-			this.collection = socialModule.getSocialCollection();
-			this._super.apply(this, arguments);
-		}
+		template: template
 
 	});
 

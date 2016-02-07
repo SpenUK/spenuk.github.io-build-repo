@@ -1,20 +1,19 @@
 .grid-container.contact {
 
 	.connect {
-		max-width: 95%;
 		margin: 0 auto;
 
 		ul.social-buttons {
 			width: 100%;
 			.button {
-				
+
 				width: 100%;
 				margin: 8px auto;
 				padding: 0 50px;
 
 				&.twitter {
 					$brand-color: rgb(0,172,237);
-					@include ui-btn($brand-color, 50px); 
+					@include ui-btn($brand-color, 50px);
 				}
 
 				&.github {
@@ -29,6 +28,11 @@
 
 				&.dribbble {
 					$brand-color: rgb(234,76,137);
+					@include ui-btn($brand-color, 50px);
+				}
+
+				&.instagram {
+					$brand-color: rgb(63,114,155);
 					@include ui-btn($brand-color, 50px);
 				}
 			}
@@ -52,7 +56,6 @@
 	}
 
 	.say-hello {
-		max-width: 95%;	
 		margin: 0 auto;
 	}
 }
@@ -208,7 +211,7 @@ form.contact-form {
 				top: 0;
 	    	@include box-shadow(0 4px 0 #6FBA63);
 			}
-  		
+
   	}
   }
 }

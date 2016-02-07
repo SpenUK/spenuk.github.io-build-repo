@@ -5,9 +5,12 @@ var ViewExtension = require('../../../extensions/view'),
 	HeroSVGView = require('./herosvg/herosvg'),
 	template = require('../templates/intro.hbs'),
 
-	IntroView = ViewExtension.extend({
+	// may need the modules to get the current routes for both projects anf blog.
+	// Need a graceful way to direct to them though.
+	// blogModule = require('../../blog/module'),
+    // projectsModule = require('../../projects/module'),
 
-		cName: 'IntroView',
+	IntroView = ViewExtension.extend({
 
 		namespace: 'intro',
 
@@ -28,10 +31,6 @@ var ViewExtension = require('../../../extensions/view'),
 				'.social-watermarks': SocialWatermarksView,
 				'.hero-svg': HeroSVGView
 			};
-		},
-
-		setListeners: function(){
-			//
 		}
 
 	});

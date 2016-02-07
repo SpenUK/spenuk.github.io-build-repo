@@ -5,9 +5,8 @@ var _ = require('underscore'),
 	IntroView = require('../../../modules/intro/views/intro'),
 	HeaderView = require('../../../modules/ui/views/header'),
 	TransitionView = require('../../../modules/pagetransitions/views/pagetransitions'),
+	UIModel = require('../../../modules/ui/models/ui'),
 	template = require('../../../modules/master/templates/master.hbs'),
-
-	scrollTracker = require('../../../helpers/scroll-tracker'),
 
 	MasterView = View.extend({
 
@@ -18,6 +17,8 @@ var _ = require('underscore'),
 		initialize: function(){
 
 			this.state = (window.location.hash.length >= 1) ? 'content-state' : 'intro-state';
+
+			this.uiModel = new UIModel();
 
 			this._super.apply(this, arguments);
 
@@ -34,16 +35,14 @@ var _ = require('underscore'),
 			// });
 		},
 
-		events: {
-			'click .show-content': 'goToCurrentContent',
-			'click .go-prev': 'prevContent',
-			'click .go-next': 'nextContent'
-			// 'click .show-intro': 'showIntro'
-	  	},
-
 	  	views: function () {
 	  		return {
-	  			'.header': HeaderView,
+	  			'.header': {
+	  				view: HeaderView,
+	  				options: {
+	  					model: this.uiModel
+	  				}
+	  			},
 	  			'.landing': IntroView,
 	  			'.transition-container': TransitionView
 	  		};
@@ -54,21 +53,21 @@ var _ = require('underscore'),
 
 	  		this.$page = this.$el.find('.page-wrap');
 	  		this.transitionView = this.subviewInstances.findWhere({key: '.transition-container'}).get('view');
-
-	  		scrollTracker.initialize();
 	  	},
 
 	  	showContent: function() {
 			this.$page.addClass('content-state').removeClass('intro-state');
+			this.state = 'content-state';
 		},
 
 		showIntro: function() {
 			this.$page.addClass('intro-state').removeClass('content-state');
+			 this.state =  'intro-state';
 		},
 
 		serialize: function () {
 			return _.extend({}, this._super(), {
-				state: this.state || 'intro'
+				state: this.state || 'intro-state'
 			});
 		},
 
@@ -85,10 +84,7 @@ var _ = require('underscore'),
 				el: options.el || '.content-wrapper .content'
 			});
 
-			console.log(viewOptions);
-
 			if (this.currentContentClass !== View) {
-				console.log('new view');
 				this.currentContentClass = View;
 				this.currentContentView = new View(viewOptions);
 			}
@@ -97,34 +93,37 @@ var _ = require('underscore'),
 		},
 
 		transition: function (ViewDefinition, options) {
-			var View, viewOptions;
+			var View, resourceId;
 
 			options = options || {};
+
+			resourceId = options.resourceId || null;
 
 			ViewDefinition = this._expandViewDefinition(ViewDefinition);
 
 			View = ViewDefinition.View;
-            viewOptions = _.extend({}, ViewDefinition.options, {
+
+            ViewDefinition.options = _.extend({}, ViewDefinition.options, {
             	master: this,
+            	uiModel: this.uiModel,
 				el: options.el || '.content-wrapper .content'
 			});
 
-			if (this.currentContentClass !== View) {
-				this.currentContentClass = View;
-				this.currentContentView = new View(viewOptions);
-			}
+			this.transitionView.transition(ViewDefinition, {
+				noTransition: !this.shouldTransition(resourceId)
+			});
 
-			this.transitionView.transition(ViewDefinition);
+			this.currentResourceId = resourceId;
 
 			window.Backbone.trigger('ui:showContent');
 		},
 
-		// setNamespace: function(namespace) {
-		// 	document.body.className = $.trim(
-		// 		document.body.className.split(' ').filter(function(c) {
-		// 			return c.lastIndexOf('page-', 0) !== 0;
-		// 		}).join(' ') + ' page-' +namespace );
-		// },
+		shouldTransition: function (resourceId) {
+			var matchingResourceId = !this.currentResourceId || resourceId === this.currentResourceId,
+				contentState = this.state === 'content-state';
+
+			return !matchingResourceId && contentState;
+		},
 
 		// swiperUp: function(){
 		// 	if (!this.swiperUpReady()) { return false; }
@@ -164,34 +163,6 @@ var _ = require('underscore'),
 		// 	return true;
 		// },
 
-		// nextContent: function(e){
-		// 	console.log('nextContent');
-		// 	// if (e) { e.preventDefault(); }
-		// 	// if (this.transitions.animating) {return false;}
-		// 	// this.transitions.direction = 'next';
-		// 	// window.Backbone.trigger('router:nextContent');
-		// 	if (this.transitions.animating) {
-		// 		if (e) {
-		// 			console.log('is animating with e');
-		// 			e.preventDefault();
-		// 		} else {
-		// 			console.log('is animating no e');
-		// 		}
-		// 	}
-		// },
-
-		// prevContent: function(e){
-		// 	console.log('prevContent', this.transitions.animating);
-		// 	if (e) { e.preventDefault(); }
-		// 	if (this.transitions.animating) {return false;}
-		// 	this.transitions.direction = 'prev';
-		// 	window.Backbone.trigger('router:prevContent');
-		// },
-
-	  	// goToCurrentContent: function(){
-	  	// 	window.Backbone.trigger('router:goToCurrentContent');
-	  	// },
-
 		setListeners: function(){
 
 		// 	var transitions = this.transitions;
@@ -208,9 +179,6 @@ var _ = require('underscore'),
 		// 	this.listenTo(window.Backbone, 'swiper:down', this.swiperDown);
 		// 	this.listenTo(window.Backbone, 'swiper:left', this.swiperLeft);
 		// 	this.listenTo(window.Backbone, 'swiper:right', this.swiperRight);
-
-
-		// 	this.listenTo(window.Backbone, 'transition:render', render);
 
 		}
 	});

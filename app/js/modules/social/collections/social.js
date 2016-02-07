@@ -5,8 +5,6 @@ var CollectionExtension = require('../../../extensions/collection'),
     stubs = require('./../stubs'),
 
     SocialCollection = CollectionExtension.extend({
-        
-        position: 0,
 
         totalRecords: 0,
 
@@ -19,8 +17,11 @@ var CollectionExtension = require('../../../extensions/collection'),
         model: Model,
 
         initialize: function() {
+            if (!this.length) {
+                this.add(this.stubs);
+            }
+
             this._super.apply(this, arguments);
-            this.fetch();
         }
     });
 

@@ -14,13 +14,13 @@ var socialStubs = [
 	}, {
 		title: 'Linkedin',
 		className: 'linkedin',
-		url: 'http://uk.linkedin.com/',
+		url: 'https://www.linkedin.com/in/spentaylor',
 		icon: 'fa-linkedin'
 	}, {
-		title: 'Dribbble',
-		className: 'dribbble',
-		url: 'https://www.dribbble.com/',
-		icon: 'fa-dribbble'
+		title: 'Instagram',
+		className: 'instagram',
+		url: 'https://www.instagram.com/spenonpaper/',
+		icon: 'fa-instagram'
 	}
 ];
 
