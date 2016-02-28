@@ -1,5 +1,6 @@
 'use strict';
 /*jshint bitwise: false*/
+/*jshint -W087 */
 
 var _ = require('underscore'),
     Backbone = require('backbone'),
@@ -28,6 +29,7 @@ var _ = require('underscore'),
          *
          */
         initialize: function (options) {
+            _.bindAll(this, '_removeSubviewInstance', '_removeSubviewInstances');
             options = options || {};
             this._setAcceptedParams(options);
             this.wrapRender();
@@ -42,6 +44,8 @@ var _ = require('underscore'),
         },
 
         render: function () {
+            // console.log('render - ext-view');
+            // console.log(this.subviewInstances);
             this.$el.html(this.template(this.serialize()));
             this._renderSubviews();
             this._super.apply(this, arguments);
@@ -76,9 +80,16 @@ var _ = require('underscore'),
         /**
          *
          */
+        getSubviews: function () {
+            return _.result(this, 'views');
+        },
+
+        /**
+         *
+         */
         _renderSubviews: function () {
-            // could buffer?
-            var views = _.result(this, 'views');
+            var views = this.getSubviews();
+            this._removeSubviewInstances();
             _.each(views, function (viewDefinition, key) {
                 this._renderSubview(viewDefinition, key);
             }, this);
@@ -92,19 +103,27 @@ var _ = require('underscore'),
             viewDefinition = this._expandViewDefinition(viewDefinition);
 
             View = viewDefinition.View;
-            options = viewDefinition.options;
+            options = _.extend({}, {
+                model: this.model,
+                // collection: this.collection
+            }, viewDefinition.options);
 
-            options.model = options.model || this.model;
+            // collection doesn't work here, it knocks out any collection that's set in the class definition.
+
 
             view = new View(_.extend(options, {
                 el: key,
                 parentView: this
             }));
 
+            // console.log('adding to svinstances', 'svs', this.subviewInstances, 'v', view, 'k', key);
+
             this.subviewInstances.add({
                 view: view,
                 key: key
             });
+
+            // console.log(this.subviewInstances.length);
 
             view.listenTo(this, 'afterRender', function(){
                 if (view.isReady) {
@@ -123,6 +142,7 @@ var _ = require('underscore'),
             });
 
             this.listenTo(view, 'destroy', function(){
+                console.log('destroy...');
                 this.subviewInstances[key] = null;
             });
 
@@ -130,7 +150,12 @@ var _ = require('underscore'),
         },
 
         _removeSubviewInstances: function () {
-            this.subviewInstances.each(this._removeSubviewInstance, this);
+            var i;
+            // using collection.each will throw an error
+            // as it will be deleting losing index reference when deleting models.
+            for (i = this.subviewInstances.length - 1; i >= 0; i--) {
+                this._removeSubviewInstance(this.subviewInstances.first());
+            }
         },
 
         _removeSubviewInstance: function (model) {
@@ -164,35 +189,6 @@ var _ = require('underscore'),
                 View: View,
                 options: options
             };
-        },
-
-        _expandViewDefinitionx: function (viewDefinition) {
-            var View,
-                options = {},
-                definitionIsView = !!viewDefinition.extend;
-
-            if (definitionIsView) {
-                View = viewDefinition;
-            } else {
-                if (_.isFunction(viewDefinition)) {
-                    viewDefinition = viewDefinition();
-                }
-
-                View = viewDefinition.view ? viewDefinition.view :  viewDefinition;
-                options = _.result(viewDefinition, 'options');
-            }
-
-            options = _.extend(options, {});
-
-            if (!_.isFunction(View)) {
-                console.log('view is not a function');
-                return false;
-            } else {
-                return {
-                    View: View,
-                    options: options
-                };
-            }
         },
 
         _coreParams: ['parent', 'app'],
