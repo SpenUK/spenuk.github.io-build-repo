@@ -2,7 +2,7 @@
 
 var CollectionExtension = require('../../../extensions/collection'),
     Model = require('../models/article'),
-    stubs = require('../blog-post-stubs'),
+    // stubs = require('../blog-post-stubs'),
 
     BlogCollection = CollectionExtension.extend({
 
@@ -12,7 +12,7 @@ var CollectionExtension = require('../../../extensions/collection'),
 
         jsonp: true,
 
-        stubs: stubs,
+        // stubs: stubs,
 
         model: Model,
 
