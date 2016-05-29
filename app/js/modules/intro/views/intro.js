@@ -5,11 +5,10 @@ var ViewExtension = require('../../../extensions/view'),
 	HeroSVGView = require('./herosvg/herosvg'),
 	template = require('../templates/intro.hbs'),
 
-	// may need the modules to get the current routes for both projects anf blog.
+	// may need the modules to get the current routes for both projects and blog.
 	// Need a graceful way to direct to them though.
 	// blogModule = require('../../blog/module'),
     // projectsModule = require('../../projects/module'),
-
 	IntroView = ViewExtension.extend({
 
 		namespace: 'intro',
