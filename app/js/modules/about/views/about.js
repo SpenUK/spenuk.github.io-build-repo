@@ -7,6 +7,18 @@ var ViewExtension = require('../../../extensions/view'),
 
 		template: template,
 
+		acceptedParams: ['uiModel'],
+
+		initialize: function() {
+			this._super.apply(this, arguments);
+
+			this.uiModel.set({
+				currentContentUrl: '#/about',
+				nextUrl: null,
+				prevUrl: null
+			});
+		},
+
 	});
 
 module.exports = AboutView;

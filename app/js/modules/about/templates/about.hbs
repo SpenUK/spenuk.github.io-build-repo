@@ -57,15 +57,65 @@
 	.color--coke-cola { color: #000; font-weight: bold; }
 	.color--riverisland { color: #000; font-weight: bold; }*/
 
+	.about__experience {
+	    padding: 0px 40px;
+	    border-left: 10px solid #00c8b4;
+	    margin: 40px 0;
+	}
+
+	.experience__details {
+		min-height: 100px;
+	    padding-left: 120px;
+	    position: relative;
+	}
+
+	.experience__company-name {
+		color: #999;
+		font-size: 2em;
+		margin: 0;
+	}
+
+	.experience__job-title {
+		color: #999;
+		font-size: 1.2em;
+		margin: 0 0 5px 0;
+	}
+
+	.experience__employment-dates {
+		color: #999;
+		font-size: 1em;
+		margin: 0;
+	}
+
 	.experience__logo {
 		border-radius: 50%;
-		border: 4px solid rgba(100,100,100,0.5);
+		border: 4px solid #999;
 		width: 100px;
 		height: 100px;
+		background-color: #666;
+		position: absolute;
+	    left: 0;
+	    top: 50%;
+	    margin-top: -50px;
+
+		background-repeat: no-repeat;
+	    background-position: center center;
+	    -webkit-background-size: cover;
+	    -moz-background-size: cover;
+	    -o-background-size: cover;
+	    background-size: cover;
 	}
 
 	.experience__logo--burberry {
-		background-image: url(assets/images/hex-profile.png);
+		background-image: url(assets/images/experiences/burberry-logo.jpg);
+	}
+
+	.experience__logo--river-island {
+		background-image: url(assets/images/experiences/ri-logo.jpg);
+	}
+
+	.experience__logo--bd-network {
+		background-image: url(assets/images/experiences/bd-logo.png);
 	}
 
 </style>
@@ -99,8 +149,6 @@
 				<span class="about__core-competency color--plus-more">Plus more...</span>
 			</div>
 
-			<p>I've had the pleasure of working with some <strong>amazing brands</strong> since starting my career including <strong class="color--burberry">Burberry</strong>, <strong class="color--nintendo">Nintendo</strong>, <strong class="color--coke-cola">Coke-Cola</strong> &amp; <strong class="color--riverisland">River Island</strong> to name a few!</p>
-
 			<p>I've <strong>experienced</strong> a number of teams of various sizes and makeups and have developed my own <strong>ideal</strong> of how digital projects &amp; products should be built. <br/>
 			<p>Some of the <strong>best practices &amp; ideologies</strong> that I like follow:</p>
 			<div class="about__idiologies">
@@ -117,23 +165,67 @@
 				<span class="about__ideology">Writing Docs!</span>
 				<span class="about__ideology color--plus-more">Plus more...</span>
 			</div>
+
+			<p>I've had the pleasure of working with some <strong>amazing brands</strong> since starting my career including <strong class="color--burberry">Burberry</strong>, <strong class="color--nintendo">Nintendo</strong>, <strong class="color--coke-cola">Coke-Cola</strong> &amp; <strong class="color--riverisland">River Island</strong> to name a few!</p>
+
+			<p>Here are some details:</p>
 			
-			{{!-- <div class="about__experiences">
+			<div class="about__experiences">
 				<div class="about__experience">
-					
-					<h3 class="experience__company-name">Burberry</h3>
-					<div class="experience__logo experience__logo--burberry"></div>
+					<div class="experience__details">
+						<div class="experience__logo experience__logo--burberry"></div>
+						<h3 class="experience__company-name">Burberry</h3>
+						<p class="experience__job-title">Interactive Developer</p>
+						<p class="experience__employment-dates">June '15 - June '16</p>
+						
+					</div>
 
 					<div class="experience__description">
 						<p>At Burberry, I was responsible for working on both new and existing features of the company’s mobile ecommerce web app.<br/>
 						Most notably the store stock lookup feature which originally involved choreographing multiple API endpoints in a way that allowed for smooth lazy loading.</p>
-						<p>Given the nature of the web app, mobile optimisation was a key concern so techniques like lazy loading became quite important through out the work that we did.</p>
+						<p>Given the nature of the web app, mobile optimization was a key concern so techniques like lazy loading became quite important through out the work that we did.</p>
 						<p>Working at Burberry was a pleasure as there is a proper workflow in place, something I felt was missing from previous roles. This included unit testing, code reviews, proper coding standards and other agile methodologies.</p>
-						<p>Although there were strong standards with code style throughout the JS, CSS and templated HTML, I noticed that the unit tests were not standardised. <br/> In the last few months of my employment I set the ball rolling to standardise the testing style using best practices influenced by RSpec in a way that would encourage fuller test coverage throughout the projects.</p>
+						<p>Although there were strong standards with code style throughout the JS, CSS and templated HTML, I noticed that the unit tests were not standardized. <br/> In the last few months of my employment I set the ball rolling to standardize the testing style using best practices influenced by RSpec in a way that would encourage fuller test coverage throughout the projects.</p>
 					</div>
 				</div>
 			</div>
- --}}
+
+			<div class="about__experiences">
+				<div class="about__experience">
+					<div class="experience__details">
+						<div class="experience__logo experience__logo--bd-network"></div>
+						<h3 class="experience__company-name">BD Network</h3>
+						<p class="experience__job-title">Web Developer</p>
+						<p class="experience__employment-dates">Sept '14 - June '15</p>
+						
+					</div>
+
+					<div class="experience__description">
+						<p>At BD Network I worked on a number of full-stack and front-end web projects.</p>
+						<p>Some of the clients that I worked with during my time at BD include: Nintendo, Coke-Cola, Whyte &amp; Mackay and Billington’s.</p>
+						<p>Having a relatively strong JS skill set I was often tasked with JS focused jobs including refactoring messy, unorganized JS in to modular, maintainable code.</p>
+						<p>Whilst building some of the front-ends for these projects I developed a small set of SCSS modules/mixins (including a solid, configurable grid system based loosely on Foundation) and implemented a workflow that utilized GruntJS to run tasks automatically - speeding up the process of building each project.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="about__experiences">
+				<div class="about__experience">
+					<div class="experience__details">
+						<div class="experience__logo experience__logo--river-island"></div>
+						<h3 class="experience__company-name">River Island</h3>
+						<p class="experience__job-title">Junior FE Developer</p>
+						<p class="experience__employment-dates">Feb '14 - Sept '14</p>
+						
+					</div>
+
+					<div class="experience__description">
+						<p>At River Island I was mostly tasked with general bug fixes and enhancements to the UI &amp; Implementing new features.</p>
+						<p> My most ambitious project at RI was a complete overhaul to our google-maps implementation, slimming and optimizing our API consumption while making the user's interactions much smoother.</p>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </div>
