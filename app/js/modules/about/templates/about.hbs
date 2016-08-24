@@ -1,8 +1,139 @@
+<style type="text/css">
+	.about__panel {
+		margin-top: 90px
+	}
+
+	.about strong {
+		color: #111;
+		font-weight: 600;
+	}
+
+	.about__avatar {
+	    width: 200px;
+	    margin-top: -125px;
+	    margin: -125px auto -20px auto;
+	    display: block;
+	}
+
+	.about__idiologies,
+	.about__core-competencies {
+		padding: 0 20px;
+	}
+
+	.about__ideology,
+	.about__core-competency {
+	    display: inline-block;
+	    border-radius: 1em;
+	    border-width: 2px;
+	    padding: 2px 14px;
+	    border-style: solid;
+	    margin: 5px 5px;
+	    font-weight: 600;
+	}
+
+	.about__ideology {
+		color: #666;
+	}
+
+	.color--flash { color: rgb(255,80,80); }
+	.color--javascript { color: #eedb59; }
+	.color--backbone { color: #0071b6; }
+	.color--scss { color: #c6538c; }
+	.color--jquery { color: #0769ad; }
+	.color--node { color: #43853d; }
+	.color--underscore { color: #0071b6; }
+	.color--es6 { color: #eedb59; }
+	.color--react { color: #61dafb; }
+	.color--socketio { color: rgb(219, 122, 238); }
+	.color--jasmine { color: #8c3e83; }
+	.color--redux { color: #714fa0; }
+	.color--git { color: #ef391a; }
+	.color--webpack { color: #006a86; }
+	.color--grunt { color: #e48632; }
+	.color--ror { color: #cc0000; }
+	.color--plus-more { color: rgba(0,0,0,0.3); }
+	/*.color--burberry { color: #000; font-weight: bold; }
+	.color--nintendo { color: #000; font-weight: bold; }
+	.color--coke-cola { color: #000; font-weight: bold; }
+	.color--riverisland { color: #000; font-weight: bold; }*/
+
+	.experience__logo {
+		border-radius: 50%;
+		border: 4px solid rgba(100,100,100,0.5);
+		width: 100px;
+		height: 100px;
+	}
+
+	.experience__logo--burberry {
+		background-image: url(assets/images/hex-profile.png);
+	}
+
+</style>
+
 <div class="grid-container about">
 	<div class="bleed">
-		<h1 class="title">About Me....</h1>
-		<div class="panel" style="color: rgba(180,180,180,1); text-align: center;">
-			<p>This bit's coming soon, promise!</p>
+		{{!-- <h1 class="title">About Me</h1> --}}
+		{{!-- <div class="panel" style="color: rgba(180,180,180,1); text-align: center;"> --}}
+		<div class="panel about__panel">
+			<img class="about__avatar" src="assets/images/hex-profile.png">
+			<h3>Hi, I'm Spen.</h3>
+			<p>I've always had a passion for <strong>digital experiences.</strong><br/> At the age of 13 I started toying with making very crude <strong>animations &amp; games</strong> with Flash. <br/>	Things have changed a lot since then but the <strong>underlying goal</strong> is still ultimately the same - To create things that are <strong>engaging &amp; entertaining.</strong></p>
+			<p>I've spent the past 4 years working with various web technologies with a strong focus on the ever expanding <strong>Javascript</strong> landscape.</p>
+			<p>Some of my <strong>core competencies</strong> are:</p>
+			<div class="about__core-competencies">
+				<span class="about__core-competency color--javascript">Javascript</span>
+				<span class="about__core-competency color--backbone">BackboneJS</span>
+				<span class="about__core-competency color--scss">SCSS</span>
+				<span class="about__core-competency color--jquery">jQuery</span>
+				<span class="about__core-competency color--node">NodeJS</span>
+				<span class="about__core-competency color--underscore">UnderscoreJS</span>
+				<span class="about__core-competency color--es6">ES6</span>
+				<span class="about__core-competency color--react">ReactJS</span>
+				<span class="about__core-competency color--socketio">SocketIO</span>
+				<span class="about__core-competency color--jasmine">Jasmine</span>
+				<span class="about__core-competency color--redux">Redux</span>
+				<span class="about__core-competency color--git">Git</span>
+				<span class="about__core-competency color--webpack">Webpack</span>
+				<span class="about__core-competency color--grunt">GruntJS</span>
+				<span class="about__core-competency color--ror">Ruby on Rails</span>
+				<span class="about__core-competency color--plus-more">Plus more...</span>
+			</div>
+
+			<p>I've had the pleasure of working with some <strong>amazing brands</strong> since starting my career including <strong class="color--burberry">Burberry</strong>, <strong class="color--nintendo">Nintendo</strong>, <strong class="color--coke-cola">Coke-Cola</strong> &amp; <strong class="color--riverisland">River Island</strong> to name a few!</p>
+
+			<p>I've <strong>experienced</strong> a number of teams of various sizes and makeups and have developed my own <strong>ideal</strong> of how digital projects &amp; products should be built. <br/>
+			<p>Some of the <strong>best practices &amp; ideologies</strong> that I like follow:</p>
+			<div class="about__idiologies">
+				<span class="about__ideology">Unit Testing</span>
+				<span class="about__ideology">Strict Code Standards</span>
+				<span class="about__ideology">Linting</span>
+				<span class="about__ideology">Test Driven Development</span>
+				<span class="about__ideology">Continuous Integration</span>
+				<span class="about__ideology">Agile Workflows</span>
+				<span class="about__ideology">Single Responsibility Principle</span>
+				<span class="about__ideology">Component/Module Based Architecture</span>
+				<span class="about__ideology">Pure Functions</span>
+				<span class="about__ideology">Code Reviews</span>
+				<span class="about__ideology">Writing Docs!</span>
+				<span class="about__ideology color--plus-more">Plus more...</span>
+			</div>
+			
+			{{!-- <div class="about__experiences">
+				<div class="about__experience">
+					
+					<h3 class="experience__company-name">Burberry</h3>
+					<div class="experience__logo experience__logo--burberry"></div>
+
+					<div class="experience__description">
+						<p>At Burberry, I was responsible for working on both new and existing features of the company’s mobile ecommerce web app.<br/>
+						Most notably the store stock lookup feature which originally involved choreographing multiple API endpoints in a way that allowed for smooth lazy loading.</p>
+						<p>Given the nature of the web app, mobile optimisation was a key concern so techniques like lazy loading became quite important through out the work that we did.</p>
+						<p>Working at Burberry was a pleasure as there is a proper workflow in place, something I felt was missing from previous roles. This included unit testing, code reviews, proper coding standards and other agile methodologies.</p>
+						<p>Although there were strong standards with code style throughout the JS, CSS and templated HTML, I noticed that the unit tests were not standardised. <br/> In the last few months of my employment I set the ball rolling to standardise the testing style using best practices influenced by RSpec in a way that would encourage fuller test coverage throughout the projects.</p>
+					</div>
+				</div>
+			</div>
+ --}}
 		</div>
 	</div>
 </div>
